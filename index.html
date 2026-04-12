@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Claro de Luna | Spa y Bienestar</title>
+    <meta name="description" content="Claro de Luna — Spa y Bienestar. El refugio más exclusivo para el alma. Rituales, masajes, faciales y circuito de hidroterapia en Veracruz.">
+    
+    <!-- OpenGraph -->
+    <meta property="og:title" content="Claro de Luna · Spa y Bienestar">
+    <meta property="og:description" content="El refugio más exclusivo para el alma. Rituales, masajes y bienestar premium.">
+    <meta property="og:image" content="assets/PERFIL_FBK_CDL.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="assets/PERFIL_FBK_CDL.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ============ SPLASH SCREEN ============ -->
+    <div id="splash-screen" class="splash">
+        <div class="splash-inner">
+            <img src="assets/LOGO CLARO DE LUNA 1920 x 1080.png" alt="Claro de Luna" class="splash-logo" id="splash-logo">
+            <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+        </div>
+    </div>
+
+    <!-- ============ AUDIO AMBIENTE ============ -->
+    <audio id="bg-audio" loop preload="none">
+        <source src="https://cdn.pixabay.com/download/audio/2022/02/07/audio_dc39bde80a.mp3?filename=relaxing-music-vol1-124477.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ============ HERO CINEMA ============ -->
+    <header class="hero" id="hero">
+        <video autoplay muted playsinline class="hero__video" id="hero-video">
+            <source src="assets/Portada.MP4" type="video/mp4">
+        </video>
+        <div class="hero__overlay"></div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+            <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+
+        <div class="hero__content">
+            <img src="assets/LOGO CLARO DE LUNA 1920 x 1080.png" alt="Claro de Luna · Spa y Bienestar" class="hero__logo">
+            <p class="hero__tagline">El refugio más exclusivo para el alma</p>
+
+            <nav class="hero__actions">
+                <a href="tel:+522294023957" class="hero__btn" aria-label="Llamar"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://wa.me/522294023957" target="_blank" class="hero__btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <button class="hero__btn" id="audio-btn" aria-label="Música"><i class="fa-solid fa-music"></i></button>
+                <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" class="hero__btn" aria-label="Ubicación"><i class="fa-solid fa-location-dot"></i></a>
+            </nav>
+        </div>
+
+        <div class="hero__scroll" id="scroll-cta">
+            <span>Explorar Menú</span>
+            <div class="hero__scroll-line"></div>
+        </div>
+    </header>
+
+    <!-- ============ STICKY PROMO ============ -->
+    <div class="promo-bar">
+        <i class="fa-solid fa-droplet"></i>
+        <span>Cortesía: Todo Ritual o Masaje incluye Circuito de Hidroterapia</span>
+    </div>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main" id="main-content">
+
+        <!-- MODE TOGGLE -->
+        <div class="mode-toggle" id="mode-toggle">
+            <div class="mode-toggle__track">
+                <div class="mode-toggle__slider"></div>
+                <button class="mode-toggle__btn active" id="btn-for-me">Para Mí</button>
+                <button class="mode-toggle__btn" id="btn-gift">Regalar</button>
+            </div>
+        </div>
+
+        <!-- SENSORY FILTERS -->
+        <div class="filters" id="filters-section">
+            <div class="filters__pills">
+                <button class="pill" data-filter="tension"><i class="fa-solid fa-hand-fist"></i> Tensión</button>
+                <button class="pill" data-filter="piel"><i class="fa-solid fa-spa"></i> Piel</button>
+                <button class="pill" data-filter="pareja"><i class="fa-solid fa-heart"></i> Pareja</button>
+                <button class="pill" data-filter="relax"><i class="fa-solid fa-moon"></i> Relajación</button>
+            </div>
+        </div>
+
+        <!-- ====== CATEGORÍA: RITUALES ====== -->
+        <section class="category" data-category="rituales">
+            <div class="category__hero">
+                <img src="assets/DSC_0426.jpg" alt="Rituales" class="category__img" loading="lazy">
+                <div class="category__overlay">
+                    <span class="category__label">Experiencias Inmersivas</span>
+                    <h2 class="category__title">Rituales</h2>
+                </div>
+                <button class="category__toggle" aria-label="Expandir"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="category__body">
+                <div class="service" data-name="Ritual Claro de Luna" data-price="2650" data-tags="piel,tension,relax" data-hydro="true">
+                    <div class="service__left">
+                        <h3 class="service__name">Ritual Claro de Luna</h3>
+                        <p class="service__desc">Exfoliación con pétalos de rosa, envoltura antioxidante y masaje relajante profundo.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 110 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia incluida</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$2,650</span>
+                            <span class="price price--alt">$5,000 <small>pareja</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Ritual de Intenciones" data-price="2650" data-tags="piel,pareja,relax" data-hydro="true">
+                    <div class="service__left">
+                        <h3 class="service__name">Ritual de Intenciones</h3>
+                        <p class="service__desc">Limpia áurica seguida de facial iluminador con perlas de caviar.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 110 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia incluida</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$2,650</span>
+                            <span class="price price--alt">$5,000 <small>pareja</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service service--featured" data-name="Ritual Ancestral" data-price="6050" data-tags="piel,tension,relax,pareja" data-hydro="true">
+                    <div class="service__badge-wrap"><span class="service__badge">✦ Signature</span></div>
+                    <div class="service__left">
+                        <h3 class="service__name">Ritual Ancestral</h3>
+                        <p class="service__desc">Nuestra experiencia más completa. Medicina tradicional combinada con técnicas contemporáneas.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 150 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia incluida</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$6,050</span>
+                            <span class="price price--alt">$10,200 <small>pareja</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== CATEGORÍA: MASAJES ====== -->
+        <section class="category" data-category="masajes">
+            <div class="category__hero">
+                <img src="assets/DSC_0212.jpg" alt="Masajes" class="category__img" loading="lazy">
+                <div class="category__overlay">
+                    <span class="category__label">El Arte del Tacto</span>
+                    <h2 class="category__title">Masajes</h2>
+                </div>
+                <button class="category__toggle" aria-label="Expandir"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="category__body">
+                <div class="service" data-name="Descontracturante" data-price="1750" data-tags="tension" data-hydro="true">
+                    <div class="service__left">
+                        <h3 class="service__name">Descontracturante</h3>
+                        <p class="service__desc">Presión profunda en musculatura rígida para extinguir dolor cervical crónico.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 50 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$1,750 <small>50 min</small></span>
+                            <span class="price price--alt">$2,650 <small>80 min</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Herbal Relajante" data-price="1650" data-tags="relax" data-hydro="true">
+                    <div class="service__left">
+                        <h3 class="service__name">Herbal Relajante</h3>
+                        <p class="service__desc">Hierbas curativas tisú y aceite de agave. Diseñado clínicamente contra el insomnio.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 50 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$1,650 <small>50 min</small></span>
+                            <span class="price price--alt">$2,500 <small>80 min</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Piedras Calientes" data-price="1750" data-tags="tension,relax" data-hydro="true">
+                    <div class="service__left">
+                        <h3 class="service__name">Piedras Calientes</h3>
+                        <p class="service__desc">Terapia ancestral con piedras volcánicas para una descontracción profunda del tejido.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 50 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$1,750 <small>50 min</small></span>
+                            <span class="price price--alt">$2,650 <small>80 min</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Piernas Cansadas" data-price="1550" data-tags="tension" data-hydro="true">
+                    <div class="service__left">
+                        <h3 class="service__name">Piernas Cansadas</h3>
+                        <p class="service__desc">Alivio circulatorio focalizado en extremidades inferiores.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 50 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$1,550</span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Drenaje Linfático" data-price="1650" data-tags="piel,relax" data-hydro="true">
+                    <div class="service__left">
+                        <h3 class="service__name">Drenaje Linfático</h3>
+                        <p class="service__desc">Estimulación suave del sistema linfático para desintoxicar y desinflamar.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 50 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$1,650 <small>50 min</small></span>
+                            <span class="price price--alt">$2,500 <small>80 min</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service service--featured" data-name="Masaje 4 Manos" data-price="3300" data-tags="tension,relax" data-hydro="true">
+                    <div class="service__badge-wrap"><span class="service__badge">✦ Exclusivo</span></div>
+                    <div class="service__left">
+                        <h3 class="service__name">Masaje 4 Manos</h3>
+                        <p class="service__desc">Dos terapeutas en sincronía perfecta para una experiencia única de relajación total.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 60 min</span>
+                            <span class="tag tag--hydro"><i class="fa-solid fa-droplet"></i> Hidroterapia</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$3,300</span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== CATEGORÍA: FACIALES ====== -->
+        <section class="category" data-category="faciales">
+            <div class="category__hero">
+                <img src="assets/IMG_3130.jpg" alt="Faciales" class="category__img" loading="lazy">
+                <div class="category__overlay">
+                    <span class="category__label">Renovación Dérmica</span>
+                    <h2 class="category__title">Faciales</h2>
+                </div>
+                <button class="category__toggle" aria-label="Expandir"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="category__body">
+                <div class="service" data-name="Facial Antioxidante" data-price="1080" data-tags="piel">
+                    <div class="service__left">
+                        <h3 class="service__name">Facial Antioxidante</h3>
+                        <p class="service__desc">Limpieza profunda con extractos naturales para revitalizar y combatir el envejecimiento.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 60 min</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing"><span class="price">$1,080</span></div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Facial Control Grasa" data-price="1080" data-tags="piel">
+                    <div class="service__left">
+                        <h3 class="service__name">Facial Control Grasa</h3>
+                        <p class="service__desc">Equilibra la producción de sebo y purifica poros con tratamiento especializado.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 60 min</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing"><span class="price">$1,080</span></div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== CATEGORÍA: TERAPIAS CORPORALES ====== -->
+        <section class="category" data-category="corporales">
+            <div class="category__hero">
+                <img src="assets/IMG_3055.jpg" alt="Terapias Corporales" class="category__img" loading="lazy">
+                <div class="category__overlay">
+                    <span class="category__label">Tratamientos Profesionales</span>
+                    <h2 class="category__title">Terapias Corporales</h2>
+                </div>
+                <button class="category__toggle" aria-label="Expandir"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="category__body">
+                <div class="service" data-name="Exfoliación Café Tisú" data-price="1880" data-tags="piel">
+                    <div class="service__left">
+                        <h3 class="service__name">Exfoliación Café Tisú</h3>
+                        <p class="service__desc">Eliminación de células muertas con granos de café orgánico para una piel renovada y luminosa.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 60 min</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing"><span class="price">$1,880</span></div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Envoltura de Agave Azul" data-price="2250" data-tags="piel,relax">
+                    <div class="service__left">
+                        <h3 class="service__name">Envoltura de Agave Azul</h3>
+                        <p class="service__desc">Hidratación profunda con extracto de agave mexicano. Nutrición intensa para la piel.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 70 min</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing"><span class="price">$2,250</span></div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Tratamiento Moldeador" data-price="2750" data-tags="piel">
+                    <div class="service__left">
+                        <h3 class="service__name">Tratamiento Moldeador <small>por zona</small></h3>
+                        <p class="service__desc">Modelado corporal con tecnología y técnicas manuales para esculpir y tonificar.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 60 min</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing"><span class="price">$2,750</span></div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== CATEGORÍA: BIENESTAR AVANZADO ====== -->
+        <section class="category" data-category="bienestar">
+            <div class="category__hero">
+                <img src="assets/DSC_0553.jpg" alt="Bienestar Avanzado" class="category__img" loading="lazy">
+                <div class="category__overlay">
+                    <span class="category__label">Tecnología & Wellness</span>
+                    <h2 class="category__title">Bienestar Avanzado</h2>
+                </div>
+                <button class="category__toggle" aria-label="Expandir"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="category__body">
+                <div class="service" data-name="Tina EMS" data-price="600" data-tags="tension,relax">
+                    <div class="service__left">
+                        <h3 class="service__name">Tina EMS</h3>
+                        <p class="service__desc">Electroestimulación muscular acuática para tonificación y relajación profunda.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 30 min</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing"><span class="price">$600</span></div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Tina de Flotación" data-price="600" data-tags="relax">
+                    <div class="service__left">
+                        <h3 class="service__name">Tina de Flotación</h3>
+                        <p class="service__desc">Experiencia de ingravidez con sales de Epsom. Profunda desconexión sensorial.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> 30 min</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing"><span class="price">$600</span></div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="service" data-name="Circuito de Hidroterapia" data-price="1000" data-tags="relax,tension">
+                    <div class="service__left">
+                        <h3 class="service__name">Circuito de Hidroterapia</h3>
+                        <p class="service__desc">Sauna, vapor, piscinas termales, jacuzzi y locker privado.</p>
+                        <div class="service__tags">
+                            <span class="tag tag--time"><i class="fa-regular fa-clock"></i> Libre</span>
+                        </div>
+                    </div>
+                    <div class="service__right">
+                        <div class="service__pricing">
+                            <span class="price">$1,000</span>
+                            <span class="price price--alt">$400 <small>extra</small></span>
+                        </div>
+                        <button class="service__add" aria-label="Agregar"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== REWARDS SYSTEM — FUNCIONAL CON SHEETS + QR ====== -->
+        <section class="rewards" id="rewards">
+            <div class="rewards__header">
+                <h2 class="rewards__title">Club Claro de Luna</h2>
+                <p class="rewards__subtitle">Tu bienestar, recompensado</p>
+            </div>
+
+            <!-- STEP 1: PHONE LOOKUP (only phone — no self-registration) -->
+            <div class="loyalty-register" id="loyalty-register">
+                <p class="loyalty-register__text">Ingresa tu número de WhatsApp para acceder a tu tarjeta de lealtad</p>
+                <div class="loyalty-register__form">
+                    <input type="tel" class="loyalty-input" id="loyalty-phone" placeholder="WhatsApp / Teléfono (10 dígitos)" maxlength="10" inputmode="numeric">
+                    <button class="rewards__cta" id="btn-loyalty-register" style="width:100%;">
+                        <i class="fa-solid fa-id-card"></i> Acceder a mi Tarjeta
+                    </button>
+                </div>
+                <!-- Not registered message (hidden by default) -->
+                <div class="loyalty-not-found" id="loyalty-not-found" style="display:none;">
+                    <p><i class="fa-solid fa-circle-info"></i> No encontramos una cuenta con ese número.</p>
+                    <p>Solicita tu registro al <strong>concierge del spa</strong> en tu próxima visita para acceder al programa de lealtad.</p>
+                </div>
+            </div>
+
+            <!-- STEP 2: ACTIVE STAMP CARD (shown when registered) -->
+            <div class="loyalty-active" id="loyalty-active" style="display:none;">
+
+                <!-- STAMP CARD -->
+                <div class="stamp-card" id="stamp-card">
+                    <div class="stamp-card__top">
+                        <img src="assets/LOGO CLARO DE LUNA 1920 x 1080.png" alt="Logo" class="stamp-card__logo">
+                        <span class="stamp-card__tier" id="loyalty-tier">Invitado</span>
+                    </div>
+
+                    <div class="stamp-card__stamps" id="stamp-grid">
+                        <div class="stamp" data-stamp="1">
+                            <div class="stamp__inner"><i class="fa-solid fa-moon"></i></div>
+                            <span class="stamp__label" id="stamp-label-1">Visita 1</span>
+                        </div>
+                        <div class="stamp" data-stamp="2">
+                            <div class="stamp__inner"><i class="fa-solid fa-moon"></i></div>
+                            <span class="stamp__label" id="stamp-label-2">Visita 2</span>
+                        </div>
+                        <div class="stamp" data-stamp="3">
+                            <div class="stamp__inner"><i class="fa-solid fa-moon"></i></div>
+                            <span class="stamp__label" id="stamp-label-3">Visita 3</span>
+                        </div>
+                        <div class="stamp stamp--reward" data-stamp="reward">
+                            <div class="stamp__inner"><i class="fa-solid fa-gift"></i></div>
+                            <span>50% OFF</span>
+                        </div>
+                    </div>
+
+                    <div class="stamp-card__progress">
+                        <div class="stamp-card__bar">
+                            <div class="stamp-card__bar-fill" id="loyalty-bar"></div>
+                        </div>
+                        <span class="stamp-card__status" id="loyalty-status">0 de 3 visitas</span>
+                    </div>
+
+                    <div class="stamp-card__user">
+                        <span id="loyalty-user-display"></span>
+                        <button class="stamp-card__logout" id="btn-loyalty-logout" title="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                </div>
+
+                <!-- CODE ENTRY (for QR scanned or manual code) -->
+                <div class="loyalty-code" id="loyalty-code-section">
+                    <p class="loyalty-code__label"><i class="fa-solid fa-qrcode"></i> ¿Tienes un código de sello?</p>
+                    <div class="loyalty-code__form">
+                        <input type="text" class="loyalty-input loyalty-input--code" id="stamp-code-input" placeholder="ABC123" maxlength="6" style="text-transform:uppercase;letter-spacing:4px;text-align:center;">
+                        <button class="rewards__cta rewards__cta--sm" id="btn-redeem-code">
+                            <i class="fa-solid fa-stamp"></i> Sellar
+                        </button>
+                    </div>
+                    <p class="loyalty-code__hint">Escanea el QR del concierge o ingresa el código manualmente</p>
+                </div>
+
+                <!-- REWARD READY (shown when 3 stamps complete) -->
+                <div class="loyalty-reward" id="loyalty-reward-section" style="display:none;">
+                    <div class="loyalty-reward__banner">
+                        <i class="fa-solid fa-crown"></i>
+                        <div>
+                            <strong>¡Recompensa Desbloqueada!</strong>
+                            <p id="reward-discount-text">50% de descuento en tu próximo servicio</p>
+                        </div>
+                    </div>
+                    <button class="rewards__cta" id="btn-redeem-reward" style="width:100%;">
+                        <i class="fa-brands fa-whatsapp"></i> Canjear vía Concierge
+                    </button>
+                </div>
+
+                <!-- PERKS INFO -->
+                <div class="rewards__details">
+                    <div class="rewards__perk">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Escanea el QR del spa después de cada servicio</span>
+                    </div>
+                    <div class="rewards__perk">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>3 sellos = 50% de descuento en tu 4to servicio</span>
+                    </div>
+                    <div class="rewards__perk">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Tu progreso se sincroniza en la nube automáticamente</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="rewards__disclaimer">*Programa exclusivo para clientes registrados. Solicita tu alta al concierge del spa.</p>
+        </section>
+
+        <!-- FOOTER MINI -->
+        <footer class="footer">
+            <img src="assets/PERFIL_FBK_CDL.jpg" alt="" class="footer__avatar">
+            <p class="footer__brand">Claro de Luna · Spa y Bienestar</p>
+            <p class="footer__address"><i class="fa-solid fa-location-dot"></i> Carretera a Antón Lizardo, Alvarado, Veracruz</p>
+            <p class="footer__phone"><i class="fa-solid fa-phone"></i> 229 402 3957</p>
+        </footer>
+    </main>
+
+    <!-- ============ MODAL: COMPANION (PAREJA) ============ -->
+    <div id="companion-modal" class="modal">
+        <div class="modal__card">
+            <div class="modal__icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+            <h3 class="modal__title">Detalle de Bienvenida</h3>
+            <p class="modal__desc">Podemos preparar batas bordadas y una bienvenida a nombre suyo en la Suite privada.</p>
+            <div class="modal__field">
+                <input type="text" id="companion-name" class="modal__input" placeholder="Nombre completo del Invitado">
+            </div>
+            <button id="btn-companion" class="modal__btn">Añadir Elegancia</button>
+        </div>
+    </div>
+
+    <!-- ============ MODAL: CHECKOUT ============ -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal__card">
+            <button class="modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="modal__title" id="checkout-title">Configuración de Reserva</h3>
+            <p class="modal__desc" id="checkout-desc">Permítanos conocer su preferencia de fecha para asegurar disponibilidad.</p>
+
+            <div id="checkout-booking-fields">
+                <div class="modal__field">
+                    <label>Fecha Deseada</label>
+                    <input type="date" id="booking-date" class="modal__input">
+                </div>
+                <div class="modal__field">
+                    <label>Número de Personas</label>
+                    <div class="stepper">
+                        <button class="stepper__btn" id="p-minus"><i class="fa-solid fa-minus"></i></button>
+                        <span class="stepper__val" id="p-val">1</span>
+                        <button class="stepper__btn" id="p-plus"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="checkout-gift-fields" style="display: none;">
+                <div class="modal__field">
+                    <label>¿Para quién es el regalo?</label>
+                    <input type="text" id="gift-to" class="modal__input" placeholder="Nombre de quien recibe">
+                </div>
+                <div class="modal__field">
+                    <label>¿De parte de quién?</label>
+                    <input type="text" id="gift-from" class="modal__input" placeholder="Tu nombre">
+                </div>
+                <div class="modal__field">
+                    <label>Mensaje especial (opcional)</label>
+                    <input type="text" id="gift-msg" class="modal__input" placeholder="Feliz aniversario...">
+                </div>
+                <p style="font-size: 0.65rem; color: rgba(255,255,255,0.4); text-align: center; margin: 1rem 0; line-height: 1.4;">
+                    *Certificado válido por 3 meses tras la compra. No reembolsable. Previa cita sujeta a disponibilidad.
+                </p>
+            </div>
+
+            <button id="btn-final-whatsapp" class="modal__btn modal__btn--wa">
+                Enviar Petición a Concierge <i class="fa-brands fa-whatsapp"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============ FLOATING CART ============ -->
+    <div id="floating-cart" class="cart">
+        <div class="cart__info">
+            <span class="cart__count" id="cart-count">0 servicios</span>
+            <span class="cart__total" id="cart-price">$0 MXN</span>
+        </div>
+        <button id="btn-checkout" class="cart__btn">
+            <span id="btn-book-text">Reservar</span>
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <script src="js/app.js"></script>
+
+<!-- TREZE SIGNATURE -->
+<a href="https://wa.me/522214092478?text=Hola%20Treze%20Labs%2C%20me%20gustar%C3%ADa%20solicitar%20el%20desarrollo%20de%20un%20sistema%20profesional." target="_blank" style="display: flex; justify-content: center; text-decoration: none; margin-top: 24px; margin-bottom: 24px; opacity: 0.6; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+    <img src="assets/footer.png" alt="Ingeniería Digital por Treze Labs" style="max-height: 38px; object-fit: contain; filter: brightness(0);">
+</a>
+
+</body>
+</html>
