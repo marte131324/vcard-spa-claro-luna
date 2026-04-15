@@ -223,6 +223,16 @@ button { font-family: inherit; cursor: pointer; }
     padding: 3rem 1.25rem 8rem;
 }
 
+/* Categories break out of .main for full-bleed */
+.main > .category {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
 
 /* =============================================
    MODE TOGGLE — PERSONAL / GIFT
@@ -290,91 +300,115 @@ button { font-family: inherit; cursor: pointer; }
 
 
 /* =============================================
-   CATEGORY CARDS
+   CATEGORY SECTIONS — EDITORIAL IMMERSIVE
+   Full-bleed cinematic approach. Each category
+   is a breathing moment, not a card.
    ============================================= */
 .category {
-    margin-bottom: 2.5rem;
-    border-radius: var(--radius);
+    margin-bottom: 0;
+    border-radius: 0;
     overflow: hidden;
-    background: var(--bg-card);
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border);
-    transition: box-shadow 0.4s, border-color 0.4s;
-}
-.category:hover {
-    box-shadow: var(--shadow-lg);
+    background: var(--bg);
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.6s var(--ease);
 }
 
 .category__hero {
-    position: relative; height: 300px;
-    overflow: hidden; cursor: pointer;
+    position: relative; 
+    height: 45vh;
+    min-height: 320px;
+    max-height: 500px;
+    overflow: hidden; 
+    cursor: pointer;
 }
 .category__img {
     width: 100%; height: 100%;
     object-fit: cover;
-    transition: transform 1.8s var(--ease);
+    transition: transform 2.5s var(--ease), filter 1.5s var(--ease);
+    filter: saturate(0.85);
 }
-.category__hero:hover .category__img { transform: scale(1.08); }
+.category__hero:hover .category__img { 
+    transform: scale(1.04); 
+    filter: saturate(1);
+}
 .category__overlay {
     position: absolute; inset: 0;
     background: linear-gradient(to top, 
-        rgba(0,0,0,0.85) 0%, 
-        rgba(0,0,0,0.35) 35%, 
-        rgba(0,0,0,0.05) 60%,
-        rgba(0,0,0,0) 100%);
+        rgba(0,0,0,0.7) 0%, 
+        rgba(0,0,0,0.2) 30%, 
+        rgba(0,0,0,0) 55%,
+        rgba(0,0,0,0.1) 100%);
     display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 2.5rem;
+    padding: 3rem 2.5rem;
     color: #fff;
 }
 .category__label {
-    font-size: 0.62rem; text-transform: uppercase;
-    letter-spacing: 4px; color: var(--copper);
-    margin-bottom: 0.4rem;
+    font-family: var(--sans);
+    font-size: 0.58rem; 
+    text-transform: uppercase;
+    letter-spacing: 5px; 
+    color: rgba(212, 163, 115, 0.9);
+    margin-bottom: 0.5rem;
     font-weight: 500;
+    opacity: 0.9;
 }
 .category__title {
     font-family: var(--serif);
-    font-size: clamp(2.2rem, 7vw, 3.2rem);
-    font-weight: 400;
-    line-height: 1.05;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -1px;
+    text-shadow: 0 4px 40px rgba(0,0,0,0.3);
 }
 .category__toggle {
-    position: absolute; bottom: 1.8rem; right: 1.8rem;
-    width: 44px; height: 44px; border-radius: 50%;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.18);
-    color: #fff; font-size: 0.85rem;
+    position: absolute; bottom: 2rem; right: 2.5rem;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7); font-size: 0.85rem;
     display: flex; justify-content: center; align-items: center;
-    transition: all 0.5s var(--ease);
+    transition: all 0.6s var(--ease);
 }
 .category__toggle:hover {
-    background: rgba(255,255,255,0.2);
-    transform: scale(1.05);
+    background: rgba(255,255,255,0.15);
+    color: #fff;
 }
 .category.open .category__toggle { 
     transform: rotate(180deg); 
-    background: var(--copper); 
-    border-color: var(--copper);
-    box-shadow: 0 4px 16px rgba(212, 163, 115, 0.3);
+    background: rgba(212, 163, 115, 0.2); 
+    border-color: rgba(212, 163, 115, 0.3);
+    color: var(--copper);
 }
 
-/* Accordion Body */
+/* Accordion Body — Contemplative Space */
 .category__body {
     max-height: 0; overflow: hidden;
-    transition: max-height 0.8s var(--ease);
-    padding: 0 1.5rem;
+    transition: max-height 1s var(--ease);
+    padding: 0;
 }
 .category.open .category__body {
     max-height: 5000px;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 1.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, transparent 100%);
 }
 [data-theme="dark"] .category.open .category__body {
-    background: rgba(0,0,0,0.15);
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(13,11,9,0.8) 100%);
+}
+
+/* First category gets no top spacing */
+.category:first-of-type { margin-top: -1px; }
+
+/* Restore max-width constraint inside fullbleed categories */
+.category.open .category__body {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -1041,8 +1075,11 @@ button { font-family: inherit; cursor: pointer; }
    ============================================= */
 @media (max-width: 640px) {
     .hero__logo { width: 200px; }
-    .category__hero { height: 220px; }
-    .category__title { font-size: 2rem; }
+    .category__hero { height: 35vh; min-height: 240px; }
+    .category__title { font-size: 2.2rem; }
+    .category__overlay { padding: 2rem 1.5rem; }
+    .category__toggle { bottom: 1.5rem; right: 1.5rem; width: 42px; height: 42px; }
+    .category.open .category__body { padding: 1.5rem 1.2rem; }
 
     /* Service Items */
     .service:not(.service--featured) { flex-direction: column; align-items: stretch; gap: 0.8rem; }
