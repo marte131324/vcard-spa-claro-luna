@@ -134,17 +134,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ========================================================
-       CATEGORY ACCORDION
+       CATEGORY NAVIGATOR — Pill Switching
        ======================================================== */
+    const catNav = document.getElementById('cat-nav');
+    const catPills = document.querySelectorAll('.cat-nav__pill');
+    const categories = document.querySelectorAll('.category');
+
+    catPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            const target = pill.dataset.target;
+            // Update active pill
+            catPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            // Scroll pill into view within nav
+            pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            // Show target category, hide others
+            categories.forEach(cat => {
+                if (cat.dataset.category === target) {
+                    cat.classList.add('open');
+                    // Re-trigger animation
+                    const body = cat.querySelector('.category__body');
+                    if (body) { body.style.animation = 'none'; body.offsetHeight; body.style.animation = ''; }
+                } else {
+                    cat.classList.remove('open');
+                }
+            });
+        });
+    });
+
+    // Keep legacy hero click working (fallback)
     document.querySelectorAll('.category__hero').forEach(hero => {
         hero.addEventListener('click', () => {
             const cat = hero.closest('.category');
-            const wasOpen = cat.classList.contains('open');
-            document.querySelectorAll('.category').forEach(c => c.classList.remove('open'));
-            if (!wasOpen) {
-                cat.classList.add('open');
-                setTimeout(() => cat.scrollIntoView({ behavior: 'smooth', block: 'start' }), 350);
-            }
+            const target = cat.dataset.category;
+            const pill = document.querySelector(`.cat-nav__pill[data-target="${target}"]`);
+            if (pill) pill.click();
         });
     });
 
@@ -157,12 +181,21 @@ document.addEventListener('DOMContentLoaded', () => {
         pill.addEventListener('click', () => {
             const isActive = pill.classList.contains('active');
             pills.forEach(p => p.classList.remove('active'));
-            if (isActive) { allServices.forEach(s => s.classList.remove('dimmed')); return; }
+            if (isActive) {
+                allServices.forEach(s => s.classList.remove('dimmed'));
+                // Return to active pill's category
+                const activePill = document.querySelector('.cat-nav__pill.active');
+                if (activePill) activePill.click();
+                return;
+            }
             pill.classList.add('active');
             const tag = pill.dataset.filter;
             allServices.forEach(s => s.classList.toggle('dimmed', !(s.dataset.tags || '').includes(tag)));
-            document.querySelectorAll('.category').forEach(c => {
-                if (c.querySelector('.service:not(.dimmed)')) c.classList.add('open');
+            // Show ALL categories that have matching services
+            categories.forEach(c => {
+                const hasMatch = c.querySelector('.service:not(.dimmed)');
+                if (hasMatch) c.classList.add('open');
+                else c.classList.remove('open');
             });
         });
     });
