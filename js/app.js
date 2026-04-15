@@ -342,7 +342,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showNotFound() {
-        if (notFoundSection) notFoundSection.style.display = '';
+        if (notFoundSection) {
+            notFoundSection.style.display = '';
+            setTimeout(() => notFoundSection.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+        }
     }
 
     function showActiveCard() {
@@ -522,10 +525,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Enter key on phone input
+    // Enter key + numeric-only filter on phone input
     if (phoneInput) {
         phoneInput.addEventListener('keydown', e => {
             if (e.key === 'Enter') btnRegister.click();
+        });
+        phoneInput.addEventListener('input', () => {
+            phoneInput.value = phoneInput.value.replace(/\D/g, '');
         });
     }
 
