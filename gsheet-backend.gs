@@ -206,7 +206,86 @@ function createGift(pin, giftTo, giftFrom, service, amount) {
 function getGifts(pin) {
   if (!validatePin(pin)) return { success: false, error: 'PIN incorrecto' };
   const data = getSheet('Certificados').getDataRange().getValues();
-  return { success: true, gifts: data.slice(1).map(d => ({ folio: d[0], giftTo: d[1], status: d[6] })).reverse() };
+  return { success: true, gifts: data.slice(1).map(d => ({ folio: d[0], giftTo: d[1], service: d[3], status: d[6] })).reverse() };
+}
+
+function getClients(pin) {
+  if (!validatePin(pin)) return { success: false, error: 'PIN incorrecto' };
+  return { success: true, clients: sheetToArray(getSheet('Clientes')).reverse() };
+}
+
+function getStats(pin) {
+  if (!validatePin(pin)) return { success: false, error: 'PIN incorrecto' };
+  const clients = sheetToArray(getSheet('Clientes'));
+  const gifts = sheetToArray(getSheet('Certificados'));
+  const checkins = sheetToArray(getSheet('Registros'));
+  const config = getConfig();
+  
+  return { 
+    success: true, 
+    stats: {
+      totalClients: clients.length,
+      totalGifts: gifts.length,
+      activeGifts: gifts.filter(g => String(g.Estatus).toUpperCase() === 'ACTIVO').length,
+      totalCheckins: checkins.length
+    },
+    config: config
+  };
+}
+
+function validateGift(pin, folio) {
+  if (!validatePin(pin)) return { success: false, error: 'PIN incorrecto' };
+  const gifts = sheetToArray(getSheet('Certificados'));
+  const gift = gifts.find(g => String(g.Folio).toUpperCase() === String(folio).toUpperCase());
+  if (!gift) return { success: false, error: 'Certificado no encontrado' };
+  return { 
+    success: true, 
+    gift: { 
+      folio: gift.Folio, 
+      giftTo: gift.Para, 
+      giftFrom: gift.De, 
+      service: gift.Servicio, 
+      amount: gift.Monto, 
+      date: gift.FechaCompra, 
+      status: gift.Estatus 
+    } 
+  };
+}
+
+function redeemGift(pin, folio) {
+  if (!validatePin(pin)) return { success: false, error: 'PIN incorrecto' };
+  const sheet = getSheet('Certificados');
+  const data = sheet.getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][0]).toUpperCase() === String(folio).toUpperCase()) {
+      if (data[i][6] === 'CANJEADO') return { success: false, error: 'Ya canjeado anteriormente' };
+      sheet.getRange(i + 1, 7).setValue('CANJEADO');
+      sheet.getRange(i + 1, 8).setValue(new Date().toISOString());
+      return { success: true };
+    }
+  }
+  return { success: false, error: 'No encontrado' };
+}
+
+function redeemReward(phone, pin) {
+  if (!validatePin(pin)) return { success: false, error: 'PIN incorrecto' };
+  phone = normalizePhone(phone);
+  const sheet = getSheet('Clientes');
+  const data = sheet.getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) {
+    if (normalizePhone(String(data[i][0])) === phone) {
+      sheet.getRange(i + 1, 3).setValue(0); // Reiniciar sellos
+      return { success: true, message: 'Recompensa canjeada. Sellos reiniciados.' };
+    }
+  }
+  return { success: false, error: 'Cliente no encontrado' };
+}
+
+function sheetToArray(sheet) {
+  const data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return [];
+  const h = data[0];
+  return data.slice(1).map(r => rowToObject(h, r));
 }
 
 // ============ CORE HELPERS & VISUALS ============

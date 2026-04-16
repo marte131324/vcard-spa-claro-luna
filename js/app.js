@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==================================================
        CONFIGURACIÓN API
        ================================================== */
-    const API_URL = 'https://script.google.com/macros/s/AKfycbymopbpOgPxakL19ye7Y9SvIDpxABKMpwyGkrlaFWs5aBQe2DKe9UyT-kObgD5-ZPDc/exec'; // ← URL de Google Apps Script deployment
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwWqsyzxQbVUeEMtyyzTLhs4w8yGG13PErX6tX-fCUASc45bH5IBoMpDVjJJzNEXQw/exec'; // ← URL de Google Apps Script deployment
 
     /* ========================================================
        SPLASH SCREEN
