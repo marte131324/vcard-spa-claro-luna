@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Requerimientos de Onboarding — Claro de Luna Spa</title>
+<title>Onboarding & Requerimientos — Claro de Luna Spa</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -14,22 +14,22 @@
   .header .sub { font-size:0.8rem; color:#64748b; }
   .badge { display:inline-block; background:#0e86b0; color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
   h2 { font-size:1.15rem; font-weight:700; color:#0e86b0; margin:28px 0 12px; padding-bottom:6px; border-bottom:1px solid #e2e8f0; }
-  h3 { font-size:0.95rem; font-weight:700; color:#334155; margin:18px 0 8px; }
   p, li { font-size:0.88rem; color:#475569; }
-  ul, ol { padding-left:22px; margin:8px 0; }
-  li { margin:6px 0; }
+  ul { padding-left:22px; margin:8px 0; }
   .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
-  .section-card h3 { margin-top:0; color:#0e86b0; }
-  .req-tag { display:inline-block; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:6px; font-size:0.72rem; font-weight:600; margin-left:6px; }
-  .opt-tag { display:inline-block; background:#dbeafe; color:#1e40af; padding:2px 8px; border-radius:6px; font-size:0.72rem; font-weight:600; margin-left:6px; }
-  .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
-  .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
-  .note { background:#eff6ff; border-left:4px solid #0e86b0; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
+  .section-card h3 { margin-top:0; color:#0e86b0; margin-bottom: 12px;}
+  .req-status { display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.72rem; font-weight:600; margin-left:6px; }
+  .req-pending { background:#fef3c7; color:#92400e; }
+  .req-done { background:#dcfce7; color:#166534; }
+  .req-info { background:#dbeafe; color:#1e40af; }
   table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
   th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
   td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
   tr:nth-child(even) td { background:#f8fafc; }
   .footer { margin-top:40px; padding-top:16px; border-top:2px solid #e2e8f0; font-size:0.75rem; color:#94a3b8; text-align:center; }
+  .alert { padding:12px 16px; border-radius:8px; margin:14px 0; font-size:0.84rem; }
+  .alert-warning { background:#fef3c7; border-left:4px solid #f59e0b; color:#92400e; }
+  .alert-info { background:#eff6ff; border-left:4px solid #3b82f6; color:#1e40af; }
   @media print { body { padding:0; } .section-card { break-inside:avoid; } }
 </style>
 </head>
@@ -38,95 +38,84 @@
 <div class="header">
   <div>
     <span class="badge">Documento 1 de 3</span>
-    <h1>Requerimientos de Onboarding</h1>
-    <div class="sub">Claro de Luna Spa y Bienestar — Ecosistema Digital Premium</div>
+    <h1>Onboarding & Requerimientos</h1>
+    <div class="sub">Guía de transición comercial > técnica para el Cliente</div>
   </div>
   <div style="text-align:right;">
-    <div style="font-size:0.75rem; color:#94a3b8;">Christian Belmont - Desarrollo de Sistemas Digitales</div>
-    <div style="font-size:0.75rem; color:#94a3b8;">Abril 2026</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Treze Labs | Agencia de Sistemas</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Estado: Esperando Aprobación Comercial</div>
   </div>
 </div>
 
-<div class="note">
-  <strong>Proposito:</strong> Este documento lista toda la informacion que fue requerida y proporcionada para el desarrollo del ecosistema digital "Claro de Luna Spa". Sirve como referencia y checklist de onboarding.
+<div class="alert alert-info">
+  <strong>Propósito de este documento:</strong> 
+  Actualmente, el sistema "Claro de Luna Spa" funciona al 100% como un ecosistema demostrativo (Demo) con datos de prueba estructurados. Este documento detalla toda la información real (catálogos finales, staff, accesos) que su administración debe entregarnos formalmente tras la firma/aprobación para inicializar el sistema de producción final.
 </div>
 
-<h2>1. Informacion del Negocio</h2>
+<h2>1. Fase Actual: Esperando Aprobación</h2>
+<p>El ecosistema digital que está evaluando posee toda la infraestructura conectada. Una vez aprobada la propuesta comercial, este prototipo mutará con los datos de sus operaciones diarias reales. Para lograr esto, pasaremos por una fase de recolección de datos (Onboarding).</p>
+
+<h2>2. Checklist de Requerimientos Pendientes</h2>
+
 <div class="section-card">
-  <h3>Datos de Contacto <span class="req-tag">Requerido</span></h3>
+  <h3>Catálogo Definitivo de Servicios <span class="req-status req-pending">Pendiente de Cliente</span></h3>
+  <p>En el prototipo hemos integrado servicios sacados de sus listas previas. Necesitamos su Menú Oficial 2026/2027 validado.</p>
+  <ul>
+    <li>Lista exacta de nombres de los tratamientos.</li>
+    <li>Precios finales con impuestos (o indicar si no lleva IVA).</li>
+    <li>Clasificación correcta (Ej: Masajes Holísticos, Faciales Premium).</li>
+    <li>Duración en minutos de cada servicio. (Crucial para cálculos de agenda en fases futuras).</li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <h3>Fuerza Operativa / Staff Base <span class="req-status req-pending">Pendiente de Cliente</span></h3>
+  <p>Para que el panel de comisiones (20% automático) y asistencias funcione el Día 1, necesitamos pre-cargar a su personal.</p>
+  <ul>
+    <li>Nombres completos o alias/nombre de atención de los terapeutas.</li>
+    <li>Nombres de recepcionistas / administradores.</li>
+    <li>Correos electrónicos de gerencia para notificaciones críticas futuras.</li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <h3>Accesos a Cuentas de Marca <span class="req-status req-pending">Pendiente de Cliente</span></h3>
+  <p>Para enlazar correctamente sus canales de venta, necesitamos confirmación de:</p>
+  <ul>
+    <li>El número oficial de WhatsApp Business (El que responderá a las peticiones automatizadas de la VCard).</li>
+    <li>Los links exactos a su Instagram Oficial y Facebook Oficial.</li>
+    <li>El punto exacto de Google Maps para incrustarlo en la tarjeta digital.</li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <h3>Reglas del Club de Lealtad <span class="req-status req-info">Configurado en Demo</span></h3>
+  <p>Actualmente, el club de recompensas regala un cupón del "50% de descuento" al juntar "3 sellos". Si desean cambiar esta lógica para la versión final, deben notificarlo en esta etapa.</p>
+  <ul>
+    <li>¿Cuántas visitas se necesitan para el premio? (Configurable).</li>
+    <li>¿Cuál es la recompensa final? (Texto del cupón).</li>
+  </ul>
+</div>
+
+<h2>3. Material Analizado y Rescatado (Ya Aplicado)</h2>
+<div class="section-card">
+  <h3>Asignaciones Cubiertas <span class="req-status req-done">Completado por Agencia</span></h3>
   <table>
-    <tr><th>Dato</th><th>Valor</th></tr>
-    <tr><td>Nombre comercial</td><td>Claro de Luna Spa y Bienestar</td></tr>
-    <tr><td>Telefono principal</td><td>229 294 0239</td></tr>
-    <tr><td>Sitio web oficial</td><td>spaclarodeluna.mx</td></tr>
-    <tr><td>Redes sociales</td><td>Facebook e Instagram activos</td></tr>
-    <tr><td>Horario de operacion</td><td>Martes a Domingo, 9:00 - 18:00 hrs</td></tr>
-    <tr><td>Ubicacion</td><td>Veracruz, Boca del Rio</td></tr>
+    <tr><th>Asignación</th><th>Estado e Integración técnica</th></tr>
+    <tr><td>Branding y Covers</td><td>Integración del logo "Claro de Luna 1920x1080", portada animada en loop sinfín y paleta de colores.</td></tr>
+    <tr><td>Fix OpenGraph</td><td>Corrección de vista previa en WhatsApp (logo renderizado adecuadamente a 800x800).</td></tr>
+    <tr><td>Check-In Médico</td><td>El Check-In incorpora los consentimientos recomendados para Spas (presión arterial, embarazo, alergias).</td></tr>
+    <tr><td>Políticas Ocultas</td><td>Se han maquetado las políticas PDF en web para validación de cookies.</td></tr>
   </table>
 </div>
 
-<h2>2. Catalogo de Servicios</h2>
-<div class="section-card">
-  <h3>Tabulador de Precios <span class="req-tag">Requerido</span></h3>
-  <p>Se recibio el catalogo completo en formato PDF ("CATALOGO MENU AGOSTO 24") con las siguientes categorias:</p>
-  <ul>
-    <li><strong>Rituales Exclusivos:</strong> Claro de Luna, de Intenciones, Ancestral</li>
-    <li><strong>Masajes Terapeuticos:</strong> Descontracturante, Herbal Relajante, Piedras Calientes, Piernas Cansadas</li>
-    <li><strong>Drenaje Linfatico:</strong> 50 y 80 minutos</li>
-    <li><strong>Tratamientos Especiales:</strong> Masaje 4 Manos, Facial Antioxidante/Control Grasa</li>
-    <li><strong>Corporales:</strong> Exfoliacion Cafe Tisu, Envoltura Agave Azul, Moldeador</li>
-    <li><strong>Hidroterapia:</strong> Tina EMS, Tina Flotacion, Circuito Completo</li>
-  </ul>
-  <div class="warn">
-    <strong>Nota:</strong> La ultima pagina del PDF contenia precios del 2024 que fueron descartados. Se usaron exclusivamente los precios actualizados del catalogo.
-  </div>
-</div>
-
-<h2>3. Material Visual</h2>
-<div class="section-card">
-  <h3>Assets Proporcionados <span class="req-tag">Requerido</span></h3>
-  <ul>
-    <li><strong>Logo oficial:</strong> "LOGO CLARO DE LUNA 1920x1080.png" (fondo transparente)</li>
-    <li><strong>Logo alternativo:</strong> "clarodeluna_negro-01-01V3.png"</li>
-    <li><strong>Foto perfil:</strong> "PERFIL_FBK_CDL.jpg" (1080x1080)</li>
-    <li><strong>Video portada:</strong> "CDL SPOT V2.mp4" y "Portada.MP4"</li>
-    <li><strong>Galeria:</strong> +40 fotografias profesionales del spa, instalaciones y ambientacion</li>
-    <li><strong>Etiquetas corporativas:</strong> "ETIQUETAS_CDLSPA.pdf"</li>
-    <li><strong>Tarjeta de lealtad:</strong> "LEALTAD_DETRAS 9X6CM.jpeg"</li>
-  </ul>
-</div>
-
-<h2>4. Funcionalidades Solicitadas</h2>
-<div class="section-card">
-  <h3>Modulos del Ecosistema</h3>
-  <table>
-    <tr><th>Modulo</th><th>Descripcion</th><th>Estado</th></tr>
-    <tr><td>VCard Premium</td><td>Tarjeta digital con catalogo, galeria, cotizador WhatsApp</td><td>Completado</td></tr>
-    <tr><td>Club de Lealtad</td><td>Sistema de sellos digitales con niveles y recompensas</td><td>Completado</td></tr>
-    <tr><td>Certificados de Regalo</td><td>Generacion de folios y canje digital</td><td>Completado</td></tr>
-    <tr><td>Command Center</td><td>Panel administrativo para gestion operativa</td><td>Completado</td></tr>
-    <tr><td>Check-In Digital</td><td>Formulario pre-visita para huespedes (lobby)</td><td>Completado</td></tr>
-    <tr><td>Gestion de Personal</td><td>CRUD de terapeutas con asistencia y comisiones (20%)</td><td>Completado</td></tr>
-    <tr><td>Politicas y Privacidad</td><td>Pagina legal con terminos y etiquetas del spa</td><td>Completado</td></tr>
-  </table>
-</div>
-
-<h2>5. Credenciales y Accesos</h2>
-<div class="section-card">
-  <h3>Informacion Sensible <span class="req-tag">Confidencial</span></h3>
-  <ul>
-    <li><strong>PIN de Acceso Admin:</strong> Proporcionado verbalmente (no incluido en este documento por seguridad)</li>
-    <li><strong>Google Sheets:</strong> Base de datos conectada con 9 hojas operativas</li>
-    <li><strong>Webhook GAS:</strong> URL de Google Apps Script como backend</li>
-  </ul>
-  <div class="tip">
-    <strong>Seguridad:</strong> El PIN esta protegido con hash SHA-256. No se almacena en texto plano en ningun archivo del proyecto.
-  </div>
+<div class="alert alert-warning">
+  <strong>IMPORTANTE:</strong> La fecha de entrega del proyecto oficial a producción comenzará a correr a partir del momento en el que el área administrativa del Spa nos envíe esta información consolidada al correo de la agencia.
 </div>
 
 <div class="footer">
-  Claro de Luna Spa — Documentacion de Entrega &copy; 2026 Christian Belmont - Desarrollo de Sistemas Digitales<br>
-  Este documento es confidencial y exclusivo para el cliente.
+  Claro de Luna Spa — Onboarding Técnico &copy; 2026 Treze Labs<br>
+  Documentación confidencial para uso interno de la marca y la agencia.
 </div>
 
 </body>

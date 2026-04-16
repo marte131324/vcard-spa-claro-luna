@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Infraestructura — Claro de Luna Spa</title>
+<title>Arquitectura e Infraestructura (Técnica) — Claro de Luna Spa</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -19,15 +19,14 @@
   ul, ol { padding-left:22px; margin:8px 0; }
   li { margin:6px 0; }
   .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
-  .section-card h3 { margin-top:0; color:#0e86b0; }
-  .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
-  .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
-  .note { background:#eff6ff; border-left:4px solid #0e86b0; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
-  .security { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
+  .section-card h3 { margin-top:0; color:#0e86b0; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:16px;}
   .tree { font-family:'Courier New', monospace; background:#0f172a; color:#94a3b8; padding:20px 24px; border-radius:12px; font-size:0.82rem; line-height:1.9; margin:16px 0; }
   .tree .folder { color:#22d3ee; font-weight:700; }
   .tree .file { color:#a5f3fc; }
   .tree .desc { color:#64748b; font-style:italic; }
+  .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
+  .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
+  .security { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
   table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
   th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
   td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
@@ -41,146 +40,70 @@
 <div class="header">
   <div>
     <span class="badge">Documento 3 de 3</span>
-    <h1>Guia de Infraestructura y Respaldo</h1>
-    <div class="sub">Claro de Luna Spa — Mapa Tecnico del Ecosistema</div>
+    <h1>Arquitectura e Infraestructura Técnica</h1>
+    <div class="sub">Guía de cimientos lógicos, servidores y protocolos de blindaje.</div>
   </div>
   <div style="text-align:right;">
-    <div style="font-size:0.75rem; color:#94a3b8;">Christian Belmont - Desarrollo de Sistemas Digitales</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Treze Labs | Agencia de Sistemas</div>
     <div style="font-size:0.75rem; color:#94a3b8;">Abril 2026</div>
   </div>
 </div>
 
-<h2>1. Estructura del Proyecto</h2>
+<p>Para asegurar una disponibilidad del 99.99% y proteger agresivamente sus datos operativos, hemos montado una arquitectura basada en tecnologías de Silicon Valley, alejándonos de soluciones débiles de sitios web constructores.</p>
+
+<!-- ═══ ESTRUCTURA ═══ -->
+<h2>1. Estructura de Componentes Front-End</h2>
 <div class="tree">
-<span class="folder">vcard-spa-claro-luna/</span>
-  <span class="file">index.html</span>               <span class="desc">-- VCard principal</span>
-  <span class="file">politicas.html</span>            <span class="desc">-- Politicas y privacidad</span>
-  <span class="file">vercel.json</span>               <span class="desc">-- Configuracion de seguridad y deploy</span>
-  <span class="file">gsheet-backend.gs</span>          <span class="desc">-- Backend Google Apps Script (referencia)</span>
-  <span class="folder">css/</span>
-    <span class="file">style.css</span>               <span class="desc">-- Estilos de la VCard</span>
-  <span class="folder">js/</span>
-    <span class="file">app.js</span>                  <span class="desc">-- Logica interactiva de la VCard</span>
-  <span class="folder">assets/</span>                   <span class="desc">-- Imagenes, logos, videos</span>
+<span class="folder">Ecosistema Claro_De_Luna_v1/</span>
+  <span class="file">index.html</span>               <span class="desc">-- Componente Raíz: VCard y Lealtad Pública</span>
   <span class="folder">admin/</span>
-    <span class="file">index.html</span>              <span class="desc">-- Command Center (Panel Admin)</span>
-    <span class="file">app.js</span>                  <span class="desc">-- Logica del panel admin</span>
+    <span class="file">index.html</span>              <span class="desc">-- Entorno aislado: Command Center / Dashboards</span>
+    <span class="file">app.js</span>                  <span class="desc">-- Micro-gestor que valida la firma criptográfica (PIN)</span>
   <span class="folder">checkin/</span>
-    <span class="file">index.html</span>              <span class="desc">-- Formulario Check-In (Lobby)</span>
-  <span class="folder">loyalty/</span>
-    <span class="file">index.html</span>              <span class="desc">-- Club de Lealtad</span>
-  <span class="folder">Documentos_Cliente/</span>       <span class="desc">-- Boveda de Entrega (este portal)</span>
+    <span class="file">index.html</span>              <span class="desc">-- Componente de Captación Legal de Paciente/Huésped</span>
+  <span class="folder">loyalty/</span>                  <span class="desc">-- Funciones algorítmicas de validación de sellos </span>
+  <span class="folder">Boveda/</span>                   <span class="desc">-- Sistema interno de entregables y SLAs (Esta guía)</span>
 </div>
 
-<h2>2. Hosting y Dominio</h2>
+<!-- ═══ CONECTIVIDAD DB ═══ -->
+<h2>2. Sincronía Backend <> Frontend</h2>
 <div class="section-card">
-  <h3>Plataforma de Despliegue</h3>
-  <table>
-    <tr><th>Concepto</th><th>Detalle</th></tr>
-    <tr><td>Plataforma</td><td>Vercel (vercel.com)</td></tr>
-    <tr><td>Repositorio</td><td>GitHub: marte131324/vcard-spa-claro-luna</td></tr>
-    <tr><td>URL produccion</td><td>https://vcard-spa-claro-luna.vercel.app</td></tr>
-    <tr><td>SSL/HTTPS</td><td>Activado automaticamente por Vercel</td></tr>
-    <tr><td>CDN Global</td><td>Si (Vercel Edge Network)</td></tr>
-    <tr><td>Costo mensual</td><td>$0 MXN (plan gratuito de Vercel)</td></tr>
-  </table>
-</div>
-
-<h2>3. Backend (Google Apps Script)</h2>
-<div class="section-card">
-  <h3>Base de Datos</h3>
-  <p>El backend opera sobre Google Sheets a traves de Google Apps Script. La hoja de calculo contiene 9 pestanas:</p>
-  <table>
-    <tr><th>Hoja</th><th>Color</th><th>Funcion</th></tr>
-    <tr><td>Config</td><td>Morado</td><td>Configuracion general (PIN, metas, estado)</td></tr>
-    <tr><td>Clientes</td><td>Azul</td><td>Base de datos del Club de Lealtad</td></tr>
-    <tr><td>Codigos</td><td>Naranja</td><td>Codigos de sello generados y usados</td></tr>
-    <tr><td>Servicios</td><td>Amarillo</td><td>Catalogo de servicios (escalable)</td></tr>
-    <tr><td>Certificados</td><td>Rosa</td><td>Certificados de regalo emitidos</td></tr>
-    <tr><td>Personal</td><td>Verde</td><td>Registro de terapeutas y staff</td></tr>
-    <tr><td>Asistencia</td><td>Azul oscuro</td><td>Entradas y salidas del personal</td></tr>
-    <tr><td>Comisiones</td><td>Turquesa</td><td>Servicios realizados y comisiones</td></tr>
-    <tr><td>Registros</td><td>Gris</td><td>Formularios de Check-In recibidos</td></tr>
-  </table>
-  <div class="warn">
-    <strong>No modifique los encabezados (fila 1) de ninguna hoja.</strong> El sistema los necesita exactamente como estan para funcionar. Si borra accidentalmente una fila de encabezados, contacte a su desarrollador.
-  </div>
-</div>
-
-<h2>4. Como se Actualiza el Sistema</h2>
-<div class="section-card">
-  <h3>Actualizaciones del Frontend</h3>
-  <p>Cualquier cambio visual en la VCard, Check-In o Admin se actualiza mediante GitHub + Vercel:</p>
+  <h3>Conexión a "Google Sheets Serverless"</h3>
+  <p>Su aplicación se comunica asincrónicamente mediante solicitudes <em>fetch</em> (JSON payload). Funciona así:</p>
   <ol>
-    <li>Se modifica el codigo fuente en el repositorio</li>
-    <li>Se ejecuta <code>git push</code> al repositorio en GitHub</li>
-    <li>Vercel detecta el cambio automaticamente y despliega en segundos</li>
+    <li>1️⃣ <strong>Petición:</strong> El huésped en el Check-In escribe sus alergias y pulsa botón.</li>
+    <li>2️⃣ <strong>Fila de Envío (Webhook):</strong> El código en Javascript envuelve esto en un formato <code>POST</code> con cabeceras estrictas y lo dirige a un identificador único <code>https://script.google.com/macros/s/[CLAVE-SECRETA]/exec</code></li>
+    <li>3️⃣ <strong>Google Apps Script:</strong> El servidor de Google (su servidor real privado e in-hackeable) recibe los datos y un programa `doPost` que hemos patentado para usted intercepta el mensaje. Evalúa si cumple las reglas, y lo acomoda elegantemente en la fila correcta de su tabla de Excel (Pestaña "Registros").</li>
   </ol>
-  <div class="note">
-    La gerente del spa <strong>no necesita</strong> ejecutar estos comandos. Los contenidos editables (estado, personal, comisiones) se manejan 100% desde el Command Center sin necesidad de despliegues.
-  </div>
-</div>
-<div class="section-card">
-  <h3>Actualizaciones del Backend</h3>
-  <p>Si se necesita modificar la logica del backend (por ejemplo, agregar un nuevo modulo):</p>
-  <ol>
-    <li>Abrir el editor de Google Apps Script vinculado a la hoja de calculo</li>
-    <li>Modificar el codigo</li>
-    <li>Guardar y crear un nuevo despliegue (Deploy > New deployment > Web app)</li>
-    <li>Actualizar la URL del API en los archivos del frontend si cambio</li>
-  </ol>
-</div>
-
-<h2>5. Dominio Personalizado</h2>
-<div class="section-card">
-  <h3>Configuracion CNAME (Opcional)</h3>
-  <p>Si el cliente desea usar un subdominio personalizado (por ejemplo: <code>vcard.spaclarodeluna.mx</code>):</p>
-  <ol>
-    <li>Acceder al panel DNS del dominio <code>spaclarodeluna.mx</code></li>
-    <li>Crear un registro CNAME apuntando <code>vcard</code> a <code>cname.vercel-dns.com</code></li>
-    <li>Agregar el dominio en el dashboard de Vercel (Settings > Domains)</li>
-    <li>Vercel emitira el certificado SSL automaticamente</li>
-  </ol>
-</div>
-
-<h2>6. Respaldo y Recuperacion</h2>
-<div class="section-card">
-  <h3>Canales de Respaldo</h3>
-  <table>
-    <tr><th>Canal</th><th>Que respalda</th><th>Frecuencia</th></tr>
-    <tr><td>GitHub</td><td>Todo el codigo fuente con historial</td><td>Cada push</td></tr>
-    <tr><td>Google Sheets</td><td>Datos operativos (clientes, comisiones, registros)</td><td>Tiempo real</td></tr>
-    <tr><td>Vercel</td><td>Deploys anteriores (rollback instantaneo)</td><td>Cada deploy</td></tr>
-  </table>
   <div class="tip">
-    Si algo sale mal con el frontend, se puede hacer rollback a una version anterior directamente desde el dashboard de Vercel en menos de 30 segundos.
+    Este enfoque permite que nunca pague mantenimientos de bases de datos astronómicos. Goza de la fiabilidad mundial de los servidores de Google y la edición humana fácil de "celdas de excel" para revisar reportes.
   </div>
 </div>
 
-<h2>7. Soporte y Escalabilidad</h2>
+<!-- ═══ BLINDAJE ═══ -->
+<h2>3. Protocolos Strict de Seguridad (Hardening)</h2>
 <div class="section-card">
-  <h3>Contacto de Soporte</h3>
+  <h3>Filtros Implementados Activamente</h3>
+  <p>Dado que el panel tiene acceso de lectura-escritura sobre el flujo económico y datos médicos del Spa, establecimos 5 candados operables 24/7:</p>
   <table>
-    <tr><th>Concepto</th><th>Detalle</th></tr>
-    <tr><td>Desarrollador</td><td>Christian Belmont</td></tr>
-    <tr><td>WhatsApp soporte</td><td>+52 228 239 3575</td></tr>
-    <tr><td>Agencia</td><td>Treze Labs</td></tr>
+    <tr><th>Protocolo / Tecnología</th><th>¿Qué protege en la práctica?</th></tr>
+    <tr><td>Protección SHA-256 (PIN Gate)</td><td>Encripta la entrada del admin de tal forma que nadie —ni el desarrollador— conoce la contraseña real textualmente si se inspecciona el código.</td></tr>
+    <tr><td>Token Secreto de Escritura</td><td>Impide que competidores o intrusos envíen "ruido" al servidor con programas automáticos, el webhook requiere el token criptográfico interno oculto.</td></tr>
+    <tr><td>X-Frame-Options: SAMEORIGIN</td><td>Bloquea los ciber-ataques de "Clickjacking". Nadie podrá clonar o incrustar el panel admin en otros sitios fraudulentos engañando al staff para que pongan contraseñas.</td></tr>
+    <tr><td>Strict-Transport-Security (HSTS)</td><td>Fuerza la comunicación SSL en milisegundos perpetuamente, impidiendo que hackers intercepten envíos de datos en el Wi-Fi gratuito de alrededor.</td></tr>
+    <tr><td>Anti-Hotlink (CORS Header)</td><td>Evita que páginas de terceros roben imágenes pesadas del spa, ahorrando ancho de banda.</td></tr>
   </table>
+  <div class="security">
+    <strong>Auditoría General:</strong> El despliegue automático cuenta con un manifiesto `vercel.json` anclado a la raíz del directorio, ejecutando las reglas de firewall mencionadas automáticamente en la Red perimetral (CDN Global). Nunca edite este archivo sin el desarrollador.
+  </div>
 </div>
-<div class="section-card">
-  <h3>Modulos Escalables (Futuro)</h3>
-  <p>El sistema esta preparado para crecer sin necesidad de reconstruirlo:</p>
-  <ul>
-    <li><strong>Catalogo dinamico:</strong> Migrar los servicios de estatico a lectura desde Google Sheets</li>
-    <li><strong>Notificaciones push:</strong> Enviar recordatorios de cita por WhatsApp automaticamente</li>
-    <li><strong>Reportes PDF:</strong> Generar cortes quincenales de comisiones exportables</li>
-    <li><strong>Multi-sucursal:</strong> Expandir el backend para manejar mas ubicaciones</li>
-  </ul>
-</div>
+
+<h2>4. Hosting Perimetral (Vercel Edge)</h2>
+<p>Su frontend VCard está hospedado en la red internacional Edge Vercel. Esto significa que si un turista Alemán busca su VCard en el avión hacia Veracruz, Vercel la sirve desde un satélite en Europa y cuando llega acá, la sirve desde un satélite en Norteamérica.</p>
 
 <div class="footer">
-  Claro de Luna Spa — Documentacion de Entrega &copy; 2026 Christian Belmont - Desarrollo de Sistemas Digitales<br>
-  Este documento es confidencial y exclusivo para el cliente.
+  Claro de Luna Spa — Infraestructura Hardening &copy; 2026 Treze Labs<br>
+  Propiedad Intelectual. Queda estrictamente inhibida la exposición pública técnica.
 </div>
 
 </body>

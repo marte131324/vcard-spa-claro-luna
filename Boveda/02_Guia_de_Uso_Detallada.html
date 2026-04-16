@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Uso VIP — Claro de Luna Spa</title>
+<title>Manual Exhaustivo de Operación VIP — Claro de Luna Spa</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -19,20 +19,21 @@
   ul, ol { padding-left:22px; margin:8px 0; }
   li { margin:6px 0; }
   .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
-  .section-card h3 { margin-top:0; color:#0e86b0; }
-  .step { display:flex; gap:14px; margin:12px 0; align-items:flex-start; }
+  .section-card h3 { margin-top:0; color:#0e86b0; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:16px;}
+  .step { display:flex; gap:14px; margin:12px 0; align-items:flex-start; background: #fff; padding: 12px; border-radius: 8px; border-left: 3px solid #0e86b0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
   .step-num { background:#0e86b0; color:white; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; flex-shrink:0; margin-top:2px; }
-  .step-text { flex:1; }
+  .step-text { flex:1; font-size: 0.86rem; color: #334155;}
+  .step-text strong { display: block; color: #0f172a; margin-bottom: 2px;}
   .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
   .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
-  .note { background:#eff6ff; border-left:4px solid #0e86b0; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
   .security { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
   table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
   th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
   td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
   tr:nth-child(even) td { background:#f8fafc; }
   .footer { margin-top:40px; padding-top:16px; border-top:2px solid #e2e8f0; font-size:0.75rem; color:#94a3b8; text-align:center; }
-  @media print { body { padding:0; } .section-card { break-inside:avoid; } }
+  .use-case { background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0; font-style: italic; border: 1px solid #e2e8f0;}
+  @media print { body { padding:0; } .section-card, .use-case { break-inside:avoid; } }
 </style>
 </head>
 <body>
@@ -40,179 +41,117 @@
 <div class="header">
   <div>
     <span class="badge">Documento 2 de 3</span>
-    <h1>Guia de Uso VIP</h1>
-    <div class="sub">Claro de Luna Spa — Manual de Operacion del Ecosistema Digital</div>
+    <h1>Manual Exhaustivo Operativo (VIP)</h1>
+    <div class="sub">Guía 360º: Cómo operará la recepción y gerencia el ecosistema entero.</div>
   </div>
   <div style="text-align:right;">
-    <div style="font-size:0.75rem; color:#94a3b8;">Christian Belmont - Desarrollo de Sistemas Digitales</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Treze Labs | Agencia de Sistemas</div>
     <div style="font-size:0.75rem; color:#94a3b8;">Abril 2026</div>
   </div>
 </div>
 
-<div class="note">
-  <strong>Para la gerencia:</strong> Este manual explica paso a paso como operar cada modulo de su ecosistema digital. No necesita conocimientos tecnicos para usarlo.
-</div>
+<p>A diferencia de un sitio web común, usted ha adquirido un <strong>ecosistema digital completo</strong> donde cada pieza (VCard, Admin, Recepción, Google Sheets) se entrelaza y obedece en tiempo real. Este manual explica los flujos y responsabilidades de cada módulo.</p>
 
-<!-- ═══ ACCESO Y SEGURIDAD ═══ -->
-<h2>1. Acceso y Seguridad</h2>
+<!-- ═══ MODULO 1 ═══ -->
+<h2>Módulo 1: El Command Center y Sincronización en Vivo</h2>
+<p>El Command Center es el corazón administrativo del Spa. Toda acción que ejecute la recepcionista aquí, modificará la web instantáneamente sin contactar a la agencia.</p>
+
 <div class="section-card">
-  <h3>URLs del Sistema</h3>
-  <table>
-    <tr><th>Componente</th><th>Enlace</th></tr>
-    <tr><td>VCard (Publica)</td><td>https://vcard-spa-claro-luna.vercel.app/</td></tr>
-    <tr><td>Command Center (Admin)</td><td>https://vcard-spa-claro-luna.vercel.app/admin/</td></tr>
-    <tr><td>Formulario Check-In (Lobby)</td><td>https://vcard-spa-claro-luna.vercel.app/checkin/</td></tr>
-    <tr><td>Web Oficial</td><td>https://spaclarodeluna.mx/</td></tr>
-  </table>
-</div>
-<div class="section-card">
-  <h3>PIN de Acceso</h3>
-  <p>El Command Center esta protegido por un PIN numerico que se le proporciono de forma verbal. Al ingresar el PIN correcto, se desbloquea la interfaz completa.</p>
-  <div class="security">
-    <strong>Importante:</strong> No comparta el PIN por escrito en chats o redes sociales. Si necesita cambiarlo, contacte a su desarrollador.
+  <h3>Casos de Uso de la Recepción (Día a Día)</h3>
+  
+  <div class="use-case">
+    <strong>Caso 1: Cambio de Horarios y Anuncios.</strong> "Hoy es un día festivo y el spa cerrará antes, quiero poner un anuncio en la tarjeta virtual para que nadie mande mensajes en vano".
   </div>
-</div>
-
-<!-- ═══ COMMAND CENTER ═══ -->
-<h2>2. Command Center (Panel Administrativo)</h2>
-
-<div class="section-card">
-  <h3>2.1 Estado del Spa</h3>
-  <p>Desde aqui puede cambiar la disponibilidad del spa en tiempo real:</p>
-  <ul>
-    <li><strong>Recepcion Activa:</strong> Indica que el spa esta abierto y recibiendo clientes normalmente.</li>
-    <li><strong>En Pausa:</strong> Indica que momentaneamente no se reciben clientes walk-in.</li>
-    <li><strong>Solo con Agenda Previa:</strong> Solo se reciben clientes con cita confirmada.</li>
-  </ul>
-  <p>Tambien puede escribir un <strong>Banner de Anuncio</strong> que sera visible en la VCard (por ejemplo: "Semana de Rituales Ancestrales").</p>
   <div class="step">
     <div class="step-num">1</div>
-    <div class="step-text">Seleccione el estado deseado en el dropdown</div>
+    <div class="step-text"><strong>Ingreso:</strong> La recepcionista entra a <code>[dominio]/admin</code> y coloca el PIN de seguridad asignado por la gerencia.</div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
-    <div class="step-text">Modifique el horario visible si es necesario</div>
+    <div class="step-text"><strong>Modificación Visual:</strong> Selecciona en el estado "En Pausa", edita el mensaje del banner ("Hoy cerramos 3PM"), y cambia el horario visible de ese día.</div>
   </div>
   <div class="step">
     <div class="step-num">3</div>
-    <div class="step-text">Haga clic en "Guardar Estado"</div>
+    <div class="step-text"><strong>Sincronización Mágica:</strong> Al hacer clic en GUARDAR, todos los clientes que abran la VCard en ese mismo segundo, verán el anuncio y el estado rojo. Ocurre instantáneamente sincronizado mediante Google Apps Script.</div>
   </div>
 </div>
 
+<!-- ═══ MODULO 2 ═══ -->
+<h2>Módulo 2: Comisiones Automáticas y Staff</h2>
+<p>El sistema se ha adaptado específicamente a la lógica de pagos de Clínicas Médicas y de Bienestar, donde existe un porcentaje de comisión y control de turnos.</p>
+
 <div class="section-card">
-  <h3>2.2 Gestion de Personal</h3>
-  <p>Registre cada terapeuta, recepcionista o coordinador(a) del spa:</p>
+  <h3>Casos de Uso del Cálculo Financiero</h3>
+  
+  <div class="use-case">
+    <strong>Caso 2: Finalizó un Masaje.</strong> "La Terapeuta 'María' acaba de terminar de dar un 'Masaje Descontracturante' de $800 y debo asentar su comisión del 20% para el pago de la quincena".
+  </div>
   <div class="step">
     <div class="step-num">1</div>
-    <div class="step-text">Haga clic en "Registrar" para agregar un nuevo empleado</div>
+    <div class="step-text"><strong>Dar de alta al empleado (Una vez pre-requisito):</strong> En la pestaña "Personal" del admin, registra a María. La base de datos oculta (Google Sheets) la reconocerá perpetuamente.</div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
-    <div class="step-text">Complete nombre, puesto, telefono y status (Activo/Inactivo)</div>
+    <div class="step-text"><strong>Registrar el servicio:</strong> En la pestaña "Comisiones", elige "María", selecciona del catálogo "Masaje Descontracturante". El sistema extraerá el precio oficial del catálogo ($800) y protegerá la cifra para que no la modifiquen por error.</div>
   </div>
   <div class="step">
     <div class="step-num">3</div>
-    <div class="step-text">Haga clic en "Guardar". El empleado aparecera en la lista y en los selectores de asistencia y comisiones</div>
-  </div>
-  <div class="tip">
-    Si un empleado renuncia o se da de baja temporal, cambie su status a "Inactivo" en lugar de eliminarlo. Asi conserva su historial.
+    <div class="step-text"><strong>Liquidación:</strong> El panel registrará internamente qué fecha y hora ocurrió, y le calculará exactamente $160 MXN (el 20% programado) asignados al perfil de María. En el resumen mensual del panel, la gerencia puede ver exactamente cuánto le debe a María sin hacer sumas manuales.</div>
   </div>
 </div>
 
-<div class="section-card">
-  <h3>2.3 Control de Asistencia</h3>
-  <p>Registre entradas y salidas del personal para llevar un control exacto:</p>
-  <ul>
-    <li>Seleccione al empleado</li>
-    <li>Elija "Entrada" o "Salida"</li>
-    <li>Agregue una nota opcional (por ejemplo: "Llego tarde 15 min")</li>
-    <li>Haga clic en "Registrar" — la fecha y hora se capturan automaticamente</li>
-  </ul>
-</div>
+<!-- ═══ MODULO 3 ═══ -->
+<h2>Módulo 3: El Check-In Médico Remoto (Adiós al Papel)</h2>
+<p>Para agilizar el flujo en el lobby y otorgar una apariencia extremadamente premium ante el cliente, hemos digitalizado el proceso de consentimiento médico y toma de datos.</p>
 
 <div class="section-card">
-  <h3>2.4 Comisiones</h3>
-  <p>Cada vez que un terapeuta realiza un servicio, registre la comision:</p>
+  <h3>Flujo 360 del Huésped al Servidor</h3>
+  
   <div class="step">
     <div class="step-num">1</div>
-    <div class="step-text">Haga clic en "Registrar Servicio"</div>
+    <div class="step-text"><strong>El cliente interactúa:</strong> Un Huésped nuevo entra al spa. Usted le enseña un Acrílico con un Código QR en el mostrador.</div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
-    <div class="step-text">Seleccione al terapeuta y el servicio realizado (el precio se llena automaticamente)</div>
+    <div class="step-text"><strong>Formulario Pre-Visita:</strong> El huésped lo escanea, abre el portal <code>/checkin</code> oscuro y elegante. Responde alhóndigas médicas (embarazo, cirugías recientes, áreas a trabajar, hipertensión). Finaliza marcando una firma digital de consentimiento.</div>
   </div>
   <div class="step">
     <div class="step-num">3</div>
-    <div class="step-text">La comision (20% del precio) se calcula sola. Haga clic en "Registrar"</div>
-  </div>
-  <p>En el <strong>Resumen del Mes</strong> vera cuanto le corresponde a cada terapeuta en comisiones acumuladas.</p>
-</div>
-
-<div class="section-card">
-  <h3>2.5 Registros de Huespedes (Check-In)</h3>
-  <p>Cuando un huesped llena el formulario de Check-In desde el lobby (o de forma remota antes de su visita), su informacion aparece automaticamente en esta seccion.</p>
-  <p>Puede ver: nombre, telefono, email, condiciones medicas, alergias, areas de atencion prioritaria, presion arterial y el servicio que desean.</p>
-  <div class="warn">
-    <strong>Privacidad:</strong> Los datos medicos de los huespedes son informacion sensible. No los comparta fuera del contexto terapeutico.
+    <div class="step-text"><strong>Manejo de Recepción:</strong> La recepcionista, en su pantalla del Admin, sección "CheckIns", recibe al instante todos estos datos. Con esta información instruye a la terapeuta qué dolencias tiene el cliente *antes* de que entre a la cabina. Excelencia operativa total.</div>
   </div>
 </div>
 
-<!-- ═══ VCARD ═══ -->
-<h2>3. VCard Premium (Tarjeta Digital)</h2>
-<div class="section-card">
-  <h3>Que contiene la VCard</h3>
-  <ul>
-    <li><strong>Portada:</strong> Video inmersivo del spa con transicion suave</li>
-    <li><strong>Catalogo:</strong> Todos los servicios organizados por categoria con precios y descripciones</li>
-    <li><strong>Cotizador:</strong> Boton "Enviar Peticion Claro de Luna Spa" que abre WhatsApp con el servicio seleccionado</li>
-    <li><strong>Galeria:</strong> Carrusel fotografico de las instalaciones</li>
-    <li><strong>Mapa:</strong> Ubicacion interactiva del spa</li>
-    <li><strong>Club de Lealtad:</strong> Sistema de sellos para clientes frecuentes</li>
-    <li><strong>Contacto:</strong> Telefono, WhatsApp, redes sociales y horarios</li>
-  </ul>
-</div>
+<!-- ═══ MODULO 4 ═══ -->
+<h2>Módulo 4: Sistema de Recompensas y Sellos Secretos</h2>
+<p>Hemos descartado por completo el uso de tarjetas de cartón que el cliente pierde, arruinan ecología y no guardan data.</p>
 
-<!-- ═══ CHECK-IN ═══ -->
-<h2>4. Formulario de Check-In (Lobby)</h2>
 <div class="section-card">
-  <h3>Como usarlo en recepcion</h3>
+  <h3>Gamificación y Retención</h3>
+  
+  <div class="use-case">
+    <strong>Caso 4: Recompensar Lealtad de forma segura.</strong> "¿Cómo evito que un recepcionista falso o un cliente se auto-regale sellos?"
+  </div>
   <div class="step">
     <div class="step-num">1</div>
-    <div class="step-text">Imprima el codigo QR del Check-In y coloquelo en la recepcion del spa</div>
+    <div class="step-text"><strong>Criptografía QR:</strong> La VCard del cliente tiene una sección donde él introduce su teléfono. Ahí ve su tarjeta virtual vacía.</div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
-    <div class="step-text">Cuando un huesped llegue, pida que escanee el QR con su celular</div>
+    <div class="step-text"><strong>El staff sella:</strong> Para sellar un punto, la recepcionista enseña desde su propio admin un Código QR especial y cambiante de validación (El "Sello Secreto") y le dice al cliente: "Escanea este código con la cámara de tu lealtad".</div>
   </div>
   <div class="step">
     <div class="step-num">3</div>
-    <div class="step-text">El huesped llenara un formulario de 4 pasos con su informacion personal y preferencias</div>
-  </div>
-  <div class="step">
-    <div class="step-num">4</div>
-    <div class="step-text">Los datos aparecen automaticamente en el Command Center, seccion "Registros"</div>
-  </div>
-  <div class="tip">
-    Tambien puede enviar el enlace del Check-In por WhatsApp al huesped antes de que llegue, para agilizar su registro.
+    <div class="step-text"><strong>Seguridad Anti-Fraude:</strong> Cada vez que regalan un sello, el código interno que se mandó fue "quemado" en la base de datos de Google Sheets. El cliente no le puede sacar una foto al código y dárselo a sus amigos. Solo sirve una vez.</div>
   </div>
 </div>
 
-<!-- ═══ CLUB DE LEALTAD ═══ -->
-<h2>5. Club de Lealtad</h2>
-<div class="section-card">
-  <h3>Funcionamiento</h3>
-  <p>El sistema de sellos funciona de la siguiente manera:</p>
-  <ul>
-    <li>Al completar un servicio, el staff genera un <strong>codigo de sello</strong> desde la interfaz de lealtad</li>
-    <li>El cliente ingresa el codigo en su tarjeta digital para acumular un sello</li>
-    <li>Al alcanzar la meta de sellos (actualmente 3), se desbloquea una recompensa (50% de descuento)</li>
-    <li>Los clientes acumulan visitas y suben de nivel (Invitado, Habitue, Premium, VIP)</li>
-  </ul>
+<div class="security">
+  <strong>Manejo de Base de Datos Base:</strong> El "cerebro" detrás de la memoria de todo este panel vive en su propia cuenta de Google Workspace en forma de Google Sheets. Esto implica que la información es 100% de su propiedad, respaldada internacionalmente, y auditable fila por fila. No obstante, advierta a su staff de no entrar a borrar filas manualmente a menos que tengan capacitación directa por nosotros, para no dañar las tablas de conexión.
 </div>
 
 <div class="footer">
-  Claro de Luna Spa — Documentacion de Entrega &copy; 2026 Christian Belmont - Desarrollo de Sistemas Digitales<br>
-  Este documento es confidencial y exclusivo para el cliente.
+  Claro de Luna Spa — Documentación de Entendimiento 360 &copy; 2026 Treze Labs<br>
+  Prohibida la reproducción técnica de esta infraestructura conceptual.
 </div>
 
 </body>
