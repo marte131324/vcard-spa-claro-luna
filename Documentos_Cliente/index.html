@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrega Oficial — Claro de Luna Spa | Treze Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a0f;
+    --card: rgba(255,255,255,0.03);
+    --card-border: rgba(255,255,255,0.08);
+    --accent: #22d3ee;
+    --accent-dark: #0e86b0;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --amber: #f59e0b;
+    --cyan: #22d3ee;
+    --violet: #8b5cf6;
+    --green: #22c55e;
+    --yellow: #eab308;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  .container { max-width: 520px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  /* Hero */
+  .hero { text-align: center; margin-bottom: 48px; }
+  .hero-badge { display: inline-block; background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.3); color: var(--accent); padding: 6px 18px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px; }
+  .hero-logo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(34,211,238,0.2); margin-bottom: 20px; box-shadow: 0 0 40px rgba(34,211,238,0.15); }
+  .hero h1 { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .hero .subtitle { font-size: 13px; color: var(--text-dim); font-weight: 400; }
+  .hero .dev { font-size: 11px; color: var(--accent-dark); margin-top: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* Live Card */
+  .live-card { background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(14,134,176,0.12)); border: 1px solid rgba(34,211,238,0.25); border-radius: 16px; padding: 28px; text-align: center; margin-bottom: 36px; }
+  .live-card h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 14px; font-weight: 700; }
+  .live-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #0a0a0a; padding: 16px 36px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all 0.3s; box-shadow: 0 4px 20px rgba(34,211,238,0.3); }
+  .live-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34,211,238,0.4); }
+  .live-url { font-size: 11px; color: var(--text-dim); margin-top: 12px; word-break: break-all; }
+
+  /* QR */
+  .qr-section { text-align: center; margin-bottom: 40px; }
+  .qr-section h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 16px; font-weight: 600; }
+  .qr-container { display: inline-block; background: #fff; padding: 16px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+  .qr-container img { width: 200px; height: 200px; display: block; }
+  .qr-label { font-size: 10px; color: var(--text-dim); margin-top: 12px; font-weight: 500; }
+
+  /* Doc Cards */
+  .docs-title { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 16px; font-weight: 600; text-align: center; }
+  .doc-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 22px; margin-bottom: 14px; display: flex; align-items: center; gap: 18px; transition: all 0.3s; }
+  .doc-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); transform: translateX(4px); }
+  .doc-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .doc-icon.amber { background: rgba(245,158,11,0.1); color: var(--amber); }
+  .doc-icon.cyan { background: rgba(34,211,238,0.1); color: var(--cyan); }
+  .doc-icon.violet { background: rgba(139,92,246,0.1); color: var(--violet); }
+  .doc-info { flex: 1; min-width: 0; }
+  .doc-info h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .doc-info p { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+  .doc-dl { color: var(--accent); font-size: 18px; flex-shrink: 0; text-decoration: none; padding: 8px; border-radius: 8px; transition: 0.3s; }
+  .doc-dl:hover { background: rgba(34,211,238,0.1); }
+
+  /* Timeline */
+  .timeline { margin: 40px 0; }
+  .timeline h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 20px; font-weight: 600; text-align: center; }
+  .tl-item { display: flex; gap: 16px; margin-bottom: 0; position: relative; padding-bottom: 24px; }
+  .tl-item:not(:last-child)::before { content: ''; position: absolute; left: 11px; top: 28px; width: 2px; height: calc(100% - 16px); background: rgba(255,255,255,0.08); }
+  .tl-dot { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+  .tl-dot.done { background: var(--green); box-shadow: 0 0 12px rgba(34,197,94,0.4); }
+  .tl-dot.pending { background: var(--yellow); box-shadow: 0 0 12px rgba(234,179,8,0.4); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+  .tl-text { flex: 1; }
+  .tl-text strong { font-size: 13px; color: #fff; display: block; margin-bottom: 3px; }
+  .tl-text span { font-size: 11px; color: var(--text-dim); }
+
+  /* Modifications Table */
+  .mods { margin: 36px 0; }
+  .mods-toggle { width: 100%; background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px 20px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: 0.3s; }
+  .mods-toggle:hover { border-color: rgba(255,255,255,0.15); }
+  .mods-toggle i { transition: 0.3s; font-size: 18px; }
+  .mods-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .mods-content.open { max-height: 600px; }
+  .mods-inner { padding: 20px; background: var(--card); border: 1px solid var(--card-border); border-top: none; border-radius: 0 0 12px 12px; }
+  .mods-inner table { width: 100%; font-size: 12px; border-collapse: collapse; }
+  .mods-inner th { background: rgba(34,211,238,0.1); color: var(--accent); padding: 10px; text-align: left; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .mods-inner td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-dim); }
+  .mods-warn { margin-top: 14px; padding: 12px 16px; background: rgba(239,68,68,0.08); border-left: 3px solid #ef4444; border-radius: 0 8px 8px 0; font-size: 11px; color: #fca5a5; }
+
+  /* Footer */
+  .footer { text-align: center; margin-top: 48px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-brand { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.25); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+  .wa-link { display: inline-flex; align-items: center; gap: 10px; background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.25); padding: 14px 28px; border-radius: 12px; color: #25d366; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; }
+  .wa-link:hover { background: rgba(37,211,102,0.15); transform: translateY(-1px); }
+  .footer-copy { font-size: 10px; color: rgba(255,255,255,0.12); margin-top: 20px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">Entrega Oficial</div><br>
+    <img src="../assets/PERFIL_FBK_CDL.jpg" alt="Claro de Luna" class="hero-logo">
+    <h1>Claro de Luna Spa</h1>
+    <p class="subtitle">Ecosistema Digital Premium — Spa y Bienestar</p>
+    <p class="dev">Desarrollado por Christian Belmont</p>
+  </div>
+
+  <!-- Live Card -->
+  <div class="live-card">
+    <h3>Tu Ecosistema en Vivo</h3>
+    <a href="https://vcard-spa-claro-luna.vercel.app/" target="_blank" class="live-btn">
+      <i class="ri-external-link-line"></i> Abrir VCard en Vivo
+    </a>
+    <p class="live-url">vcard-spa-claro-luna.vercel.app</p>
+  </div>
+
+  <!-- QR Code -->
+  <div class="qr-section">
+    <h3>Codigo QR — Acceso Directo</h3>
+    <div class="qr-container">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=https://vcard-spa-claro-luna.vercel.app/&bgcolor=FFFFFF&color=0e86b0&format=svg" alt="QR Code VCard">
+    </div>
+    <p class="qr-label">Escanea para abrir la VCard</p>
+  </div>
+
+  <!-- Documents -->
+  <p class="docs-title">Documentacion de Entrega</p>
+
+  <a href="01_Requerimientos_Onboarding.pdf" class="doc-card" style="text-decoration:none;">
+    <div class="doc-icon amber"><i class="ri-file-list-3-line"></i></div>
+    <div class="doc-info">
+      <h4>Requerimientos de Onboarding</h4>
+      <p>Checklist de informacion proporcionada y funcionalidades implementadas</p>
+    </div>
+    <span class="doc-dl"><i class="ri-download-2-line"></i></span>
+  </a>
+
+  <a href="02_Guia_de_Uso_Detallada.pdf" class="doc-card" style="text-decoration:none;">
+    <div class="doc-icon cyan"><i class="ri-book-open-line"></i></div>
+    <div class="doc-info">
+      <h4>Guia de Uso VIP</h4>
+      <p>Manual paso a paso para operar el Command Center, Check-In y Club de Lealtad</p>
+    </div>
+    <span class="doc-dl"><i class="ri-download-2-line"></i></span>
+  </a>
+
+  <a href="03_Guia_de_Infraestructura.pdf" class="doc-card" style="text-decoration:none;">
+    <div class="doc-icon violet"><i class="ri-server-line"></i></div>
+    <div class="doc-info">
+      <h4>Guia de Infraestructura</h4>
+      <p>Mapa tecnico, hosting, respaldo y escalabilidad del sistema</p>
+    </div>
+    <span class="doc-dl"><i class="ri-download-2-line"></i></span>
+  </a>
+
+  <!-- Timeline -->
+  <div class="timeline">
+    <h3>Estado del Proyecto</h3>
+
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-text">
+        <strong>VCard Premium</strong>
+        <span>Tarjeta digital con catalogo, cotizador y galeria inmersiva</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-text">
+        <strong>Club de Lealtad</strong>
+        <span>Sistema de sellos digitales con niveles y recompensas</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-text">
+        <strong>Certificados de Regalo</strong>
+        <span>Generacion de folios y canje digital</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-text">
+        <strong>Command Center</strong>
+        <span>Panel administrativo: estado, personal, asistencia y comisiones</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-text">
+        <strong>Check-In Digital</strong>
+        <span>Formulario de registro pre-visita para huespedes</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-text">
+        <strong>Security Hardening</strong>
+        <span>Headers de seguridad, PIN Gate, HSTS y anti-clonacion</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-text">
+        <strong>Boveda de Entrega</strong>
+        <span>Documentacion profesional y portal de acceso</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot pending"></div>
+      <div class="tl-text">
+        <strong>Aprobacion del Cliente</strong>
+        <span>Revision final y feedback de la gerente del spa</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modifications Table -->
+  <div class="mods">
+    <button class="mods-toggle" onclick="toggleMods()">
+      <span><i class="ri-tools-line" style="margin-right:8px;"></i> Modificaciones Futuras y Costos</span>
+      <i class="ri-arrow-down-s-line" id="mods-arrow"></i>
+    </button>
+    <div class="mods-content" id="mods-content">
+      <div class="mods-inner">
+        <table>
+          <tr><th>Tipo de Cambio</th><th>Ejemplo</th><th>Costo</th></tr>
+          <tr><td>Cambio menor</td><td>Texto, fotos, precios, horarios</td><td>$200 MXN</td></tr>
+          <tr><td>Cambio estructural</td><td>Nuevas secciones, modulos o funciones</td><td>$500+ MXN</td></tr>
+          <tr><td>Soporte urgente</td><td>Sistema caido o error critico</td><td>Sin costo*</td></tr>
+        </table>
+        <p style="font-size:10px;color:var(--text-dim);margin-top:10px;">*Soporte de emergencia incluido durante los primeros 30 dias despues de la entrega.</p>
+        <div class="mods-warn">
+          <strong>Advertencia:</strong> Modificar directamente los archivos del proyecto sin supervision del desarrollador puede desestabilizar el sistema. Siempre contacte a soporte antes de editar codigo.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">Christian Belmont — Desarrollo de Sistemas Digitales</div>
+    <a href="https://wa.me/5212282393575?text=Hola%20Christian%2C%20recibi%20la%20entrega%20de%20mi%20ecosistema%20Claro%20de%20Luna%20Spa." class="wa-link" target="_blank">
+      <i class="ri-whatsapp-line" style="font-size:20px;"></i> Contactar Soporte
+    </a>
+    <p class="footer-copy">&copy; 2026 Treze Labs. Todos los derechos reservados.</p>
+  </div>
+
+</div>
+
+<script>
+function toggleMods() {
+  const c = document.getElementById('mods-content');
+  const a = document.getElementById('mods-arrow');
+  c.classList.toggle('open');
+  a.style.transform = c.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+</script>
+
+</body>
+</html>

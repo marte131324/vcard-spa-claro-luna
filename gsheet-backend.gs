@@ -57,7 +57,7 @@ function handleRequest(e) {
   if (e.postData && e.postData.contents) {
     try { body = JSON.parse(e.postData.contents); } catch(err) {}
   }
-  const action = (params.action || body.action || '').trim();
+  const action = (params.action || body.action || '').trim().toLowerCase();
   let result;
   try {
     switch (action) {
@@ -70,15 +70,15 @@ function handleRequest(e) {
       case 'getstatus':      result = { success: true, ...getConfig() }; break;
       case 'lookup':         result = lookupClient(params.phone); break;
       case 'register':       result = registerClient(params.pin, params.phone, params.name); break;
-      case 'generateCode':   result = generateStampCode(params.pin, params.service, params.amount); break;
-      case 'redeemCode':     result = redeemStampCode(params.code, params.phone); break;
-      case 'redeemReward':   result = redeemReward(params.phone, params.pin); break;
+      case 'generatecode':   result = generateStampCode(params.pin, params.service, params.amount); break;
+      case 'redeemcode':     result = redeemStampCode(params.code, params.phone); break;
+      case 'redeemreward':   result = redeemReward(params.phone, params.pin); break;
       case 'services':       result = getServices(); break;
       case 'stats':          result = getStats(params.pin); break;
       case 'clients':        result = getClients(params.pin); break;
-      case 'createGift':     result = createGift(params.pin, params.giftTo, params.giftFrom, params.service, params.amount); break;
-      case 'validateGift':   result = validateGift(params.pin, params.folio); break;
-      case 'redeemGift':     result = redeemGift(params.pin, params.folio); break;
+      case 'creategift':     result = createGift(params.pin, params.giftTo, params.giftFrom, params.service, params.amount); break;
+      case 'validategift':   result = validateGift(params.pin, params.folio); break;
+      case 'redeemgift':     result = redeemGift(params.pin, params.folio); break;
       case 'gifts':          result = getGifts(params.pin); break;
       default:               result = { success: false, error: 'Acción no válida: ' + action };
     }
