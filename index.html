@@ -26,6 +26,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -805,17 +806,111 @@
     </script>
     <script src="js/app.js"></script>
 
-<!-- TREZE SIGNATURE V4 -->
-<!-- TREZE SIGNATURE V4 -->
-<div style="text-align: center; padding: 4rem 2rem 6rem; border-top: 1px solid var(--border); margin-top: 2rem;">
-    <p style="margin: 0 0 0.6rem 0; font-weight: 300; font-size: 0.72rem; color: var(--text-subtle); font-family: 'Inter', sans-serif; letter-spacing: 0.5px;">© 2026 Claro de Luna · Reservados todos los derechos</p>
-    <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
-        <span style="font-weight: 400; font-size: 0.7rem; color: var(--text-subtle); font-family: 'Inter', sans-serif; letter-spacing: 0.5px;">Desarrollado por</span>
-        <a href="https://wa.me/522214092478?text=Hola%20Treze%20Labs%2C%20me%20gustar%C3%ADa%20solicitar%20el%20desarrollo%20de%20un%20sistema%20profesional." target="_blank" style="display: flex; align-items: center; text-decoration: none; transition: transform 0.3s ease, opacity 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.opacity='0.7'" onmouseout="this.style.transform='scale(1)'; this.style.opacity='1'">
-            <img src="treze_footer.png" alt="Treze Labs" style="height: 28px; object-fit: contain; opacity: 0.4;">
-        </a>
+<!-- FLOATING ACTIONS & CHATBOT UI -->
+<div class="floating-actions" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
+    <button id="btn-tour" style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); color: var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: transform 0.3s; backdrop-filter: blur(10px);">
+        <i class="fa-solid fa-map-location-dot"></i>
+    </button>
+    <button id="btn-chat" style="width: 50px; height: 50px; border-radius: 50%; background: var(--gold); border: none; color: #fff; box-shadow: 0 4px 15px rgba(179, 147, 89, 0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: transform 0.3s;">
+        <i class="fa-solid fa-message"></i>
+    </button>
+</div>
+
+<!-- CHATBOT WINDOW -->
+<div id="chat-window" style="position: fixed; bottom: 85px; right: 20px; width: 320px; height: 450px; max-height: 70vh; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 9998; display: none; flex-direction: column; overflow: hidden; backdrop-filter: blur(10px);">
+    <div style="padding: 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 10px; height: 10px; background: #22c55e; border-radius: 50%;"></div>
+            <strong style="color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;">Concierge IA</strong>
+        </div>
+        <button id="btn-close-chat" style="background: none; border: none; color: var(--text); cursor: pointer; font-size: 1.1rem;"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; font-size: 0.85rem;">
+        <div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text); line-height: 1.4; border: 1px solid var(--border);">
+            Hola 🌙 Soy la asistente IA de Claro de Luna Spa. Estoy aquí para resolver tus dudas sobre nuestros rituales, políticas y horarios. ¿En qué te ayudo hoy?
+        </div>
+    </div>
+    <div style="padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: rgba(0,0,0,0.2);">
+        <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." style="flex: 1; padding: 10px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg); color: var(--text); outline: none; font-size: 0.85rem;">
+        <button id="btn-send-chat" style="width: 40px; height: 40px; border-radius: 50%; background: var(--gold); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
+<script>
+    // Configuración del Tour VCard
+    const driver = window.driver.js.driver;
+    const tour = driver({
+        showProgress: true,
+        animate: true,
+        nextBtnText: 'Siguiente →',
+        prevBtnText: '← Anterior',
+        doneBtnText: '¡Entendido!',
+        steps: [
+            { popover: { title: 'Bienvenido', description: 'Descubre cómo usar nuestro catálogo digital para reservar.' } },
+            { element: '#cat-nav', popover: { title: 'Categorías', description: 'Navega rápidamente entre Faciales, Masajes y Rituales.', side: "bottom", align: 'start' } },
+            { element: '#mode-toggle', popover: { title: 'Comprar o Regalar', description: 'Con un clic, cambia los botones para reservar para ti o solicitar un certificado de regalo para alguien más.', side: "bottom" } },
+            { element: '.catalog__grid', popover: { title: 'Añadir al Carrito', description: 'Usa los botones de (+) para cotizar al instante. El total se pre-calcula abajo de tu pantalla.', side: "top" } },
+            { element: '#rewards', popover: { title: 'Club de Lealtad', description: 'Anota tu teléfono aquí después de un servicio para que nuestra recepcionista te escanee el QR y sumes descuentos.', side: "top" } }
+        ]
+    });
+
+    document.getElementById('btn-tour').addEventListener('click', () => {
+        tour.drive();
+    });
+
+    // Lógica del Chatbot
+    const btnChat = document.getElementById('btn-chat');
+    const chatWindow = document.getElementById('chat-window');
+    const btnCloseChat = document.getElementById('btn-close-chat');
+    const btnSendChat = document.getElementById('btn-send-chat');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+
+    btnChat.addEventListener('click', () => {
+        chatWindow.style.display = chatWindow.style.display === 'none' || chatWindow.style.display === '' ? 'flex' : 'none';
+    });
+
+    btnCloseChat.addEventListener('click', () => {
+        chatWindow.style.display = 'none';
+    });
+
+    async function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // Añadir mensaje del usuario
+        chatMessages.innerHTML += `<div style="align-self: flex-end; background: var(--gold); color: #fff; padding: 10px 14px; border-radius: 12px 12px 0 12px; max-width: 80%; line-height: 1.4;">${text}</div>`;
+        chatInput.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Añadir typing indicator
+        const typingId = 'typing-' + Date.now();
+        chatMessages.innerHTML += `<div id="${typingId}" style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text-subtle); border: 1px solid var(--border);">Escribiendo...</div>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        try {
+            const res = await fetch('/api/chat-vcard', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+            const data = await res.json();
+            document.getElementById(typingId).remove();
+            
+            chatMessages.innerHTML += `<div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text); line-height: 1.4; border: 1px solid var(--border); max-width: 85%;">${data.reply || 'Lo siento, hubo un error técnico.'}</div>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        } catch (err) {
+            document.getElementById(typingId).remove();
+            chatMessages.innerHTML += `<div style="align-self: flex-start; background: rgba(239, 68, 68, 0.1); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: #ef4444; line-height: 1.4; border: 1px solid rgba(239, 68, 68, 0.3);">Error de conexión al cerebro IA.</div>`;
+        }
+    }
+
+    btnSendChat.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+</script>
 
 </body>
 </html>
