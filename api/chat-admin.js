@@ -59,7 +59,7 @@ No emitas este JSON a menos que te hayan proveído los 3 datos.`;
     const payload = {
       contents: chatContents,
       systemInstruction: { parts: [{ text: finalPrompt }] },
-      generationConfig: { temperature: 0.2, maxOutputTokens: 250 }
+      generationConfig: { temperature: 0.2 }
     };
 
     // Retry and Fallback Logic
