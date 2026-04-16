@@ -591,7 +591,7 @@
                 </div>
 
                 <!-- CODE ENTRY (for QR scanned or manual code) -->
-                <div class="loyalty-code" id="loyalty-code-section">
+                <div class="loyalty-code" id="loyalty-code-section" style="margin-top: 15px;">
                     <p class="loyalty-code__label"><i class="fa-solid fa-qrcode"></i> ¿Tienes un código de sello?</p>
                     <div class="loyalty-code__form">
                         <input type="text" class="loyalty-input loyalty-input--code" id="stamp-code-input" placeholder="ABC123" maxlength="6" style="text-transform:uppercase;letter-spacing:4px;text-align:center;">
@@ -599,8 +599,17 @@
                             <i class="fa-solid fa-stamp"></i> Sellar
                         </button>
                     </div>
-                    <p class="loyalty-code__hint">Escanea el QR del concierge o ingresa el código manualmente</p>
                 </div>
+                
+                <button id="btn-scan-qr" class="rewards__cta" style="width:100%; margin-top:10px; background:rgba(212,175,55,0.08); color:var(--copper); border:1px dashed rgba(212,175,55,0.4);">
+                    <i class="fa-solid fa-camera"></i> Escanear Sello con Cámara
+                </button>
+                <button id="btn-close-qr" class="rewards__cta" style="width:100%; margin-top:10px; background:rgba(255,0,0,0.1); color:#ff6b6b; border:1px solid rgba(255,0,0,0.2); display:none;">
+                    <i class="fa-solid fa-xmark"></i> Cancelar Escaneo
+                </button>
+                <div id="qr-reader" style="width:100%; margin-top:10px; display:none; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);"></div>
+                
+                <p class="loyalty-code__hint" style="margin-top:16px;">Pídele a la recepcionista el código QR para sumar una visita.</p>
 
                 <!-- REWARD READY (shown when 3 stamps complete) -->
                 <div class="loyalty-reward" id="loyalty-reward-section" style="display:none;">
@@ -727,6 +736,75 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnScan = document.getElementById('btn-scan-qr');
+            const btnCloseScan = document.getElementById('btn-close-qr');
+            const qrReaderDiv = document.getElementById('qr-reader');
+            const stampInput = document.getElementById('stamp-code-input');
+            const btnRedeem = document.getElementById('btn-redeem-code');
+            let html5QrcodeScanner;
+
+            if (btnScan) {
+                btnScan.addEventListener('click', () => {
+                    qrReaderDiv.style.display = 'block';
+                    btnScan.style.display = 'none';
+                    btnCloseScan.style.display = 'block';
+                    
+                    html5QrcodeScanner = new Html5QrcodeScanner(
+                        "qr-reader", { fps: 10, qrbox: 250 }, false);
+                    
+                    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                });
+            }
+
+            if (btnCloseScan) {
+                btnCloseScan.addEventListener('click', () => {
+                    if(html5QrcodeScanner) {
+                        html5QrcodeScanner.clear();
+                    }
+                    qrReaderDiv.style.display = 'none';
+                    btnCloseScan.style.display = 'none';
+                    btnScan.style.display = 'block';
+                });
+            }
+
+            function onScanSuccess(decodedText, decodedResult) {
+                if(html5QrcodeScanner) {
+                    html5QrcodeScanner.clear();
+                }
+                qrReaderDiv.style.display = 'none';
+                btnCloseScan.style.display = 'none';
+                btnScan.style.display = 'block';
+
+                // Verify if it contains a URL or just a code
+                let codeToApply = decodedText;
+                try {
+                    const url = new URL(decodedText);
+                    const params = new URLSearchParams(url.search);
+                    if(params.has('code')) {
+                        codeToApply = params.get('code');
+                    }
+                } catch(e) {
+                    // Not a URL, use raw text
+                }
+
+                // If VCard passed an 'action=stamp', ignore that part, we just want the pure text or parameter.
+                // Usually the code is a 6 char string
+                if (codeToApply.length <= 10) {
+                    stampInput.value = codeToApply;
+                    if(btnRedeem) btnRedeem.click();
+                } else {
+                    alert("Código QR no válido para sellar.");
+                }
+            }
+
+            function onScanFailure(error) {
+                // handle scan failure, usually better to ignore and keep scanning
+            }
+        });
+    </script>
     <script src="js/app.js"></script>
 
 <!-- TREZE SIGNATURE V4 -->

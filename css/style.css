@@ -202,18 +202,34 @@ button { font-family: inherit; cursor: pointer; }
    PROMO BAR — STICKY
    ============================================= */
 .promo-bar {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--text);
-    color: var(--copper);
-    padding: 0.7rem 1rem;
+    position: sticky; top: 15px; z-index: 100;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #171412;
+    padding: 0.8rem 1.4rem;
     text-align: center;
-    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-    display: flex; justify-content: center; align-items: center; gap: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    font-size: 0.65rem; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700;
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    border-radius: 50px;
+    width: max-content;
+    max-width: 90%;
+    margin: -15px auto 30px;
+    transition: all 0.4s ease;
 }
-[data-theme="dark"] .promo-bar { background: #171412; }
-.promo-bar i { color: var(--water); font-size: 0.8rem; }
-
+[data-theme="dark"] .promo-bar { 
+    background: rgba(23, 20, 18, 0.6); 
+    border-color: rgba(212, 175, 55, 0.15); 
+    color: var(--copper); 
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.promo-bar i { color: #3b82f6; font-size: 0.9rem; animation: pulseWater 2s infinite ease-in-out; }
+@keyframes pulseWater { 
+    0% { transform: scale(1); opacity: 0.7; } 
+    50% { transform: scale(1.15); opacity: 1; text-shadow: 0 0 12px rgba(59,130,246,0.6); } 
+    100% { transform: scale(1); opacity: 0.7; } 
+}
 
 /* =============================================
    MAIN CONTENT
