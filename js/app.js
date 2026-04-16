@@ -69,33 +69,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ========================================================
-       HERO VIDEO — SEAMLESS 2s LOOP
+       HERO VIDEO — DUAL VIDEO CROSSFADE (seamless loop)
+       Two <video> elements alternate. While A plays (0→2s),
+       B is preloaded at t=0. At the loop point, A fades out
+       and B fades in simultaneously → zero visible cuts.
        ======================================================== */
-    const heroVideo = document.getElementById('hero-video');
-    if (heroVideo) {
+    const vidA = document.getElementById('hero-video-a');
+    const vidB = document.getElementById('hero-video-b');
+    if (vidA && vidB) {
         const LOOP_END = 2;
-        let looping = false;
-        
-        function checkLoop() {
-            if (!looping && heroVideo.currentTime >= LOOP_END) {
-                looping = true;
-                // Ultra-subtle dissolve: barely perceptible
-                heroVideo.style.transition = 'opacity 0.2s ease-out';
-                heroVideo.style.opacity = '0';
+        let active = vidA;
+        let standby = vidB;
+        let switching = false;
+
+        // Preload standby at frame 0
+        standby.currentTime = 0;
+        standby.pause();
+
+        function crossfadeLoop() {
+            if (!switching && active.currentTime >= LOOP_END - 0.4) {
+                switching = true;
+                // Prepare standby
+                standby.currentTime = 0;
+                standby.play();
+                // Crossfade
+                standby.style.opacity = '1';
+                active.style.opacity = '0';
+
                 setTimeout(() => {
-                    heroVideo.currentTime = 0;
-                    heroVideo.style.transition = 'opacity 0.3s ease-in';
-                    heroVideo.style.opacity = '1';
-                    looping = false;
-                }, 200);
+                    active.pause();
+                    active.currentTime = 0;
+                    // Swap roles
+                    const tmp = active;
+                    active = standby;
+                    standby = tmp;
+                    switching = false;
+                }, 450);
             }
-            requestAnimationFrame(checkLoop);
+            requestAnimationFrame(crossfadeLoop);
         }
-        requestAnimationFrame(checkLoop);
-        
-        heroVideo.play().catch(() => {
-            document.addEventListener('touchstart', () => heroVideo.play(), { once: true });
-            document.addEventListener('click', () => heroVideo.play(), { once: true });
+        requestAnimationFrame(crossfadeLoop);
+
+        vidA.play().catch(() => {
+            document.addEventListener('touchstart', () => vidA.play(), { once: true });
+            document.addEventListener('click', () => vidA.play(), { once: true });
         });
     }
 
@@ -370,14 +387,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const giftTo = document.getElementById('gift-to').value.trim() || '[No especificado]';
                 const giftFrom = document.getElementById('gift-from').value.trim() || '[No especificado]';
                 const giftMsg = document.getElementById('gift-msg').value.trim();
-                const note = giftMsg ? `\n📝 *Mensaje:* "${giftMsg}"` : '';
-                msg = `¡Hola Concierge! ✨\n\nDeseo adquirir un *Certificado de Regalo Premium*.\n(He leído y acepto los T&C).\n\n🎁 *Para:* ${giftTo}\n💌 *De parte de:* ${giftFrom}${note}\n\n💎 *Servicio seleccionado:*\n${itemsList}\n\n💳 *Total a certificar:* $${totalPrice.toLocaleString()} MXN\n\n¿Me proporcionan método de pago para que generen mi código?`;
+                const note = giftMsg ? `\n*Mensaje:* "${giftMsg}"` : '';
+                msg = `Hola, buen dia.\n\nDeseo adquirir un *Certificado de Regalo Premium*.\n(He leido y acepto los T&C).\n\n*Para:* ${giftTo}\n*De parte de:* ${giftFrom}${note}\n\n*Servicio seleccionado:*\n${itemsList}\n\n*Total a certificar:* $${totalPrice.toLocaleString()} MXN\n\nMe proporcionan metodo de pago para que generen mi codigo?`;
             } else {
                 const dateVal = document.getElementById('booking-date').value;
                 const formattedDate = dateVal
                     ? new Date(dateVal).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
                     : 'A coordinar';
-                msg = `¡Hola Concierge! ✨\n\nSeleccioné mi itinerario desde el Catálogo Digital.\n\n🛎 *Reserva:*\n📅 *${formattedDate}*\n👥 *${peopleCount}* persona(s)\n\n💎 *Selección:*\n${itemsList}\n\n*Total:* $${totalPrice.toLocaleString()} MXN`;
+                msg = `Hola, buen dia.\n\nSeleccione mi itinerario desde el Catalogo Digital.\n\n*Reserva:*\n*Fecha:* ${formattedDate}\n*Personas:* ${peopleCount}\n\n*Seleccion:*\n${itemsList}\n\n*Total:* $${totalPrice.toLocaleString()} MXN`;
             }
             window.open(`https://wa.me/522294023957?text=${encodeURIComponent(msg)}`, '_blank');
             checkoutModal.classList.remove('active');
@@ -685,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `  ${i + 1}. ${h.service} — $${(h.amount || 0).toLocaleString()}`
             ).join('\n');
 
-            const msg = `¡Hola Concierge! ✨\n\nHe completado mis 3 sellos del *Club Claro de Luna* y deseo canjear mi recompensa.\n\n🎁 *Descuento: 50%* (~$${discount.toLocaleString()} MXN)\n📱 ${loyaltyUser.phone}\n👤 ${loyaltyUser.name || 'Miembro'}\n🏅 ${loyaltyUser.tier || 'Miembro'}\n\n📋 *Servicios sellados:*\n${serviceList}\n\nQuedo atento/a a su confirmación.`;
+            const msg = `Hola, buen dia.\n\nHe completado mis 3 sellos del *Club Claro de Luna* y deseo canjear mi recompensa.\n\n*Descuento: 50%* (~$${discount.toLocaleString()} MXN)\nTelefono: ${loyaltyUser.phone}\nNombre: ${loyaltyUser.name || 'Miembro'}\nNivel: ${loyaltyUser.tier || 'Miembro'}\n\n*Servicios sellados:*\n${serviceList}\n\nQuedo atento/a a su confirmacion.`;
 
             window.open(`https://wa.me/522294023957?text=${encodeURIComponent(msg)}`, '_blank');
         });

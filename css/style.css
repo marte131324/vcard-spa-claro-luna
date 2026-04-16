@@ -116,6 +116,7 @@ button { font-family: inherit; cursor: pointer; }
     width: 100%; height: 100%;
     object-fit: cover;
     z-index: 1;
+    transition: opacity 0.4s ease;
 }
 .hero__overlay {
     position: absolute; inset: 0; z-index: 2;

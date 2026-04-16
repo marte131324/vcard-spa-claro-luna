@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-In | Claro de Luna Spa</title>
+    <meta name="description" content="Formulario de registro previo a su visita a Claro de Luna Spa. Personalice su experiencia de bienestar.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAF8F5; --bg-card: #FFFFFF;
+            --text: #2C2824; --text-muted: #7A7068; --text-subtle: #B0A89E;
+            --copper: #D4A373; --copper-light: rgba(212,163,115,0.08);
+            --border: rgba(212,163,115,0.15);
+            --success: #10b981; --danger: #ef4444;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-ui: 'Inter', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: var(--font-ui); line-height: 1.6;
+            min-height: 100vh;
+        }
+        .checkin-wrap {
+            max-width: 520px; margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        .brand { text-align: center; margin-bottom: 40px; }
+        .brand h1 {
+            font-family: var(--font-display);
+            font-size: 2rem; font-weight: 300;
+            letter-spacing: 2px; color: var(--text);
+        }
+        .brand p {
+            font-size: 0.68rem; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--copper); margin-top: 4px;
+        }
+        .brand .sub {
+            font-size: 0.82rem; color: var(--text-muted);
+            margin-top: 16px; line-height: 1.7; font-weight: 300;
+        }
+
+        /* Progress */
+        .progress { display: flex; gap: 6px; margin-bottom: 36px; }
+        .progress__step {
+            flex: 1; height: 3px; border-radius: 2px;
+            background: var(--border); transition: background 0.5s;
+        }
+        .progress__step.active { background: var(--copper); }
+        .progress__step.done { background: var(--copper); opacity: 0.5; }
+
+        /* Step */
+        .step { display: none; animation: fadeUp 0.4s ease; }
+        .step.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-label {
+            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--copper); margin-bottom: 6px; font-weight: 500;
+        }
+        .step-title {
+            font-family: var(--font-display); font-size: 1.5rem;
+            font-weight: 400; margin-bottom: 20px; color: var(--text);
+        }
+
+        /* Fields */
+        .field { margin-bottom: 18px; }
+        .field label {
+            display: block; font-size: 0.72rem; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-muted);
+            margin-bottom: 6px; font-weight: 500;
+        }
+        .field input, .field textarea, .field select {
+            width: 100%; padding: 14px 16px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 10px; font-family: var(--font-ui);
+            font-size: 0.9rem; color: var(--text);
+            outline: none; transition: border-color 0.3s;
+        }
+        .field input:focus, .field textarea:focus, .field select:focus {
+            border-color: var(--copper);
+        }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field small {
+            display: block; margin-top: 4px;
+            font-size: 0.68rem; color: var(--text-subtle);
+        }
+
+        /* Checkbox group */
+        .check-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .check-item {
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 14px; border: 1px solid var(--border);
+            border-radius: 100px; cursor: pointer; transition: 0.3s;
+            font-size: 0.78rem; color: var(--text-muted);
+            background: var(--bg-card); user-select: none;
+        }
+        .check-item.selected {
+            background: var(--copper-light);
+            border-color: var(--copper); color: var(--text);
+        }
+        .check-item input { display: none; }
+
+        /* Radio pills */
+        .radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .radio-pill {
+            padding: 10px 18px; border: 1px solid var(--border);
+            border-radius: 100px; cursor: pointer; transition: 0.3s;
+            font-size: 0.8rem; color: var(--text-muted);
+            background: var(--bg-card); user-select: none;
+        }
+        .radio-pill.selected {
+            background: var(--copper); color: #fff;
+            border-color: var(--copper);
+        }
+        .radio-pill input { display: none; }
+
+        /* Buttons */
+        .btn-row { display: flex; gap: 12px; margin-top: 28px; }
+        .btn {
+            flex: 1; padding: 14px; border: none; border-radius: 10px;
+            font-family: var(--font-ui); font-size: 0.82rem;
+            font-weight: 500; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: var(--text); color: var(--bg);
+        }
+        .btn-primary:hover { opacity: 0.85; }
+        .btn-secondary {
+            background: var(--bg-card); color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { border-color: var(--copper); }
+
+        /* Accept */
+        .accept-row {
+            display: flex; align-items: flex-start; gap: 10px;
+            margin: 20px 0; padding: 16px; background: var(--copper-light);
+            border-radius: 10px; border: 1px solid var(--border);
+        }
+        .accept-row input[type="checkbox"] {
+            width: 18px; height: 18px; margin-top: 2px;
+            accent-color: var(--copper);
+        }
+        .accept-row label {
+            font-size: 0.78rem; color: var(--text-muted); line-height: 1.6;
+        }
+        .accept-row a { color: var(--copper); }
+
+        /* Success */
+        .success-screen {
+            display: none; text-align: center; padding: 60px 20px;
+            animation: fadeUp 0.5s ease;
+        }
+        .success-screen.active { display: block; }
+        .success-icon {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(16,185,129,0.1); display: flex;
+            align-items: center; justify-content: center;
+            margin: 0 auto 24px; font-size: 2.2rem; color: var(--success);
+        }
+        .success-screen h2 {
+            font-family: var(--font-display); font-size: 1.8rem;
+            font-weight: 400; margin-bottom: 12px;
+        }
+        .success-screen p {
+            color: var(--text-muted); font-size: 0.9rem;
+            max-width: 360px; margin: 0 auto; line-height: 1.7;
+        }
+
+        /* Error state */
+        .field.error input, .field.error textarea, .field.error select {
+            border-color: var(--danger);
+        }
+        .field .error-msg {
+            color: var(--danger); font-size: 0.68rem;
+            margin-top: 4px; display: none;
+        }
+        .field.error .error-msg { display: block; }
+
+        @media (max-width: 400px) {
+            .checkin-wrap { padding: 30px 16px 60px; }
+            .brand h1 { font-size: 1.6rem; }
+            .step-title { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkin-wrap">
+        <div class="brand">
+            <h1>Claro de Luna</h1>
+            <p>Registro de Bienvenida</p>
+            <p class="sub">Para ofrecerle una experiencia personalizada y de la mas alta calidad, le solicitamos amablemente que complete este formulario antes de su visita.</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress" id="progress">
+            <div class="progress__step active"></div>
+            <div class="progress__step"></div>
+            <div class="progress__step"></div>
+            <div class="progress__step"></div>
+        </div>
+
+        <!-- ═══ STEP 1: Datos personales ═══ -->
+        <div class="step active" id="step-1">
+            <div class="step-label">Paso 1 de 4</div>
+            <div class="step-title">Datos Personales</div>
+
+            <div class="field">
+                <label>Nombre completo *</label>
+                <input type="text" id="ci-nombre" placeholder="Su nombre completo" required>
+                <span class="error-msg">Este campo es obligatorio</span>
+            </div>
+            <div class="field">
+                <label>Correo electronico *</label>
+                <input type="email" id="ci-email" placeholder="correo@ejemplo.com" required>
+                <span class="error-msg">Ingrese un correo valido</span>
+            </div>
+            <div class="field">
+                <label>Telefono / WhatsApp *</label>
+                <input type="tel" id="ci-telefono" placeholder="229 000 0000" required>
+                <span class="error-msg">Este campo es obligatorio</span>
+            </div>
+            <div class="field">
+                <label>Fecha de nacimiento</label>
+                <input type="date" id="ci-nacimiento">
+                <small>Nos permite personalizar su experiencia</small>
+            </div>
+            <div class="field">
+                <label>Es su primera visita?</label>
+                <div class="radio-group" data-field="ci-primera-visita">
+                    <div class="radio-pill selected" data-value="Si"><input type="radio" name="primera" checked>Si, es mi primera vez</div>
+                    <div class="radio-pill" data-value="No"><input type="radio" name="primera">He visitado antes</div>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="nextStep(2)">Continuar</button>
+            </div>
+        </div>
+
+        <!-- ═══ STEP 2: Salud ═══ -->
+        <div class="step" id="step-2">
+            <div class="step-label">Paso 2 de 4</div>
+            <div class="step-title">Salud y Bienestar</div>
+
+            <div class="field">
+                <label>Esta embarazada o tiene alguna condicion medica?</label>
+                <textarea id="ci-condicion" placeholder="Si tiene alguna condicion, describala brevemente. De lo contrario, escriba 'Ninguna'."></textarea>
+            </div>
+            <div class="field">
+                <label>Alergias conocidas</label>
+                <textarea id="ci-alergias" placeholder="Plantas, aceites esenciales, fragancias, productos cosmeticos, etc. Si no tiene, escriba 'Ninguna'."></textarea>
+            </div>
+            <div class="field">
+                <label>Lesiones o zonas sensibles</label>
+                <textarea id="ci-lesiones" placeholder="Zonas del cuerpo con dolor, lesiones recientes o cirugia. Si no aplica, escriba 'Ninguna'."></textarea>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="prevStep(1)">Atras</button>
+                <button class="btn btn-primary" onclick="nextStep(3)">Continuar</button>
+            </div>
+        </div>
+
+        <!-- ═══ STEP 3: Preferencias ═══ -->
+        <div class="step" id="step-3">
+            <div class="step-label">Paso 3 de 4</div>
+            <div class="step-title">Sus Preferencias</div>
+
+            <div class="field">
+                <label>Areas de atencion prioritaria</label>
+                <div class="check-group" id="ci-areas">
+                    <div class="check-item" data-value="Espalda"><input type="checkbox">Espalda</div>
+                    <div class="check-item" data-value="Cuello y hombros"><input type="checkbox">Cuello y hombros</div>
+                    <div class="check-item" data-value="Piernas"><input type="checkbox">Piernas</div>
+                    <div class="check-item" data-value="Rostro"><input type="checkbox">Rostro</div>
+                    <div class="check-item" data-value="Abdomen"><input type="checkbox">Abdomen</div>
+                    <div class="check-item" data-value="Cuerpo completo"><input type="checkbox">Cuerpo completo</div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Nivel de presion preferido</label>
+                <div class="radio-group" data-field="ci-presion">
+                    <div class="radio-pill" data-value="Suave"><input type="radio" name="presion">Suave</div>
+                    <div class="radio-pill selected" data-value="Medio"><input type="radio" name="presion" checked>Medio</div>
+                    <div class="radio-pill" data-value="Firme"><input type="radio" name="presion">Firme</div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Objetivo de su visita</label>
+                <div class="radio-group" data-field="ci-objetivo">
+                    <div class="radio-pill selected" data-value="Relajacion"><input type="radio" name="objetivo" checked>Relajacion</div>
+                    <div class="radio-pill" data-value="Dolor muscular"><input type="radio" name="objetivo">Dolor muscular</div>
+                    <div class="radio-pill" data-value="Cuidado de piel"><input type="radio" name="objetivo">Cuidado de piel</div>
+                    <div class="radio-pill" data-value="Ocasion especial"><input type="radio" name="objetivo">Ocasion especial</div>
+                    <div class="radio-pill" data-value="Bienestar general"><input type="radio" name="objetivo">Bienestar general</div>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="prevStep(2)">Atras</button>
+                <button class="btn btn-primary" onclick="nextStep(4)">Continuar</button>
+            </div>
+        </div>
+
+        <!-- ═══ STEP 4: Confirmacion ═══ -->
+        <div class="step" id="step-4">
+            <div class="step-label">Paso 4 de 4</div>
+            <div class="step-title">Confirmacion</div>
+
+            <div class="field">
+                <label>Servicio(s) reservado(s)</label>
+                <input type="text" id="ci-servicio" placeholder="Ej: Ritual Claro de Luna, Masaje Descontracturante">
+                <small>Pregunte a su concierge si no esta seguro</small>
+            </div>
+            <div class="field">
+                <label>Comentarios o solicitudes especiales</label>
+                <textarea id="ci-comentarios" placeholder="Cualquier detalle adicional que debamos conocer para su visita..."></textarea>
+            </div>
+
+            <div class="accept-row">
+                <input type="checkbox" id="ci-acepto">
+                <label for="ci-acepto">He leido y acepto la <a href="../politicas.html" target="_blank">Etiqueta del Spa, Aviso de Privacidad y Terminos y Condiciones</a> de Claro de Luna Spa.</label>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="prevStep(3)">Atras</button>
+                <button class="btn btn-primary" id="btn-submit" onclick="submitCheckin()">Enviar Registro</button>
+            </div>
+        </div>
+
+        <!-- ═══ SUCCESS ═══ -->
+        <div class="success-screen" id="success-screen">
+            <div class="success-icon"><i class="ri-check-line"></i></div>
+            <h2>Registro Completo</h2>
+            <p>Gracias por completar su registro. Nuestro equipo ya tiene su informacion para personalizar su experiencia. Le esperamos con todo preparado.</p>
+            <p style="margin-top: 20px; font-style: italic; font-family: var(--font-display); font-size: 1.1rem; color: var(--copper);">"El bienestar comienza antes de llegar."</p>
+        </div>
+    </div>
+
+    <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbymopbpOgPxakL19ye7Y9SvIDpxABKMpwyGkrlaFWs5aBQe2DKe9UyT-kObgD5-ZPDc/exec';
+
+    // ── Radio/Check pill interactions ──
+    document.querySelectorAll('.radio-group').forEach(g => {
+        g.querySelectorAll('.radio-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                g.querySelectorAll('.radio-pill').forEach(p => p.classList.remove('selected'));
+                pill.classList.add('selected');
+            });
+        });
+    });
+    document.querySelectorAll('.check-item').forEach(item => {
+        item.addEventListener('click', () => item.classList.toggle('selected'));
+    });
+
+    // ── Navigation ──
+    let currentStep = 1;
+    function showStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById(`step-${n}`).classList.add('active');
+        const bars = document.querySelectorAll('.progress__step');
+        bars.forEach((b, i) => {
+            b.classList.remove('active', 'done');
+            if (i + 1 === n) b.classList.add('active');
+            else if (i + 1 < n) b.classList.add('done', 'active');
+        });
+        currentStep = n;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextStep(n) {
+        // Validate current step
+        if (currentStep === 1) {
+            let valid = true;
+            ['ci-nombre', 'ci-email', 'ci-telefono'].forEach(id => {
+                const f = document.getElementById(id);
+                const wrap = f.closest('.field');
+                if (!f.value.trim()) { wrap.classList.add('error'); valid = false; }
+                else { wrap.classList.remove('error'); }
+            });
+            if (!valid) return;
+        }
+        showStep(n);
+    }
+    function prevStep(n) { showStep(n); }
+
+    // ── Submit ──
+    async function submitCheckin() {
+        const acepto = document.getElementById('ci-acepto');
+        if (!acepto.checked) {
+            alert('Debe aceptar las politicas del spa para continuar.');
+            return;
+        }
+
+        const btn = document.getElementById('btn-submit');
+        btn.textContent = 'Enviando...';
+        btn.disabled = true;
+
+        const areasSelected = Array.from(document.querySelectorAll('#ci-areas .check-item.selected'))
+            .map(i => i.dataset.value).join(', ');
+        const presion = document.querySelector('[data-field="ci-presion"] .radio-pill.selected');
+        const objetivo = document.querySelector('[data-field="ci-objetivo"] .radio-pill.selected');
+        const primera = document.querySelector('[data-field="ci-primera-visita"] .radio-pill.selected');
+
+        const data = {
+            action: 'saveCheckin',
+            data: {
+                nombre: document.getElementById('ci-nombre').value.trim(),
+                email: document.getElementById('ci-email').value.trim(),
+                telefono: document.getElementById('ci-telefono').value.trim(),
+                nacimiento: document.getElementById('ci-nacimiento').value,
+                primeraVisita: primera ? primera.dataset.value : '',
+                condicionMedica: document.getElementById('ci-condicion').value.trim(),
+                alergias: document.getElementById('ci-alergias').value.trim(),
+                lesiones: document.getElementById('ci-lesiones').value.trim(),
+                areasAtencion: areasSelected,
+                presion: presion ? presion.dataset.value : '',
+                objetivo: objetivo ? objetivo.dataset.value : '',
+                servicio: document.getElementById('ci-servicio').value.trim(),
+                comentarios: document.getElementById('ci-comentarios').value.trim(),
+                fecha: new Date().toLocaleDateString('es-MX'),
+                hora: new Date().toLocaleTimeString('es-MX')
+            }
+        };
+
+        try {
+            await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(data)
+            });
+        } catch (e) {
+            console.log('Sent (no-cors)');
+        }
+
+        // Show success
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('progress').style.display = 'none';
+        document.getElementById('success-screen').classList.add('active');
+    }
+    </script>
+</body>
+</html>

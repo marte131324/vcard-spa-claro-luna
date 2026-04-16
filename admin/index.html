@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claro de Luna | Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #1A1814;
+            --bg-panel: #221F1A;
+            --accent: #D4A373;
+            --accent-hover: #e8c49a;
+            --text-pure: #FAF8F5;
+            --text-dim: #9A8E82;
+            --border: rgba(212,163,115,0.15);
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --font-ui: 'Inter', sans-serif;
+            --font-display: 'Cormorant Garamond', serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg-deep); color: var(--text-pure); font-family: var(--font-ui); display: flex; height: 100vh; overflow: hidden; }
+
+        /* Sidebar */
+        .sidebar { width: 260px; background: rgba(0,0,0,0.3); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 30px 20px; flex-shrink: 0; }
+        .brand { text-align: center; margin-bottom: 40px; }
+        .brand h1 { font-family: var(--font-display); font-size: 22px; color: var(--accent); font-weight: 400; letter-spacing: 1px; }
+        .brand p { font-size: 8px; text-transform: uppercase; letter-spacing: 3px; color: var(--text-dim); margin-top: 4px; }
+        .nav-item { padding: 12px 16px; margin-bottom: 6px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--text-dim); transition: 0.3s; font-size: 12px; font-weight: 500; border: 1px solid transparent; }
+        .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text-pure); }
+        .nav-item.active { background: rgba(212,163,115,0.08); color: var(--accent); border-color: rgba(212,163,115,0.2); }
+        .nav-item .badge { margin-left: auto; font-size: 9px; background: var(--accent); color: var(--bg-deep); padding: 2px 7px; border-radius: 10px; font-weight: 700; }
+        .sidebar-footer { margin-top: auto; text-align: center; font-size: 9px; color: rgba(255,255,255,0.15); letter-spacing: 1px; text-transform: uppercase; }
+
+        /* Workspace */
+        .workspace { flex: 1; padding: 36px; overflow-y: auto; background: linear-gradient(160deg, #1e1b16 0%, #141210 100%); }
+        .view { display: none; animation: fadeIn 0.3s ease; max-width: 960px; margin: 0 auto; }
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .header { margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; }
+        .header h2 { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--accent); }
+        .header p { color: var(--text-dim); font-size: 12px; margin-top: 4px; }
+
+        .card { background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+        .card-title { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 14px; font-weight: 600; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 6px; font-weight: 600; }
+        input[type="text"], input[type="number"], input[type="date"], input[type="tel"], input[type="email"], textarea, select { width: 100%; padding: 11px 14px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: var(--text-pure); border-radius: 6px; font-family: var(--font-ui); outline: none; transition: 0.3s; font-size: 12px; }
+        input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+        textarea { resize: vertical; min-height: 70px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+        .btn { padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-family: var(--font-ui); font-weight: 600; font-size: 11px; display: inline-flex; align-items: center; gap: 7px; transition: 0.3s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-primary { background: var(--accent); color: #111; }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,163,115,0.3); }
+        .btn-secondary { background: transparent; color: var(--text-pure); border: 1px solid var(--border); }
+        .btn-danger { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+        .stat-card { background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 18px; border-radius: 10px; text-align: center; }
+        .stat-card .num { font-size: 24px; font-weight: 700; color: var(--accent); font-family: var(--font-display); }
+        .stat-card .lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 4px; }
+
+        .list-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(0,0,0,0.15); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; gap: 12px; }
+        .list-item .info { flex: 1; min-width: 0; }
+        .list-item .name { font-size: 13px; font-weight: 500; }
+        .list-item .meta { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+        .status { padding: 3px 8px; border-radius: 4px; font-size: 9px; font-weight: 600; text-transform: uppercase; }
+        .status-on { background: rgba(16,185,129,0.1); color: var(--success); border: 1px solid var(--success); }
+        .status-off { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid var(--danger); }
+        .status-warn { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid var(--warning); }
+
+        /* Modal */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 999; }
+        .modal.show { display: flex; }
+        .modal-content { background: var(--bg-panel); border: 1px solid var(--accent); padding: 28px; border-radius: 12px; width: 92%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-family: var(--font-display); font-size: 18px; color: var(--accent); }
+        .modal-header i { cursor: pointer; font-size: 20px; }
+
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: #fff; padding: 12px 24px; border-radius: 6px; font-weight: 600; font-size: 12px; transform: translateY(100px); opacity: 0; transition: 0.4s; z-index: 1000; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Loader */
+        .loader { position: fixed; inset: 0; background: var(--bg-deep); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .loader-spin { width: 36px; height: 36px; border: 3px solid rgba(212,163,115,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; flex-direction: row; padding: 10px; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; }
+            .brand { display: none; }
+            .sidebar nav { display: flex; gap: 4px; width: max-content; }
+            .nav-item { white-space: nowrap; font-size: 10px; padding: 8px 12px; }
+            .nav-item .badge { display: none; }
+            .sidebar-footer { display: none; }
+            .workspace { padding: 20px 16px; }
+            .header h2 { font-size: 22px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .stat-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PIN GATE -->
+    <div id="pin-gate" style="position:fixed;inset:0;z-index:999999;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;">
+        <div style="text-align:center;">
+            <div style="font-family:var(--font-display);font-size:2rem;color:var(--accent);margin-bottom:4px;">Claro de Luna</div>
+            <p style="color:var(--text-dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;">Command Center</p>
+        </div>
+        <input id="pin-input" type="password" maxlength="6" placeholder="----"
+            style="background:rgba(0,0,0,0.3);border:1px solid var(--accent);color:#fff;padding:16px 20px;border-radius:12px;font-size:1.5rem;text-align:center;width:200px;letter-spacing:10px;outline:none;font-family:monospace;"
+            onkeyup="if(event.key==='Enter')checkPin()">
+        <button onclick="checkPin()"
+            style="background:var(--accent);color:var(--bg-deep);border:none;padding:14px 40px;border-radius:10px;font-family:var(--font-display);font-weight:600;font-size:1rem;cursor:pointer;">
+            Acceder
+        </button>
+        <p id="pin-error" style="color:#ef4444;font-size:0.85rem;display:none;font-weight:600;">PIN incorrecto</p>
+    </div>
+    <script>
+    const PIN_HASH = '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab';
+    async function hashPin(pin) {
+        const d = new TextEncoder().encode(pin);
+        const h = await crypto.subtle.digest('SHA-256', d);
+        return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+    async function checkPin() {
+        if (await hashPin(document.getElementById('pin-input').value) === PIN_HASH) {
+            document.getElementById('pin-gate').style.display = 'none';
+            sessionStorage.setItem('cdl_auth', '1');
+        } else {
+            document.getElementById('pin-error').style.display = 'block';
+            document.getElementById('pin-input').value = '';
+            setTimeout(() => document.getElementById('pin-error').style.display = 'none', 2000);
+        }
+    }
+    if (sessionStorage.getItem('cdl_auth') === '1') document.getElementById('pin-gate').style.display = 'none';
+    </script>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-spin"></div>
+        <p style="margin-top:16px;font-family:var(--font-display);color:var(--accent);font-size:16px;">Sincronizando...</p>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <h1>Claro de Luna</h1>
+            <p>Command Center</p>
+        </div>
+        <nav>
+            <div class="nav-item active" onclick="switchView('v-estado', this)"><i class="ri-home-heart-line"></i> Estado Spa</div>
+            <div class="nav-item" onclick="switchView('v-personal', this)"><i class="ri-team-line"></i> Personal</div>
+            <div class="nav-item" onclick="switchView('v-asistencia', this)"><i class="ri-calendar-check-line"></i> Asistencia</div>
+            <div class="nav-item" onclick="switchView('v-comisiones', this)"><i class="ri-money-dollar-circle-line"></i> Comisiones</div>
+            <div class="nav-item" onclick="switchView('v-checkins', this)"><i class="ri-user-heart-line"></i> Registros <span class="badge" id="badge-checkins">0</span></div>
+            <div class="nav-item" onclick="window.open('../checkin/', '_blank')"><i class="ri-send-plane-line"></i> Enviar Check-In</div>
+            <div class="nav-item" onclick="window.open('https://vcard-spa-claro-luna.vercel.app', '_blank')"><i class="ri-external-link-line"></i> Ver VCard</div>
+        </nav>
+        <div class="sidebar-footer">Treze Labs</div>
+    </aside>
+
+    <!-- Workspace -->
+    <main class="workspace">
+
+        <!-- ═══ ESTADO SPA ═══ -->
+        <section id="v-estado" class="view active">
+            <div class="header">
+                <div>
+                    <h2>Estado del Spa</h2>
+                    <p>Disponibilidad, horarios y anuncios generales.</p>
+                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card"><div class="num" id="s-personal">0</div><div class="lbl">Terapeutas</div></div>
+                <div class="stat-card"><div class="num" id="s-status" style="font-size:14px;">--</div><div class="lbl">Estado</div></div>
+                <div class="stat-card"><div class="num" id="s-checkins">0</div><div class="lbl">Registros Hoy</div></div>
+                <div class="stat-card"><div class="num" id="s-comisiones">--</div><div class="lbl">Comisiones Mes</div></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Disponibilidad</div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Recepcion</label>
+                        <select id="cfg-status">
+                            <option value="ACTIVA">Recepcion Activa</option>
+                            <option value="EN PAUSA">En Pausa</option>
+                            <option value="SOLO AGENDA">Solo con Agenda Previa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Horario Visible</label>
+                        <input type="text" id="cfg-horario" value="Martes a Domingo 9:00 - 18:00 hrs">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Banner de Anuncio (visible en VCard)</label>
+                    <input type="text" id="cfg-banner" placeholder="Ej: Temporada de Rituales Ancestrales">
+                </div>
+                <button class="btn btn-primary" onclick="saveConfig()"><i class="ri-save-line"></i> Guardar Estado</button>
+            </div>
+        </section>
+
+        <!-- ═══ PERSONAL ═══ -->
+        <section id="v-personal" class="view">
+            <div class="header">
+                <div>
+                    <h2>Gestion de Personal</h2>
+                    <p>Registro de terapeutas y staff del spa.</p>
+                </div>
+                <button class="btn btn-primary" onclick="openStaffModal()"><i class="ri-user-add-line"></i> Registrar</button>
+            </div>
+            <div id="dom-staff"></div>
+        </section>
+
+        <!-- ═══ ASISTENCIA ═══ -->
+        <section id="v-asistencia" class="view">
+            <div class="header">
+                <div>
+                    <h2>Control de Asistencia</h2>
+                    <p>Registro de entrada y salida del personal.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Registrar Asistencia</div>
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>Empleado</label>
+                        <select id="att-person"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select id="att-type">
+                            <option value="ENTRADA">Entrada</option>
+                            <option value="SALIDA">Salida</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Notas</label>
+                        <input type="text" id="att-notes" placeholder="Opcional">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="logAttendance()"><i class="ri-check-line"></i> Registrar</button>
+            </div>
+            <div class="card" style="margin-top:16px;">
+                <div class="card-title">Historial Reciente</div>
+                <div id="dom-attendance"></div>
+            </div>
+        </section>
+
+        <!-- ═══ COMISIONES ═══ -->
+        <section id="v-comisiones" class="view">
+            <div class="header">
+                <div>
+                    <h2>Comisiones</h2>
+                    <p>Registro de servicios realizados y calculo de comisiones por terapeuta (20% fijo).</p>
+                </div>
+                <button class="btn btn-primary" onclick="openCommModal()"><i class="ri-add-line"></i> Registrar Servicio</button>
+            </div>
+            <div class="card">
+                <div class="card-title">Resumen del Mes</div>
+                <div id="dom-comm-summary"></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Historial de Servicios</div>
+                <div id="dom-commissions"></div>
+            </div>
+        </section>
+
+        <!-- ═══ REGISTROS (CHECK-INS) ═══ -->
+        <section id="v-checkins" class="view">
+            <div class="header">
+                <div>
+                    <h2>Registros de Huespedes</h2>
+                    <p>Formularios de check-in recibidos antes de cada visita.</p>
+                </div>
+                <button class="btn btn-secondary" onclick="copyCheckinLink()"><i class="ri-links-line"></i> Copiar Link Check-In</button>
+            </div>
+            <div id="dom-checkins"></div>
+        </section>
+
+    </main>
+
+    <!-- Modal Staff -->
+    <div class="modal" id="modal-staff">
+        <div class="modal-content">
+            <div class="modal-header"><span id="staff-modal-title">Nuevo Empleado</span><i class="ri-close-line" onclick="document.getElementById('modal-staff').classList.remove('show')"></i></div>
+            <input type="hidden" id="sf-id">
+            <div class="form-group"><label>Nombre Completo</label><input type="text" id="sf-name" placeholder="Nombre del empleado"></div>
+            <div class="grid-2">
+                <div class="form-group"><label>Puesto</label>
+                    <select id="sf-role">
+                        <option value="Terapeuta">Terapeuta</option>
+                        <option value="Recepcionista">Recepcionista</option>
+                        <option value="Coordinador(a)">Coordinador(a)</option>
+                        <option value="Gerente">Gerente</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Telefono</label><input type="tel" id="sf-phone" placeholder="229 000 0000"></div>
+            </div>
+            <div class="form-group"><label>Status</label>
+                <select id="sf-status"><option value="ACTIVO">Activo</option><option value="INACTIVO">Inactivo</option></select>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">
+                <button class="btn btn-danger" id="btn-del-staff" style="display:none;margin-right:auto;" onclick="deleteStaff()">Eliminar</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('modal-staff').classList.remove('show')">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveStaff()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Comision -->
+    <div class="modal" id="modal-comm">
+        <div class="modal-content">
+            <div class="modal-header"><span>Registrar Servicio Realizado</span><i class="ri-close-line" onclick="document.getElementById('modal-comm').classList.remove('show')"></i></div>
+            <div class="grid-2">
+                <div class="form-group"><label>Terapeuta</label><select id="cm-person"></select></div>
+                <div class="form-group"><label>Fecha</label><input type="date" id="cm-date"></div>
+            </div>
+            <div class="form-group"><label>Servicio Realizado</label>
+                <select id="cm-service">
+                    <option value="Ritual Claro de Luna">Ritual Claro de Luna ($2,650)</option>
+                    <option value="Ritual de Intenciones">Ritual de Intenciones ($2,650)</option>
+                    <option value="Ritual Ancestral">Ritual Ancestral ($6,050)</option>
+                    <option value="Descontracturante 50min">Descontracturante 50min ($1,750)</option>
+                    <option value="Descontracturante 80min">Descontracturante 80min ($2,650)</option>
+                    <option value="Herbal Relajante 50min">Herbal Relajante 50min ($1,650)</option>
+                    <option value="Herbal Relajante 80min">Herbal Relajante 80min ($2,500)</option>
+                    <option value="Piedras Calientes 50min">Piedras Calientes 50min ($1,750)</option>
+                    <option value="Piedras Calientes 80min">Piedras Calientes 80min ($2,650)</option>
+                    <option value="Piernas Cansadas">Piernas Cansadas ($1,550)</option>
+                    <option value="Drenaje Linfatico 50min">Drenaje Linfatico 50min ($1,650)</option>
+                    <option value="Drenaje Linfatico 80min">Drenaje Linfatico 80min ($2,500)</option>
+                    <option value="Masaje 4 Manos">Masaje 4 Manos ($3,300)</option>
+                    <option value="Facial Antioxidante">Facial Antioxidante ($1,080)</option>
+                    <option value="Facial Control Grasa">Facial Control Grasa ($1,080)</option>
+                    <option value="Exfoliacion Cafe Tisu">Exfoliacion Cafe Tisu ($1,880)</option>
+                    <option value="Envoltura Agave Azul">Envoltura Agave Azul ($2,250)</option>
+                    <option value="Tratamiento Moldeador">Tratamiento Moldeador ($2,750)</option>
+                    <option value="Tina EMS">Tina EMS ($600)</option>
+                    <option value="Tina de Flotacion">Tina de Flotacion ($600)</option>
+                    <option value="Circuito Hidroterapia">Circuito Hidroterapia ($1,000)</option>
+                </select>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label>Precio del Servicio ($MXN)</label><input type="number" id="cm-price" placeholder="0"></div>
+                <div class="form-group"><label>Comision (20%)</label><input type="number" id="cm-commission" readonly style="opacity:0.6;"></div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">
+                <button class="btn btn-secondary" onclick="document.getElementById('modal-comm').classList.remove('show')">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveCommission()">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

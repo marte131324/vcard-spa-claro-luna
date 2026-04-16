@@ -41,14 +41,14 @@
         </div>
     </div>
 
-    <!-- ============ AUDIO AMBIENTE ============ -->
-    <audio id="bg-audio" loop preload="none">
-        <source src="https://cdn.pixabay.com/download/audio/2022/02/07/audio_dc39bde80a.mp3?filename=relaxing-music-vol1-124477.mp3" type="audio/mpeg">
-    </audio>
 
-    <!-- ============ HERO CINEMA ============ -->
+
+    <!-- ============ HERO CINEMA — DUAL VIDEO CROSSFADE ============ -->
     <header class="hero" id="hero">
-        <video autoplay muted playsinline class="hero__video" id="hero-video">
+        <video autoplay muted playsinline class="hero__video hero__video--a" id="hero-video-a">
+            <source src="assets/Portada.MP4" type="video/mp4">
+        </video>
+        <video muted playsinline class="hero__video hero__video--b" id="hero-video-b" style="opacity:0;">
             <source src="assets/Portada.MP4" type="video/mp4">
         </video>
 
@@ -637,6 +637,7 @@
             <p class="footer__brand">Claro de Luna · Spa y Bienestar</p>
             <p class="footer__address"><i class="fa-solid fa-location-dot"></i> Carretera a Antón Lizardo, Alvarado, Veracruz</p>
             <p class="footer__phone"><i class="fa-solid fa-phone"></i> 229 402 3957</p>
+            <a href="politicas.html" style="display:block;margin-top:12px;font-size:0.65rem;color:var(--text-subtle);text-decoration:none;letter-spacing:1px;text-transform:uppercase;">Etiqueta del Spa · Privacidad · T&C</a>
         </footer>
     </main>
 
