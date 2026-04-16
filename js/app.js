@@ -72,10 +72,21 @@ document.addEventListener('DOMContentLoaded', () => {
        HERO VIDEO — LOOP ONLY FIRST 3 SECONDS
        ======================================================== */
     const heroVideo = document.getElementById('hero-video');
+    const videoFade = document.getElementById('hero-video-fade');
     if (heroVideo) {
         const LOOP_END = 2;
+        const FADE_START = 1.4; // Start fading 0.6s before loop point
         heroVideo.addEventListener('timeupdate', () => {
-            if (heroVideo.currentTime >= LOOP_END) heroVideo.currentTime = 0;
+            // Start fade-out before the loop point
+            if (heroVideo.currentTime >= FADE_START && videoFade && !videoFade.classList.contains('active')) {
+                videoFade.classList.add('active');
+            }
+            // Reset video when loop point is reached
+            if (heroVideo.currentTime >= LOOP_END) {
+                heroVideo.currentTime = 0;
+                // Fade back in after a brief moment
+                setTimeout(() => { if (videoFade) videoFade.classList.remove('active'); }, 100);
+            }
         });
         heroVideo.play().catch(() => {
             document.addEventListener('touchstart', () => heroVideo.play(), { once: true });
