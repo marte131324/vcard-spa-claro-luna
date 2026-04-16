@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Infraestructura — Claro de Luna Spa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @page { size: letter; margin: 2cm 2.5cm; }
+  body { font-family:'Inter',sans-serif; color:#1e293b; line-height:1.7; padding:40px 50px; max-width:850px; margin:0 auto; }
+  .header { border-bottom:3px solid #0e86b0; padding-bottom:18px; margin-bottom:30px; display:flex; justify-content:space-between; align-items:flex-end; }
+  .header h1 { font-size:1.6rem; font-weight:800; color:#042d3d; }
+  .header .sub { font-size:0.8rem; color:#64748b; }
+  .badge { display:inline-block; background:#0e86b0; color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  h2 { font-size:1.15rem; font-weight:700; color:#0e86b0; margin:28px 0 12px; padding-bottom:6px; border-bottom:1px solid #e2e8f0; }
+  h3 { font-size:0.95rem; font-weight:700; color:#334155; margin:18px 0 8px; }
+  p, li { font-size:0.88rem; color:#475569; }
+  ul, ol { padding-left:22px; margin:8px 0; }
+  li { margin:6px 0; }
+  .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
+  .section-card h3 { margin-top:0; color:#0e86b0; }
+  .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
+  .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
+  .note { background:#eff6ff; border-left:4px solid #0e86b0; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
+  .security { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
+  .tree { font-family:'Courier New', monospace; background:#0f172a; color:#94a3b8; padding:20px 24px; border-radius:12px; font-size:0.82rem; line-height:1.9; margin:16px 0; }
+  .tree .folder { color:#22d3ee; font-weight:700; }
+  .tree .file { color:#a5f3fc; }
+  .tree .desc { color:#64748b; font-style:italic; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
+  th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
+  td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
+  tr:nth-child(even) td { background:#f8fafc; }
+  .footer { margin-top:40px; padding-top:16px; border-top:2px solid #e2e8f0; font-size:0.75rem; color:#94a3b8; text-align:center; }
+  @media print { body { padding:0; } .section-card, .tree { break-inside:avoid; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <span class="badge">Documento 3 de 3</span>
+    <h1>Guia de Infraestructura y Respaldo</h1>
+    <div class="sub">Claro de Luna Spa — Mapa Tecnico del Ecosistema</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="font-size:0.75rem; color:#94a3b8;">Christian Belmont - Desarrollo de Sistemas Digitales</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Abril 2026</div>
+  </div>
+</div>
+
+<h2>1. Estructura del Proyecto</h2>
+<div class="tree">
+<span class="folder">vcard-spa-claro-luna/</span>
+  <span class="file">index.html</span>               <span class="desc">-- VCard principal</span>
+  <span class="file">politicas.html</span>            <span class="desc">-- Politicas y privacidad</span>
+  <span class="file">vercel.json</span>               <span class="desc">-- Configuracion de seguridad y deploy</span>
+  <span class="file">gsheet-backend.gs</span>          <span class="desc">-- Backend Google Apps Script (referencia)</span>
+  <span class="folder">css/</span>
+    <span class="file">style.css</span>               <span class="desc">-- Estilos de la VCard</span>
+  <span class="folder">js/</span>
+    <span class="file">app.js</span>                  <span class="desc">-- Logica interactiva de la VCard</span>
+  <span class="folder">assets/</span>                   <span class="desc">-- Imagenes, logos, videos</span>
+  <span class="folder">admin/</span>
+    <span class="file">index.html</span>              <span class="desc">-- Command Center (Panel Admin)</span>
+    <span class="file">app.js</span>                  <span class="desc">-- Logica del panel admin</span>
+  <span class="folder">checkin/</span>
+    <span class="file">index.html</span>              <span class="desc">-- Formulario Check-In (Lobby)</span>
+  <span class="folder">loyalty/</span>
+    <span class="file">index.html</span>              <span class="desc">-- Club de Lealtad</span>
+  <span class="folder">Documentos_Cliente/</span>       <span class="desc">-- Boveda de Entrega (este portal)</span>
+</div>
+
+<h2>2. Hosting y Dominio</h2>
+<div class="section-card">
+  <h3>Plataforma de Despliegue</h3>
+  <table>
+    <tr><th>Concepto</th><th>Detalle</th></tr>
+    <tr><td>Plataforma</td><td>Vercel (vercel.com)</td></tr>
+    <tr><td>Repositorio</td><td>GitHub: marte131324/vcard-spa-claro-luna</td></tr>
+    <tr><td>URL produccion</td><td>https://vcard-spa-claro-luna.vercel.app</td></tr>
+    <tr><td>SSL/HTTPS</td><td>Activado automaticamente por Vercel</td></tr>
+    <tr><td>CDN Global</td><td>Si (Vercel Edge Network)</td></tr>
+    <tr><td>Costo mensual</td><td>$0 MXN (plan gratuito de Vercel)</td></tr>
+  </table>
+</div>
+
+<h2>3. Backend (Google Apps Script)</h2>
+<div class="section-card">
+  <h3>Base de Datos</h3>
+  <p>El backend opera sobre Google Sheets a traves de Google Apps Script. La hoja de calculo contiene 9 pestanas:</p>
+  <table>
+    <tr><th>Hoja</th><th>Color</th><th>Funcion</th></tr>
+    <tr><td>Config</td><td>Morado</td><td>Configuracion general (PIN, metas, estado)</td></tr>
+    <tr><td>Clientes</td><td>Azul</td><td>Base de datos del Club de Lealtad</td></tr>
+    <tr><td>Codigos</td><td>Naranja</td><td>Codigos de sello generados y usados</td></tr>
+    <tr><td>Servicios</td><td>Amarillo</td><td>Catalogo de servicios (escalable)</td></tr>
+    <tr><td>Certificados</td><td>Rosa</td><td>Certificados de regalo emitidos</td></tr>
+    <tr><td>Personal</td><td>Verde</td><td>Registro de terapeutas y staff</td></tr>
+    <tr><td>Asistencia</td><td>Azul oscuro</td><td>Entradas y salidas del personal</td></tr>
+    <tr><td>Comisiones</td><td>Turquesa</td><td>Servicios realizados y comisiones</td></tr>
+    <tr><td>Registros</td><td>Gris</td><td>Formularios de Check-In recibidos</td></tr>
+  </table>
+  <div class="warn">
+    <strong>No modifique los encabezados (fila 1) de ninguna hoja.</strong> El sistema los necesita exactamente como estan para funcionar. Si borra accidentalmente una fila de encabezados, contacte a su desarrollador.
+  </div>
+</div>
+
+<h2>4. Como se Actualiza el Sistema</h2>
+<div class="section-card">
+  <h3>Actualizaciones del Frontend</h3>
+  <p>Cualquier cambio visual en la VCard, Check-In o Admin se actualiza mediante GitHub + Vercel:</p>
+  <ol>
+    <li>Se modifica el codigo fuente en el repositorio</li>
+    <li>Se ejecuta <code>git push</code> al repositorio en GitHub</li>
+    <li>Vercel detecta el cambio automaticamente y despliega en segundos</li>
+  </ol>
+  <div class="note">
+    La gerente del spa <strong>no necesita</strong> ejecutar estos comandos. Los contenidos editables (estado, personal, comisiones) se manejan 100% desde el Command Center sin necesidad de despliegues.
+  </div>
+</div>
+<div class="section-card">
+  <h3>Actualizaciones del Backend</h3>
+  <p>Si se necesita modificar la logica del backend (por ejemplo, agregar un nuevo modulo):</p>
+  <ol>
+    <li>Abrir el editor de Google Apps Script vinculado a la hoja de calculo</li>
+    <li>Modificar el codigo</li>
+    <li>Guardar y crear un nuevo despliegue (Deploy > New deployment > Web app)</li>
+    <li>Actualizar la URL del API en los archivos del frontend si cambio</li>
+  </ol>
+</div>
+
+<h2>5. Dominio Personalizado</h2>
+<div class="section-card">
+  <h3>Configuracion CNAME (Opcional)</h3>
+  <p>Si el cliente desea usar un subdominio personalizado (por ejemplo: <code>vcard.spaclarodeluna.mx</code>):</p>
+  <ol>
+    <li>Acceder al panel DNS del dominio <code>spaclarodeluna.mx</code></li>
+    <li>Crear un registro CNAME apuntando <code>vcard</code> a <code>cname.vercel-dns.com</code></li>
+    <li>Agregar el dominio en el dashboard de Vercel (Settings > Domains)</li>
+    <li>Vercel emitira el certificado SSL automaticamente</li>
+  </ol>
+</div>
+
+<h2>6. Respaldo y Recuperacion</h2>
+<div class="section-card">
+  <h3>Canales de Respaldo</h3>
+  <table>
+    <tr><th>Canal</th><th>Que respalda</th><th>Frecuencia</th></tr>
+    <tr><td>GitHub</td><td>Todo el codigo fuente con historial</td><td>Cada push</td></tr>
+    <tr><td>Google Sheets</td><td>Datos operativos (clientes, comisiones, registros)</td><td>Tiempo real</td></tr>
+    <tr><td>Vercel</td><td>Deploys anteriores (rollback instantaneo)</td><td>Cada deploy</td></tr>
+  </table>
+  <div class="tip">
+    Si algo sale mal con el frontend, se puede hacer rollback a una version anterior directamente desde el dashboard de Vercel en menos de 30 segundos.
+  </div>
+</div>
+
+<h2>7. Soporte y Escalabilidad</h2>
+<div class="section-card">
+  <h3>Contacto de Soporte</h3>
+  <table>
+    <tr><th>Concepto</th><th>Detalle</th></tr>
+    <tr><td>Desarrollador</td><td>Christian Belmont</td></tr>
+    <tr><td>WhatsApp soporte</td><td>+52 228 239 3575</td></tr>
+    <tr><td>Agencia</td><td>Treze Labs</td></tr>
+  </table>
+</div>
+<div class="section-card">
+  <h3>Modulos Escalables (Futuro)</h3>
+  <p>El sistema esta preparado para crecer sin necesidad de reconstruirlo:</p>
+  <ul>
+    <li><strong>Catalogo dinamico:</strong> Migrar los servicios de estatico a lectura desde Google Sheets</li>
+    <li><strong>Notificaciones push:</strong> Enviar recordatorios de cita por WhatsApp automaticamente</li>
+    <li><strong>Reportes PDF:</strong> Generar cortes quincenales de comisiones exportables</li>
+    <li><strong>Multi-sucursal:</strong> Expandir el backend para manejar mas ubicaciones</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Claro de Luna Spa — Documentacion de Entrega &copy; 2026 Christian Belmont - Desarrollo de Sistemas Digitales<br>
+  Este documento es confidencial y exclusivo para el cliente.
+</div>
+
+</body>
+</html>

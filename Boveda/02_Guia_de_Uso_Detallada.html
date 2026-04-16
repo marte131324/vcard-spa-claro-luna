@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Uso VIP — Claro de Luna Spa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @page { size: letter; margin: 2cm 2.5cm; }
+  body { font-family:'Inter',sans-serif; color:#1e293b; line-height:1.7; padding:40px 50px; max-width:850px; margin:0 auto; }
+  .header { border-bottom:3px solid #0e86b0; padding-bottom:18px; margin-bottom:30px; display:flex; justify-content:space-between; align-items:flex-end; }
+  .header h1 { font-size:1.6rem; font-weight:800; color:#042d3d; }
+  .header .sub { font-size:0.8rem; color:#64748b; }
+  .badge { display:inline-block; background:#0e86b0; color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  h2 { font-size:1.15rem; font-weight:700; color:#0e86b0; margin:28px 0 12px; padding-bottom:6px; border-bottom:1px solid #e2e8f0; }
+  h3 { font-size:0.95rem; font-weight:700; color:#334155; margin:18px 0 8px; }
+  p, li { font-size:0.88rem; color:#475569; }
+  ul, ol { padding-left:22px; margin:8px 0; }
+  li { margin:6px 0; }
+  .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
+  .section-card h3 { margin-top:0; color:#0e86b0; }
+  .step { display:flex; gap:14px; margin:12px 0; align-items:flex-start; }
+  .step-num { background:#0e86b0; color:white; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; flex-shrink:0; margin-top:2px; }
+  .step-text { flex:1; }
+  .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
+  .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
+  .note { background:#eff6ff; border-left:4px solid #0e86b0; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
+  .security { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
+  th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
+  td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
+  tr:nth-child(even) td { background:#f8fafc; }
+  .footer { margin-top:40px; padding-top:16px; border-top:2px solid #e2e8f0; font-size:0.75rem; color:#94a3b8; text-align:center; }
+  @media print { body { padding:0; } .section-card { break-inside:avoid; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <span class="badge">Documento 2 de 3</span>
+    <h1>Guia de Uso VIP</h1>
+    <div class="sub">Claro de Luna Spa — Manual de Operacion del Ecosistema Digital</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="font-size:0.75rem; color:#94a3b8;">Christian Belmont - Desarrollo de Sistemas Digitales</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Abril 2026</div>
+  </div>
+</div>
+
+<div class="note">
+  <strong>Para la gerencia:</strong> Este manual explica paso a paso como operar cada modulo de su ecosistema digital. No necesita conocimientos tecnicos para usarlo.
+</div>
+
+<!-- ═══ ACCESO Y SEGURIDAD ═══ -->
+<h2>1. Acceso y Seguridad</h2>
+<div class="section-card">
+  <h3>URLs del Sistema</h3>
+  <table>
+    <tr><th>Componente</th><th>Enlace</th></tr>
+    <tr><td>VCard (Publica)</td><td>https://vcard-spa-claro-luna.vercel.app/</td></tr>
+    <tr><td>Command Center (Admin)</td><td>https://vcard-spa-claro-luna.vercel.app/admin/</td></tr>
+    <tr><td>Formulario Check-In (Lobby)</td><td>https://vcard-spa-claro-luna.vercel.app/checkin/</td></tr>
+    <tr><td>Web Oficial</td><td>https://spaclarodeluna.mx/</td></tr>
+  </table>
+</div>
+<div class="section-card">
+  <h3>PIN de Acceso</h3>
+  <p>El Command Center esta protegido por un PIN numerico que se le proporciono de forma verbal. Al ingresar el PIN correcto, se desbloquea la interfaz completa.</p>
+  <div class="security">
+    <strong>Importante:</strong> No comparta el PIN por escrito en chats o redes sociales. Si necesita cambiarlo, contacte a su desarrollador.
+  </div>
+</div>
+
+<!-- ═══ COMMAND CENTER ═══ -->
+<h2>2. Command Center (Panel Administrativo)</h2>
+
+<div class="section-card">
+  <h3>2.1 Estado del Spa</h3>
+  <p>Desde aqui puede cambiar la disponibilidad del spa en tiempo real:</p>
+  <ul>
+    <li><strong>Recepcion Activa:</strong> Indica que el spa esta abierto y recibiendo clientes normalmente.</li>
+    <li><strong>En Pausa:</strong> Indica que momentaneamente no se reciben clientes walk-in.</li>
+    <li><strong>Solo con Agenda Previa:</strong> Solo se reciben clientes con cita confirmada.</li>
+  </ul>
+  <p>Tambien puede escribir un <strong>Banner de Anuncio</strong> que sera visible en la VCard (por ejemplo: "Semana de Rituales Ancestrales").</p>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text">Seleccione el estado deseado en el dropdown</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text">Modifique el horario visible si es necesario</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text">Haga clic en "Guardar Estado"</div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h3>2.2 Gestion de Personal</h3>
+  <p>Registre cada terapeuta, recepcionista o coordinador(a) del spa:</p>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text">Haga clic en "Registrar" para agregar un nuevo empleado</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text">Complete nombre, puesto, telefono y status (Activo/Inactivo)</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text">Haga clic en "Guardar". El empleado aparecera en la lista y en los selectores de asistencia y comisiones</div>
+  </div>
+  <div class="tip">
+    Si un empleado renuncia o se da de baja temporal, cambie su status a "Inactivo" en lugar de eliminarlo. Asi conserva su historial.
+  </div>
+</div>
+
+<div class="section-card">
+  <h3>2.3 Control de Asistencia</h3>
+  <p>Registre entradas y salidas del personal para llevar un control exacto:</p>
+  <ul>
+    <li>Seleccione al empleado</li>
+    <li>Elija "Entrada" o "Salida"</li>
+    <li>Agregue una nota opcional (por ejemplo: "Llego tarde 15 min")</li>
+    <li>Haga clic en "Registrar" — la fecha y hora se capturan automaticamente</li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <h3>2.4 Comisiones</h3>
+  <p>Cada vez que un terapeuta realiza un servicio, registre la comision:</p>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text">Haga clic en "Registrar Servicio"</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text">Seleccione al terapeuta y el servicio realizado (el precio se llena automaticamente)</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text">La comision (20% del precio) se calcula sola. Haga clic en "Registrar"</div>
+  </div>
+  <p>En el <strong>Resumen del Mes</strong> vera cuanto le corresponde a cada terapeuta en comisiones acumuladas.</p>
+</div>
+
+<div class="section-card">
+  <h3>2.5 Registros de Huespedes (Check-In)</h3>
+  <p>Cuando un huesped llena el formulario de Check-In desde el lobby (o de forma remota antes de su visita), su informacion aparece automaticamente en esta seccion.</p>
+  <p>Puede ver: nombre, telefono, email, condiciones medicas, alergias, areas de atencion prioritaria, presion arterial y el servicio que desean.</p>
+  <div class="warn">
+    <strong>Privacidad:</strong> Los datos medicos de los huespedes son informacion sensible. No los comparta fuera del contexto terapeutico.
+  </div>
+</div>
+
+<!-- ═══ VCARD ═══ -->
+<h2>3. VCard Premium (Tarjeta Digital)</h2>
+<div class="section-card">
+  <h3>Que contiene la VCard</h3>
+  <ul>
+    <li><strong>Portada:</strong> Video inmersivo del spa con transicion suave</li>
+    <li><strong>Catalogo:</strong> Todos los servicios organizados por categoria con precios y descripciones</li>
+    <li><strong>Cotizador:</strong> Boton "Enviar Peticion Claro de Luna Spa" que abre WhatsApp con el servicio seleccionado</li>
+    <li><strong>Galeria:</strong> Carrusel fotografico de las instalaciones</li>
+    <li><strong>Mapa:</strong> Ubicacion interactiva del spa</li>
+    <li><strong>Club de Lealtad:</strong> Sistema de sellos para clientes frecuentes</li>
+    <li><strong>Contacto:</strong> Telefono, WhatsApp, redes sociales y horarios</li>
+  </ul>
+</div>
+
+<!-- ═══ CHECK-IN ═══ -->
+<h2>4. Formulario de Check-In (Lobby)</h2>
+<div class="section-card">
+  <h3>Como usarlo en recepcion</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text">Imprima el codigo QR del Check-In y coloquelo en la recepcion del spa</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text">Cuando un huesped llegue, pida que escanee el QR con su celular</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text">El huesped llenara un formulario de 4 pasos con su informacion personal y preferencias</div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-text">Los datos aparecen automaticamente en el Command Center, seccion "Registros"</div>
+  </div>
+  <div class="tip">
+    Tambien puede enviar el enlace del Check-In por WhatsApp al huesped antes de que llegue, para agilizar su registro.
+  </div>
+</div>
+
+<!-- ═══ CLUB DE LEALTAD ═══ -->
+<h2>5. Club de Lealtad</h2>
+<div class="section-card">
+  <h3>Funcionamiento</h3>
+  <p>El sistema de sellos funciona de la siguiente manera:</p>
+  <ul>
+    <li>Al completar un servicio, el staff genera un <strong>codigo de sello</strong> desde la interfaz de lealtad</li>
+    <li>El cliente ingresa el codigo en su tarjeta digital para acumular un sello</li>
+    <li>Al alcanzar la meta de sellos (actualmente 3), se desbloquea una recompensa (50% de descuento)</li>
+    <li>Los clientes acumulan visitas y suben de nivel (Invitado, Habitue, Premium, VIP)</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Claro de Luna Spa — Documentacion de Entrega &copy; 2026 Christian Belmont - Desarrollo de Sistemas Digitales<br>
+  Este documento es confidencial y exclusivo para el cliente.
+</div>
+
+</body>
+</html>
