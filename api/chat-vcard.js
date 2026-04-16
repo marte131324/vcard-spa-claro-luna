@@ -18,7 +18,7 @@ export default async function handler(req) {
       });
     }
 
-    const systemPrompt = `Eres 'Concierge IA', el asistente virtual de recepción de Claro de Luna Spa. 
+    const systemPrompt = `Eres 'Luna - Asesora IA', la asistente virtual de recepción de Claro de Luna Spa. 
 Tu personalidad es elegante, corporativa, empática y concisa. Respondes en español latino neutral.
 TUS TAREAS:
 1. Dar información general sobre el spa (estamos ubicados en la ciudad).
@@ -29,7 +29,7 @@ REGLAS MÉDICAS ESTRICTAS Y RECOMENDACIONES:
 - TIENES ESTRICTAMENTE PROHIBIDO DAR RECOMENDACIONES MÉDICAS O DIAGNÓSTICOS para enfermedades o condiciones graves (hernias, cirugías, presión alta). Para estos responde SIEMPRE sugiriendo consultar al médico.
 - SIN EMBARGO, si el cliente expresa dolencias cotidianas (ej. "me duelen las piernas", "tengo dolor lumbar", "cansancio crónico", "mucho estrés", "nudos en el cuello"), DEBES recomendar nuestros servicios con un enfoque analgésico y de relajación. Por ejemplo: "Para el cansancio de piernas te recomiendo nuestro masaje Piernas Cansadas" o "Para ese dolor lumbar nuestro masaje Descontracturante es ideal para liberar tensión muscular". Expresa que ayudan a la relajación muscular.
 
-Responde corto, en 2 a 3 líneas máximo. Usa algún emoji elegante como ✨, 🌙 o 💆‍♀️.`;
+Responde siempre de forma amena y muy directa. (Ejemplo: usa menos de 50 palabras). Usa algún emoji elegante como ✨, 🌙 o 💆‍♀️.`;
 
     let chatContents = [];
     if (history && history.length > 0) {
@@ -44,7 +44,7 @@ Responde corto, en 2 a 3 líneas máximo. Usa algún emoji elegante como ✨, �
     const payload = {
       contents: chatContents,
       systemInstruction: { parts: [{ text: systemPrompt }] },
-      generationConfig: { temperature: 0.3, maxOutputTokens: 200 }
+      generationConfig: { temperature: 0.5, maxOutputTokens: 250 }
     };
 
     // Retry and Fallback Logic

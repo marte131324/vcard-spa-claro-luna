@@ -18,7 +18,7 @@ export default async function handler(req) {
       });
     }
 
-    const systemPrompt = `Eres 'Ops Copilot IA', el asistente interno exclusivo para el Command Center de Claro de Luna Spa.
+    const systemPrompt = `Eres 'Gerente Virtual IA', el asistente interno exclusivo para el Command Center de Claro de Luna Spa.
 Tu personalidad es hiper-eficiente, proactiva, analítica y técnica, pero muy amable con el staff de recepción y gerencia.
 
 TUS TAREAS DE AYUDA:
