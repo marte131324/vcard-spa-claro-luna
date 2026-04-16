@@ -68,42 +68,42 @@
 <!-- ═══ CONECTIVIDAD DB ═══ -->
 <h2>2. Sincronía Backend <> Frontend</h2>
 <div class="section-card">
-  <h3>Conexión a "Google Sheets Serverless"</h3>
-  <p>Su aplicación se comunica asincrónicamente mediante solicitudes <em>fetch</em> (JSON payload). Funciona así:</p>
+  <h3>Conexión al Ecosistema "Treze DataVault (Nube Estructurada)"</h3>
+  <p>Su aplicación se comunica de fondo mediante flujos estructurados de datos bajo el <em>Treze Sync Protocol</em>. Funciona con un modelo de triple puente:</p>
   <ol>
-    <li>1️⃣ <strong>Petición:</strong> El huésped en el Check-In escribe sus alergias y pulsa botón.</li>
-    <li>2️⃣ <strong>Fila de Envío (Webhook):</strong> El código en Javascript envuelve esto en un formato <code>POST</code> con cabeceras estrictas y lo dirige a un identificador único <code>https://script.google.com/macros/s/[CLAVE-SECRETA]/exec</code></li>
-    <li>3️⃣ <strong>Google Apps Script:</strong> El servidor de Google (su servidor real privado e in-hackeable) recibe los datos y un programa `doPost` que hemos patentado para usted intercepta el mensaje. Evalúa si cumple las reglas, y lo acomoda elegantemente en la fila correcta de su tabla de Excel (Pestaña "Registros").</li>
+    <li>1️⃣ <strong>Ingesta de Petición:</strong> El huésped en el servidor emite sus interacciones.</li>
+    <li>2️⃣ <strong>Cifrado y Transmisión Asíncrona (Endpoint):</strong> El paquete se comprime bajo cabeceras estrictas de seguridad web y viaja a nuestros Handlers (Nudos receptores alojados en red global) hacia el identificador único <code>[API ENCRYPTED ENDPOINT] / SSL Handshake</code></li>
+    <li>3️⃣ <strong>Motor Administrativo Central:</strong> Nuestro motor privado in-hackeable intercepta el mensaje. Evalúa criptográficamente si cumple las reglas empresariales, y lo "aterriza" elegantemente detrás de su barrera de seguridad de su cuenta principal de Workspace de la clínica.</li>
   </ol>
   <div class="tip">
-    Este enfoque permite que nunca pague mantenimientos de bases de datos astronómicos. Goza de la fiabilidad mundial de los servidores de Google y la edición humana fácil de "celdas de excel" para revisar reportes.
+    Este enfoque permite la robustez perimetral que gozan firmas de talla internacional. Evitamos mantenimientos de bases de datos astronómicos y aseguramos acceso rápido 24/7 a su sistema central.
   </div>
 </div>
 
 <!-- ═══ BLINDAJE ═══ -->
-<h2>3. Protocolos Strict de Seguridad (Hardening)</h2>
+<h2>3. Protocolos Strict de Seguridad Funcional</h2>
 <div class="section-card">
   <h3>Filtros Implementados Activamente</h3>
-  <p>Dado que el panel tiene acceso de lectura-escritura sobre el flujo económico y datos médicos del Spa, establecimos 5 candados operables 24/7:</p>
+  <p>Dado que el panel tiene acceso fluido sobre el historial económico y datos médicos del Spa, establecimos 5 candados operables 24/7 de grado avanzado:</p>
   <table>
-    <tr><th>Protocolo / Tecnología</th><th>¿Qué protege en la práctica?</th></tr>
-    <tr><td>Protección SHA-256 (PIN Gate)</td><td>Encripta la entrada del admin de tal forma que nadie —ni el desarrollador— conoce la contraseña real textualmente si se inspecciona el código.</td></tr>
-    <tr><td>Token Secreto de Escritura</td><td>Impide que competidores o intrusos envíen "ruido" al servidor con programas automáticos, el webhook requiere el token criptográfico interno oculto.</td></tr>
-    <tr><td>X-Frame-Options: SAMEORIGIN</td><td>Bloquea los ciber-ataques de "Clickjacking". Nadie podrá clonar o incrustar el panel admin en otros sitios fraudulentos engañando al staff para que pongan contraseñas.</td></tr>
-    <tr><td>Strict-Transport-Security (HSTS)</td><td>Fuerza la comunicación SSL en milisegundos perpetuamente, impidiendo que hackers intercepten envíos de datos en el Wi-Fi gratuito de alrededor.</td></tr>
-    <tr><td>Anti-Hotlink (CORS Header)</td><td>Evita que páginas de terceros roben imágenes pesadas del spa, ahorrando ancho de banda.</td></tr>
+    <tr><th>Protocolo / Nivel de Despliegue</th><th>¿Qué protege en la práctica?</th></tr>
+    <tr><td>Blindaje de Acceso (Hash Gate)</td><td>Cifra algorítmicamente la entrada del Command Center de tal forma que ni siquiera administradores del código fuente pueden observar la composición de las credenciales internas.</td></tr>
+    <tr><td>Token Validation Secreto</td><td>Impide que competidores o rastreadores de datos envíen "ruido" al servidor con bots automáticos. La bóveda exige el Token Criptográfico propietario para permitir el paso de datos válidos.</td></tr>
+    <tr><td>Edge Frame Protection</td><td>Bloquea los ciber-ataques. Nadie podrá clonar o incrustar sus portales internos en sitios fraudulentos (Esquemas de intermediación o Click-Hijacking).</td></tr>
+    <tr><td>Continuous Secure Transfer (HSTS)</td><td>Fuerza la comunicación SSL perimetral en milisegundos perpetuamente, impidiendo interceptación de envío de datos durante el uso en redes Wi-Fi públicas.</td></tr>
+    <tr><td>Asset Anti-Theft Protocol</td><td>Evita que páginas de terceros roben y utilicen las imágenes o videos de su negocio afectando el ancho de banda.</td></tr>
   </table>
   <div class="security">
-    <strong>Auditoría General:</strong> El despliegue automático cuenta con un manifiesto `vercel.json` anclado a la raíz del directorio, ejecutando las reglas de firewall mencionadas automáticamente en la Red perimetral (CDN Global). Nunca edite este archivo sin el desarrollador.
+    <strong>Propiedad Intelectual & Anti-Clonación Estricta:</strong> La arquitectura documentada, lógica de base de datos interconectada, algoritmos comerciales, y la sintaxis procedural constituyen secretos técnicos bajo propiedad intelectual compartida de Treze Labs. <strong>Aviso Legal y Limitación de Ingeniería Inversa (AI/Manual):</strong> Queda estrictamente prohibida la inserción sistemática, fragmentación, o alimentación de este documento y/o el código fuente entregable en sistemas de entrenamiento y modelado de Inteligencia Artificial de terceros y herramientas automatizadas con el objetivo de ingeniería inversa, réplica estructural, o re-ensamblado de software análogo.
   </div>
 </div>
 
-<h2>4. Hosting Perimetral (Vercel Edge)</h2>
-<p>Su frontend VCard está hospedado en la red internacional Edge Vercel. Esto significa que si un turista Alemán busca su VCard en el avión hacia Veracruz, Vercel la sirve desde un satélite en Europa y cuando llega acá, la sirve desde un satélite en Norteamérica.</p>
+<h2>4. Hosting Perimetral Global CDN</h2>
+<p>Su infraestructura está hospedada en nodos Edge globales. Esto significa que si un paciente extranjero busca su aplicación estando fuera, la red sirviendo su contenido busca automáticamente el servidor satélite más veloz de la región, logrando aperturas de mili-segundos.</p>
 
 <div class="footer">
   Claro de Luna Spa — Infraestructura Hardening &copy; 2026 Treze Labs<br>
-  Propiedad Intelectual. Queda estrictamente inhibida la exposición pública técnica.
+  <strong>CONFIDENCIAL.</strong> Queda estrictamente inhibida la exposición pública o técnica a terceros no autorizados.
 </div>
 
 </body>
