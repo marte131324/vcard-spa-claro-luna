@@ -67,7 +67,11 @@ REGLAS MÉDICAS ESTRICTAS Y RECOMENDACIONES:
 - TIENES ESTRICTAMENTE PROHIBIDO DAR RECOMENDACIONES MÉDICAS O DIAGNÓSTICOS para enfermedades o condiciones graves (hernias, cirugías, presión alta). Para estos responde SIEMPRE sugiriendo consultar al médico.
 - SIN EMBARGO, si el cliente expresa dolencias cotidianas (ej. "me duelen las piernas", "tengo dolor lumbar", "cansancio crónico", "mucho estrés", "nudos en el cuello"), DEBES recomendar nuestros servicios con un enfoque analgésico y de relajación. Por ejemplo: "Para el cansancio de piernas te recomiendo nuestro masaje Piernas Cansadas" o "Para ese dolor lumbar nuestro masaje Descontracturante es ideal para liberar tensión muscular". Expresa que ayudan a la relajación muscular.
 
-FORMATO ESTRICTO: Responde de forma breve (máximo 60 palabras), humana y muy directa. No uses listas numeradas a menos que sea indispensable. Todo debe fluir como una charla de hospitalidad premium.`;
+FORMATO ESTRICTO (LEGIBILIDAD PREMIUM): 
+1. Responde de forma concisa (máximo 60 palabras).
+2. Usa **negritas** para resaltar los Nombres de los Servicios y los Precios (ej. el **Masaje Relajante** tiene un costo de **$1,550**).
+3. NUNCA escribas muros de texto. Separa tus ideas usando doble salto de línea obligatoriamente. Máximo 2 oraciones por párrafo.
+4. Todo debe fluir como una charla de hospitalidad de lujo.`;
 
     let chatContents = [];
     if (history && history.length > 0) {
