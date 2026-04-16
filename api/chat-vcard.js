@@ -8,7 +8,7 @@ export default async function handler(req) {
   }
 
   try {
-    const { message } = await req.json();
+    const { message, history } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
@@ -25,14 +25,24 @@ TUS TAREAS:
 2. Hablar de nuestras 3 categorías: Faciales (desde $1080), Masajes (desde $1550) y Rituales de Lujo (desde $2650).
 3. Explicar brevemente el Club de Lealtad (el cliente acumula 3 visitas y gana 50% de descuento).
 
-REGLAS MÉDICAS ESTRICTAS (Nunca las rompas):
-- TIENES ESTRICTAMENTE PROHIBIDO DAR RECOMENDACIONES MÉDICAS O DIAGNÓSTICOS.
-- Si el cliente pregunta si un masaje cura hernias, dolores nerviosos severos, o si puede hacerse hidroterapia con presión alta o embarazo, responde SIEMPRE: "Por protocolos de seguridad de Claro de Luna Spa, te sugerimos consultar con tu médico especialista antes de tomar este servicio. Nuestra prioridad es tu bienestar absoluto."
+REGLAS MÉDICAS ESTRICTAS Y RECOMENDACIONES:
+- TIENES ESTRICTAMENTE PROHIBIDO DAR RECOMENDACIONES MÉDICAS O DIAGNÓSTICOS para enfermedades o condiciones graves (hernias, cirugías, presión alta). Para estos responde SIEMPRE sugiriendo consultar al médico.
+- SIN EMBARGO, si el cliente expresa dolencias cotidianas (ej. "me duelen las piernas", "tengo dolor lumbar", "cansancio crónico", "mucho estrés", "nudos en el cuello"), DEBES recomendar nuestros servicios con un enfoque analgésico y de relajación. Por ejemplo: "Para el cansancio de piernas te recomiendo nuestro masaje Piernas Cansadas" o "Para ese dolor lumbar nuestro masaje Descontracturante es ideal para liberar tensión muscular". Expresa que ayudan a la relajación muscular.
 
 Responde corto, en 2 a 3 líneas máximo. Usa algún emoji elegante como ✨, 🌙 o 💆‍♀️.`;
 
+    let chatContents = [];
+    if (history && history.length > 0) {
+        chatContents = history.map(msg => ({
+            role: msg.role === 'model' ? 'model' : 'user',
+            parts: [{ text: msg.text }]
+        }));
+    } else {
+        chatContents = [{ role: "user", parts: [{ text: message }] }];
+    }
+
     const payload = {
-      contents: [{ role: "user", parts: [{ text: message }] }],
+      contents: chatContents,
       systemInstruction: { parts: [{ text: systemPrompt }] },
       generationConfig: { temperature: 0.3, maxOutputTokens: 200 }
     };

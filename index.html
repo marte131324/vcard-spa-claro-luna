@@ -875,6 +875,8 @@
         chatWindow.style.display = 'none';
     });
 
+    let chatHistory = [];
+
     async function sendMessage() {
         const text = chatInput.value.trim();
         if (!text) return;
@@ -889,16 +891,24 @@
         chatMessages.innerHTML += `<div id="${typingId}" style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text-subtle); border: 1px solid var(--border);">Escribiendo...</div>`;
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
+        chatHistory.push({ role: 'user', text: text });
+        if (chatHistory.length > 10) chatHistory.shift();
+
         try {
             const res = await fetch('/api/chat-vcard', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ message: text, history: chatHistory })
             });
             const data = await res.json();
             document.getElementById(typingId).remove();
             
-            chatMessages.innerHTML += `<div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text); line-height: 1.4; border: 1px solid var(--border); max-width: 85%;">${data.reply || 'Lo siento, hubo un error técnico.'}</div>`;
+            let replyText = data.reply || 'Lo siento, hubo un error técnico.';
+            
+            chatHistory.push({ role: 'model', text: replyText });
+            if (chatHistory.length > 10) chatHistory.shift();
+
+            chatMessages.innerHTML += `<div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text); line-height: 1.4; border: 1px solid var(--border); max-width: 85%;">${replyText}</div>`;
             chatMessages.scrollTop = chatMessages.scrollHeight;
         } catch (err) {
             document.getElementById(typingId).remove();

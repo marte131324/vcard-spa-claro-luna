@@ -8,7 +8,7 @@ export default async function handler(req) {
   }
 
   try {
-    const { message } = await req.json();
+    const { message, history } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
@@ -39,12 +39,25 @@ REGLAS ESTRICTAS:
     if (AUTONOMOUS_MODULE_ENABLED) {
         finalPrompt += `\n\n=== MODO AGENTE AUTÓNOMO ===
 Eres capaz de accionar comandos en el sistema. 
-Si el usuario te pide literalmente agregar un terapeuta o personal (ej. "agrega a Arely terapeuta..."), DEBES detener la conversación y responder ÚNICA y EXCLUSIVAMENTE con un bloque JSON crudo (sin \`\`\`json ni nada de markdown, solo el objeto) con esta estructura exacta:
-{"action": "ADD_STAFF", "name": "[nombre derivado]", "role": "[puesto derivado (Terapeuta, Recepcionista, Coordinador(a), Gerente, Otro)]", "phone": "[telefono sin espacios si lo proveen]"}`;
+Si el usuario te pide agregar un empleado, DEBES VERIFICAR que el usuario te proporciono estos 3 datos: Nombre, Puesto y su Numero de Telefono.
+- SI FALTAN DATOS: Responde amablemente preguntando por los datos que faltan (ej. "Con gusto lo agrego, pero necesito que me digas qué puesto tendrá y su número telefónico").
+- SI TIENES LOS 3 DATOS: Detén la conversación normal y responde ÚNICA y EXCLUSIVAMENTE con un bloque JSON crudo (sin tildes markdown \`\`\`json) con esta estructura exacta:
+{"action": "ADD_STAFF", "name": "[nombre derivado]", "role": "[puesto derivado]", "phone": "[telefono sin espacios]"}
+No emitas este JSON a menos que te hayan proveído los 3 datos.`;
+    }
+
+    let chatContents = [];
+    if (history && history.length > 0) {
+        chatContents = history.map(msg => ({
+            role: msg.role === 'model' ? 'model' : 'user',
+            parts: [{ text: msg.text }]
+        }));
+    } else {
+        chatContents = [{ role: "user", parts: [{ text: message }] }];
     }
 
     const payload = {
-      contents: [{ role: "user", parts: [{ text: message }] }],
+      contents: chatContents,
       systemInstruction: { parts: [{ text: finalPrompt }] },
       generationConfig: { temperature: 0.2, maxOutputTokens: 250 }
     };

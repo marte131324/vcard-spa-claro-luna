@@ -443,6 +443,8 @@
             chatWindowA.style.display = 'none';
         });
 
+        let chatHistoryA = [];
+
         async function sendAdminMessage() {
             const text = chatInputA.value.trim();
             if (!text) return;
@@ -455,11 +457,14 @@
             chatMessagesA.innerHTML += `<div id="${typingId}" style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text-dim); border: 1px solid rgba(255,255,255,0.1);">Analizando...</div>`;
             chatMessagesA.scrollTop = chatMessagesA.scrollHeight;
 
+            chatHistoryA.push({ role: 'user', text: text });
+            if (chatHistoryA.length > 10) chatHistoryA.shift(); // Keep last 10
+
             try {
                 const res = await fetch('/api/chat-admin', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text })
+                    body: JSON.stringify({ message: text, history: chatHistoryA })
                 });
                 const data = await res.json();
                 document.getElementById(typingId).remove();
@@ -467,7 +472,8 @@
                 
                 // AUTONOMOUS AGENT PARSER
                 try {
-                    const parsed = JSON.parse(finalReply.trim());
+                    let cleanJson = finalReply.replace(/```json/g, '').replace(/```/g, '').trim();
+                    const parsed = JSON.parse(cleanJson);
                     if (parsed.action === 'ADD_STAFF') {
                         document.getElementById('sf-name').value = parsed.name || '';
                         document.getElementById('sf-role').value = parsed.role || 'Terapeuta';
@@ -481,6 +487,9 @@
                     // Not a JSON command, regular text from LLM. No action needed.
                 }
                 
+                chatHistoryA.push({ role: 'model', text: finalReply });
+                if (chatHistoryA.length > 10) chatHistoryA.shift();
+
                 chatMessagesA.innerHTML += `<div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text-pure); line-height: 1.4; border: 1px solid rgba(255,255,255,0.1); max-width: 85%;">${finalReply}</div>`;
                 chatMessagesA.scrollTop = chatMessagesA.scrollHeight;
             } catch (err) {
