@@ -69,47 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ========================================================
-       HERO VIDEO — DUAL VIDEO CROSSFADE (seamless loop)
-       Two <video> elements alternate. While A plays (0→2s),
-       B is preloaded at t=0. At the loop point, A fades out
-       and B fades in simultaneously → zero visible cuts.
+       HERO VIDEO — NATIVE LOOP
        ======================================================== */
     const vidA = document.getElementById('hero-video-a');
-    const vidB = document.getElementById('hero-video-b');
-    if (vidA && vidB) {
-        const LOOP_END = 2;
-        let active = vidA;
-        let standby = vidB;
-        let switching = false;
-
-        // Preload standby at frame 0
-        standby.currentTime = 0;
-        standby.pause();
-
-        function crossfadeLoop() {
-            if (!switching && active.currentTime >= LOOP_END - 0.4) {
-                switching = true;
-                // Prepare standby
-                standby.currentTime = 0;
-                standby.play();
-                // Crossfade
-                standby.style.opacity = '1';
-                active.style.opacity = '0';
-
-                setTimeout(() => {
-                    active.pause();
-                    active.currentTime = 0;
-                    // Swap roles
-                    const tmp = active;
-                    active = standby;
-                    standby = tmp;
-                    switching = false;
-                }, 450);
-            }
-            requestAnimationFrame(crossfadeLoop);
-        }
-        requestAnimationFrame(crossfadeLoop);
-
+    if (vidA) {
         vidA.play().catch(() => {
             document.addEventListener('touchstart', () => vidA.play(), { once: true });
             document.addEventListener('click', () => vidA.play(), { once: true });

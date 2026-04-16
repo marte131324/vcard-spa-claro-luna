@@ -50,10 +50,7 @@
 
     <!-- ============ HERO CINEMA — DUAL VIDEO CROSSFADE ============ -->
     <header class="hero" id="hero">
-        <video autoplay muted playsinline class="hero__video hero__video--a" id="hero-video-a">
-            <source src="assets/Portada.MP4" type="video/mp4">
-        </video>
-        <video muted playsinline class="hero__video hero__video--b" id="hero-video-b" style="opacity:0;">
+        <video autoplay loop muted playsinline class="hero__video hero__video--a" id="hero-video-a">
             <source src="assets/Portada.MP4" type="video/mp4">
         </video>
 
@@ -600,14 +597,15 @@
                         </button>
                     </div>
                 </div>
-                
-                <button id="btn-scan-qr" class="rewards__cta" style="width:100%; margin-top:10px; background:rgba(212,175,55,0.08); color:var(--copper); border:1px dashed rgba(212,175,55,0.4);">
-                    <i class="fa-solid fa-camera"></i> Escanear Sello con Cámara
-                </button>
-                <button id="btn-close-qr" class="rewards__cta" style="width:100%; margin-top:10px; background:rgba(255,0,0,0.1); color:#ff6b6b; border:1px solid rgba(255,0,0,0.2); display:none;">
-                    <i class="fa-solid fa-xmark"></i> Cancelar Escaneo
-                </button>
-                <div id="qr-reader" style="width:100%; margin-top:10px; display:none; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);"></div>
+                <div style="display:flex; justify-content:center; align-items:center; flex-direction:column; gap:12px; margin-top:10px;">
+                    <button id="btn-scan-qr" class="rewards__cta" style="width: auto; padding: 12px 28px; border-radius: 50px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); font-size: 0.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-camera"></i> <span>Escanear QR con Cámara</span>
+                    </button>
+                    <button id="btn-close-qr" class="rewards__cta" style="width: auto; padding: 10px 24px; border-radius: 50px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); font-size: 0.75rem; display: none; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-xmark"></i> <span>Cancelar Escaneo</span>
+                    </button>
+                </div>
+                <div id="qr-reader" style="width:100%; max-width:320px; margin:16px auto 0; display:none; border-radius:16px; overflow:hidden; border:2px solid rgba(255,255,255,0.05); box-shadow: 0 10px 25px rgba(0,0,0,0.5);"></div>
                 
                 <p class="loyalty-code__hint" style="margin-top:16px;">Pídele a la recepcionista el código QR para sumar una visita.</p>
 
