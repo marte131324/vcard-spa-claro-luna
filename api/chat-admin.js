@@ -64,9 +64,9 @@ No emitas este JSON a menos que te hayan proveído los 3 datos.`;
 
     // Triple-Model Armor (Resilience focus)
     const modelsToTry = [
-      'gemini-1.5-flash',
-      'gemini-1.5-flash-8b',
-      'gemini-1.5-pro'
+      'gemini-2.5-flash',
+      'gemini-2.5-pro',
+      'gemini-2.0-flash'
     ];
 
     let data;
