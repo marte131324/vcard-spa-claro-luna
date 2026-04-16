@@ -33,9 +33,19 @@ REGLAS ESTRICTAS:
 - Debes ofrecer atajos claros y resolver la vida de la recepcionista.
 - Responde estrictamente al punto. En máximo 3 líneas. Usa formato de lista si es necesario.`;
 
+    const AUTONOMOUS_MODULE_ENABLED = true;
+    let finalPrompt = systemPrompt;
+    
+    if (AUTONOMOUS_MODULE_ENABLED) {
+        finalPrompt += `\n\n=== MODO AGENTE AUTÓNOMO ===
+Eres capaz de accionar comandos en el sistema. 
+Si el usuario te pide literalmente agregar un terapeuta o personal (ej. "agrega a Arely terapeuta..."), DEBES detener la conversación y responder ÚNICA y EXCLUSIVAMENTE con un bloque JSON crudo (sin \`\`\`json ni nada de markdown, solo el objeto) con esta estructura exacta:
+{"action": "ADD_STAFF", "name": "[nombre derivado]", "role": "[puesto derivado (Terapeuta, Recepcionista, Coordinador(a), Gerente, Otro)]", "phone": "[telefono sin espacios si lo proveen]"}`;
+    }
+
     const payload = {
       contents: [{ role: "user", parts: [{ text: message }] }],
-      systemInstruction: { parts: [{ text: systemPrompt }] },
+      systemInstruction: { parts: [{ text: finalPrompt }] },
       generationConfig: { temperature: 0.2, maxOutputTokens: 250 }
     };
 
