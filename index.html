@@ -646,7 +646,7 @@
 
         <!-- FOOTER MINI -->
         <footer class="footer">
-            <img src="assets/PERFIL_FBK_CDL.jpg" alt="" class="footer__avatar">
+            <img src="assets/PERFIL_FBK_CDL.jpg" alt="" class="footer__avatar" loading="lazy">
             <p class="footer__brand">Claro de Luna · Spa y Bienestar</p>
             <p class="footer__address"><i class="fa-solid fa-location-dot"></i> Carretera a Antón Lizardo, Alvarado, Veracruz</p>
             <p class="footer__phone"><i class="fa-solid fa-phone"></i> 229 402 3957</p>
@@ -735,7 +735,7 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const btnScan = document.getElementById('btn-scan-qr');
@@ -836,7 +836,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js" defer></script>
 <script>
     // Configuración del Tour VCard
     const driver = window.driver.js.driver;
