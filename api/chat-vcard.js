@@ -37,16 +37,33 @@ Responde corto, en 2 a 3 líneas máximo. Usa algún emoji elegante como ✨, �
       generationConfig: { temperature: 0.3, maxOutputTokens: 200 }
     };
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    // Retry and Fallback Logic
+    const modelsToTry = [
+      'gemini-2.5-flash-lite',
+      'gemini-3-flash-preview' // Fallback if 2.5 is overloaded
+    ];
 
-    const data = await response.json();
+    let data;
+    for (let i = 0; i < modelsToTry.length; i++) {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelsToTry[i]}:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        data = await response.json();
+        
+        // If successful, break the loop
+        if (!data.error) break;
+        
+        // If error is high demand, but we have another model to try, let it loop
+        if (data.error && (data.error.message.includes("high demand") || response.status === 503) && i < modelsToTry.length - 1) {
+            continue; // Try next model immediately
+        }
+    }
     
     if (data.error) {
-       return new Response(JSON.stringify({ reply: 'Error del proveedor IA: ' + data.error.message }), { 
+       return new Response(JSON.stringify({ reply: 'Sistema IA saturado momentáneamente. Intenta de nuevo en 30 segundos.' }), { 
         status: 200, headers: { 'Content-Type': 'application/json' }
       });
     }
