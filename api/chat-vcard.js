@@ -69,10 +69,11 @@ FORMATO ESTRICTO: Responde siempre de forma súper amena, humana, y directa. (Us
       generationConfig: { temperature: 0.5 }
     };
 
-    // Retry and Fallback Logic
+    // Triple-Model Armor (Resilience focus)
     const modelsToTry = [
-      'gemini-2.5-flash-lite',
-      'gemini-3-flash-preview' // Fallback if 2.5 is overloaded
+      'gemini-1.5-flash',
+      'gemini-1.5-flash-8b',
+      'gemini-1.5-pro'
     ];
 
     let data;
@@ -88,9 +89,10 @@ FORMATO ESTRICTO: Responde siempre de forma súper amena, humana, y directa. (Us
         // If successful, break the loop
         if (!data.error) break;
         
-        // If error is high demand, but we have another model to try, let it loop
-        if (data.error && (data.error.message.includes("high demand") || response.status === 503) && i < modelsToTry.length - 1) {
-            continue; // Try next model immediately
+        // If error is high demand or rate limit, wait 1s and try next model
+        if (data.error && (data.error.message.includes("429") || data.error.message.includes("limit") || response.status === 429)) {
+            await new Promise(r => setTimeout(r, 1000));
+            continue;
         }
     }
     

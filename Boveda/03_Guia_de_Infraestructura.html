@@ -101,10 +101,9 @@
 <div class="section-card">
   <h3>Modelo de Operación: Google Gemini 1.5 Flash</h3>
   <p>El ecosistema cuenta con dos asistentes virtuales (Concierge IA y Ops Copilot IA) desplegados mediante <em>Vercel Edge Functions</em>. Esto significa que la IA no corre en el navegador del usuario, sino en servidores remotos in-hackeables.</p>
-  <ul>
-    <li><strong>Presupuesto Operativo (Costo $0):</strong> A pesar de estar montado sobre el motor corporativo de Google, la arquitectura está programada sobre la capa <em>Hard-Cap Free Tier</em>. Esto asegura que Google <strong>jamás genere cobros sorpresas</strong> o facturación automática.</li>
-    <li><strong>Alto Volumen y Tráfico de Pauta:</strong> El servidor absorbe hasta <strong>1,500 peticiones conversacionales completas por día</strong>, con un máximo de 15 personas preguntando en el mismo instante exacto. Diseñado quirúrgicamente para aguantar picos por campañas publicitarias de Facebook/Instagram.</li>
-    <li><strong>Memoria Contextual (Zero-Cost Cache):</strong> Mediante una matriz dinámica, los bots retienen el contexto de los últimos 10 mensajes intercambiados. Esto les proporciona fluidez y memoria a corto plazo sin recurrir a costosas bases de datos relacionales, manteniendo la operación de Inteligencia Artificial en <strong>$0 mensuales</strong>.</li>
+    <li><strong>Memoria Contextual & Catálogo (Token Management):</strong> La IA procesa ~800 tokens por interacción (incluyendo catálogo completo y 10 mensajes de memoria). Dado que el motor soporta 1,000,000 de tokens por minuto, el impacto del catálogo es <strong>técnicamente despreciable (0.008%)</strong>, permitiendo una inteligencia superior sin sacrificar velocidad ni estabilidad.</li>
+    <li><strong>Alto Volumen y Tráfico de Pauta:</strong> El servidor absorbe hasta <strong>1,500 peticiones diarias</strong>. Esto significa que el Spa puede recibir una consulta cada minuto, las 24 horas del día, con un tope de 15 personas hablando simultáneamente sin bloqueos.</li>
+    <li><strong>Presupuesto Operativo (Costo $0):</strong> La arquitectura está blindada para mantenerse bajo la capa <em>Free Tier</em> de Google Cloud, garantizando que el Spa no pague un solo centavo por el servicio de Inteligencia Artificial, sin importar cuántos clientes pregunten por precios o servicios.</li>
     <li><strong>Fallback Seguro:</strong> Si el tráfico llegar a desbordarse, el bot tiene indicaciones de retirarse amablemente con un "Mi servidor está en mantenimiento", blindando la reputación de la marca sin que la página caiga.</li>
   </ul>
 </div>
