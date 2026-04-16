@@ -72,20 +72,19 @@ document.addEventListener('DOMContentLoaded', () => {
        HERO VIDEO — LOOP ONLY FIRST 3 SECONDS
        ======================================================== */
     const heroVideo = document.getElementById('hero-video');
-    const videoFade = document.getElementById('hero-video-fade');
     if (heroVideo) {
         const LOOP_END = 2;
-        const FADE_START = 1.4; // Start fading 0.6s before loop point
         heroVideo.addEventListener('timeupdate', () => {
-            // Start fade-out before the loop point
-            if (heroVideo.currentTime >= FADE_START && videoFade && !videoFade.classList.contains('active')) {
-                videoFade.classList.add('active');
-            }
-            // Reset video when loop point is reached
             if (heroVideo.currentTime >= LOOP_END) {
-                heroVideo.currentTime = 0;
-                // Fade back in after a brief moment
-                setTimeout(() => { if (videoFade) videoFade.classList.remove('active'); }, 100);
+                // Micro-fade: quick opacity dip hides the frame jump
+                heroVideo.style.transition = 'opacity 0.15s ease';
+                heroVideo.style.opacity = '0.3';
+                setTimeout(() => {
+                    heroVideo.currentTime = 0;
+                    setTimeout(() => {
+                        heroVideo.style.opacity = '1';
+                    }, 50);
+                }, 120);
             }
         });
         heroVideo.play().catch(() => {
@@ -105,20 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ========================================================
-       AUDIO TOGGLE
-       ======================================================== */
-    const audioBtn = document.getElementById('audio-btn');
-    const bgAudio = document.getElementById('bg-audio');
-    let isPlaying = false;
-    if (audioBtn && bgAudio) {
-        audioBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (isPlaying) { bgAudio.pause(); audioBtn.innerHTML = '<i class="fa-solid fa-music"></i>'; }
-            else { bgAudio.play(); audioBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>'; }
-            isPlaying = !isPlaying;
-        });
-    }
 
     /* ========================================================
        MODE TOGGLE — PERSONAL / GIFT
