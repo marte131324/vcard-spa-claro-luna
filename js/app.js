@@ -69,24 +69,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ========================================================
-       HERO VIDEO — LOOP ONLY FIRST 3 SECONDS
+       HERO VIDEO — SEAMLESS 2s LOOP
        ======================================================== */
     const heroVideo = document.getElementById('hero-video');
     if (heroVideo) {
         const LOOP_END = 2;
-        heroVideo.addEventListener('timeupdate', () => {
-            if (heroVideo.currentTime >= LOOP_END) {
-                // Micro-fade: quick opacity dip hides the frame jump
-                heroVideo.style.transition = 'opacity 0.15s ease';
-                heroVideo.style.opacity = '0.3';
+        let looping = false;
+        
+        function checkLoop() {
+            if (!looping && heroVideo.currentTime >= LOOP_END) {
+                looping = true;
+                // Ultra-subtle dissolve: barely perceptible
+                heroVideo.style.transition = 'opacity 0.2s ease-out';
+                heroVideo.style.opacity = '0';
                 setTimeout(() => {
                     heroVideo.currentTime = 0;
-                    setTimeout(() => {
-                        heroVideo.style.opacity = '1';
-                    }, 50);
-                }, 120);
+                    heroVideo.style.transition = 'opacity 0.3s ease-in';
+                    heroVideo.style.opacity = '1';
+                    looping = false;
+                }, 200);
             }
-        });
+            requestAnimationFrame(checkLoop);
+        }
+        requestAnimationFrame(checkLoop);
+        
         heroVideo.play().catch(() => {
             document.addEventListener('touchstart', () => heroVideo.play(), { once: true });
             document.addEventListener('click', () => heroVideo.play(), { once: true });
@@ -104,6 +110,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    /* ========================================================
+       SERVICE DETAIL — LEER MÁS / MENOS
+       ======================================================== */
+    document.querySelectorAll('.service__more').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Don't trigger service selection
+            const service = btn.closest('.service');
+            const isOpen = service.classList.toggle('detail-open');
+            btn.textContent = isOpen ? 'Leer menos' : 'Leer más';
+        });
+    });
 
     /* ========================================================
        MODE TOGGLE — PERSONAL / GIFT

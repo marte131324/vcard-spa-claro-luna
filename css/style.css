@@ -293,11 +293,9 @@ button { font-family: inherit; cursor: pointer; }
    CATEGORY NAVIGATOR — Horizontal Scroll Pills
    ============================================= */
 .cat-nav {
-    display: flex;
-    gap: 0.6rem;
+    display: flex; gap: 0.8rem;
     overflow-x: auto;
-    overflow-y: hidden;
-    padding: 1.5rem 0 1rem;
+    padding: 1.5rem 1.25rem 1rem;
     margin-bottom: 0.5rem;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -530,9 +528,34 @@ button { font-family: inherit; cursor: pointer; }
 .service__desc {
     font-size: 0.8rem; color: var(--text-muted);
     line-height: 1.65; font-weight: 300;
-    margin-bottom: 0.6rem;
-    max-width: 380px;
+    margin-bottom: 0.4rem;
+    max-width: 420px;
 }
+
+/* Expandable Detail */
+.service__detail {
+    font-size: 0.78rem; color: var(--text-muted);
+    line-height: 1.7; font-weight: 300;
+    max-width: 420px;
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.5s var(--ease), opacity 0.4s var(--ease), margin 0.4s var(--ease);
+    margin-bottom: 0;
+}
+.service.detail-open .service__detail {
+    max-height: 300px; opacity: 1;
+    margin-bottom: 0.5rem;
+}
+.service.detail-open .service__desc { display: none; }
+.service__more {
+    background: none; border: none; padding: 0; margin-bottom: 0.5rem;
+    font-size: 0.68rem; font-weight: 400;
+    color: var(--copper); cursor: pointer;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: opacity 0.3s;
+    display: inline-block;
+}
+.service__more:hover { opacity: 0.6; }
 
 /* Tags */
 .service__tags { display: flex; gap: 12px; flex-wrap: wrap; }
