@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
        ======================================================== */
     const heroVideo = document.getElementById('hero-video');
     if (heroVideo) {
-        const LOOP_END = 3;
+        const LOOP_END = 2;
         heroVideo.addEventListener('timeupdate', () => {
             if (heroVideo.currentTime >= LOOP_END) heroVideo.currentTime = 0;
         });
@@ -201,15 +201,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ========================================================
-       CART SYSTEM
+       CART SYSTEM — Expandable with Cancel
        ======================================================== */
     let selectedServices = [];
     let totalPrice = 0;
     const floatingCart = document.getElementById('floating-cart');
     const cartCount = document.getElementById('cart-count');
     const cartPrice = document.getElementById('cart-price');
+    const cartItems = document.getElementById('cart-items');
+    const cartHeader = document.getElementById('cart-header');
+    const btnCartClear = document.getElementById('btn-cart-clear');
     const companionModal = document.getElementById('companion-modal');
     const companionInput = document.getElementById('companion-name');
+
+    // Toggle expand/collapse cart item list
+    if (cartHeader) {
+        cartHeader.addEventListener('click', (e) => {
+            // Don't toggle if clicking buttons
+            if (e.target.closest('.cart__btn') || e.target.closest('.cart__clear')) return;
+            floatingCart.classList.toggle('expanded');
+        });
+    }
+
+    // Clear all selections
+    if (btnCartClear) {
+        btnCartClear.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectedServices = [];
+            totalPrice = 0;
+            allServices.forEach(s => s.classList.remove('selected'));
+            floatingCart.classList.remove('expanded');
+            updateCart();
+        });
+    }
+
+    // Remove individual item
+    function removeService(idx) {
+        const removed = selectedServices[idx];
+        if (!removed) return;
+        totalPrice -= removed.price;
+        selectedServices.splice(idx, 1);
+        // Deselect the service card
+        const card = document.querySelector(`.service[data-name="${removed.originalName || removed.name}"]`);
+        if (card) card.classList.remove('selected');
+        updateCart();
+    }
 
     allServices.forEach(item => {
         item.addEventListener('click', () => {
@@ -221,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.classList.contains('selected')) {
                 item.classList.remove('selected');
                 totalPrice -= price;
-                const idx = selectedServices.findIndex(s => s.name.includes(name));
+                const idx = selectedServices.findIndex(s => (s.originalName || s.name) === name);
                 if (idx > -1) selectedServices.splice(idx, 1);
                 updateCart();
             } else {
@@ -231,13 +267,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     companionModal.classList.add('active');
                     document.getElementById('btn-companion').onclick = () => {
                         const guest = companionInput.value.trim();
-                        selectedServices.push({ name: guest ? `${name} (con ${guest})` : name, price });
+                        selectedServices.push({ 
+                            name: guest ? `${name} (con ${guest})` : name, 
+                            originalName: name,
+                            price 
+                        });
                         companionModal.classList.remove('active');
                         companionInput.value = '';
                         updateCart();
                     };
                 } else {
-                    selectedServices.push({ name, price });
+                    selectedServices.push({ name, originalName: name, price });
                     updateCart();
                 }
             }
@@ -249,10 +289,26 @@ document.addEventListener('DOMContentLoaded', () => {
             floatingCart.classList.add('visible');
             cartCount.textContent = `${selectedServices.length} servicio${selectedServices.length > 1 ? 's' : ''}`;
             cartPrice.textContent = `$${totalPrice.toLocaleString('en-US')} MXN`;
+            // Render item list
+            if (cartItems) {
+                cartItems.innerHTML = selectedServices.map((s, i) => `
+                    <div class="cart__item">
+                        <span class="cart__item-name">${s.name}</span>
+                        <span class="cart__item-price">$${s.price.toLocaleString('en-US')}</span>
+                        <button class="cart__item-remove" onclick="event.stopPropagation(); window.__removeCartItem(${i})" aria-label="Quitar">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
         } else {
             floatingCart.classList.remove('visible');
+            floatingCart.classList.remove('expanded');
+            if (cartItems) cartItems.innerHTML = '';
         }
     }
+    // Expose remove function globally
+    window.__removeCartItem = removeService;
 
     /* ========================================================
        CHECKOUT FLOW

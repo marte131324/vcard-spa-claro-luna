@@ -666,14 +666,24 @@
 
     <!-- ============ FLOATING CART ============ -->
     <div id="floating-cart" class="cart">
-        <div class="cart__info">
-            <span class="cart__count" id="cart-count">0 servicios</span>
-            <span class="cart__total" id="cart-price">$0 MXN</span>
+        <div class="cart__header" id="cart-header">
+            <div class="cart__info">
+                <span class="cart__count" id="cart-count">0 servicios</span>
+                <span class="cart__total" id="cart-price">$0 MXN</span>
+            </div>
+            <div class="cart__actions">
+                <button id="btn-cart-clear" class="cart__clear" aria-label="Cancelar todo" title="Cancelar todo">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <button id="btn-checkout" class="cart__btn">
+                    <span id="btn-book-text">Reservar</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
-        <button id="btn-checkout" class="cart__btn">
-            <span id="btn-book-text">Reservar</span>
-            <i class="fa-solid fa-arrow-right"></i>
-        </button>
+        <div class="cart__items" id="cart-items">
+            <!-- Selected services will be injected here -->
+        </div>
     </div>
 
     <script src="js/app.js"></script>
