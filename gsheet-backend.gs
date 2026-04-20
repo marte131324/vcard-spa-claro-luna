@@ -46,7 +46,11 @@ function getConfig() {
   };
 }
 
-function validatePin(pin) { return pin === getConfig().STAFF_PIN; }
+function validatePin(pin) {
+  const conf = getConfig();
+  const p = String(pin).trim();
+  return p === conf.STAFF_PIN || p === conf.MASTER_PIN;
+}
 
 // ============ MAIN HANDLERS (DISPATCHER) ============
 function doGet(e) { return handleRequest(e); }
