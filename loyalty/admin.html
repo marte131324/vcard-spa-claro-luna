@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="/js/config.js"></script>
+    <script src="../js/config.js"></script>
     <style>
         :root {
             --copper: #D4A373; --copper-deep: #B88655; --bg: #0D0B09;
@@ -426,9 +426,13 @@ function login() {
     if (!pin) { showError('login-error', 'Ingresa el PIN'); return; }
 
     if (API_URL) {
+        console.log('Authenticating with:', API_URL);
         api('stats', { pin }).then(res => {
             if (res.success) { showDashboard(); renderStats(res); loadServices(); }
             else showError('login-error', res.error || 'PIN incorrecto');
+        }).catch(err => {
+            console.error('Auth Request failed:', err);
+            showError('login-error', 'Error de conexión / CORS');
         });
     } else {
         showDashboard();

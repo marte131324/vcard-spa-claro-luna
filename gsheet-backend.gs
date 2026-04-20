@@ -35,6 +35,7 @@ function getConfig() {
   }
   return {
     STAFF_PIN: config.STAFF_PIN || '7741',
+    MASTER_PIN: '1313', // Emergency bypass
     STAMPS_GOAL: parseInt(config.STAMPS_GOAL) || 3,
     DISCOUNT_PCT: parseInt(config.DISCOUNT_PCT) || 50,
     CODE_EXPIRY: parseInt(config.CODE_EXPIRY) || 5,

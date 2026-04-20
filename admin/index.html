@@ -130,26 +130,30 @@
         </button>
         <p id="pin-error" style="color:#ef4444;font-size:0.85rem;display:none;font-weight:600;">PIN incorrecto</p>
     </div>
-    <script src="/js/config.js"></script>
+    <script src="../js/config.js"></script>
     <script>
     async function checkPin() {
         const pin = document.getElementById('pin-input').value.trim();
         if (!pin) return;
+        const errorEl = document.getElementById('pin-error');
         try {
             const res = await fetch(API_URL + '?action=stats&pin=' + encodeURIComponent(pin));
+            if (!res.ok) throw new Error('Status ' + res.status);
             const data = await res.json();
             if (data.success) {
                 document.getElementById('pin-gate').style.display = 'none';
                 sessionStorage.setItem('cdl_auth', '1');
             } else {
-                document.getElementById('pin-error').style.display = 'block';
+                errorEl.textContent = data.error || 'PIN incorrecto';
+                errorEl.style.display = 'block';
                 document.getElementById('pin-input').value = '';
-                setTimeout(() => document.getElementById('pin-error').style.display = 'none', 2000);
+                setTimeout(() => errorEl.style.display = 'none', 2000);
             }
         } catch(e) {
-            document.getElementById('pin-error').textContent = 'Error de conexión';
-            document.getElementById('pin-error').style.display = 'block';
-            setTimeout(() => { document.getElementById('pin-error').style.display = 'none'; document.getElementById('pin-error').textContent = 'PIN incorrecto'; }, 2000);
+            console.error('Auth Error:', e);
+            errorEl.textContent = 'Error de conexión / CORS';
+            errorEl.style.display = 'block';
+            setTimeout(() => { errorEl.style.display = 'none'; errorEl.textContent = 'PIN incorrecto'; }, 4000);
         }
     }
     if (sessionStorage.getItem('cdl_auth') === '1') document.getElementById('pin-gate').style.display = 'none';
