@@ -453,12 +453,16 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i <= 3; i++) {
             const label = document.getElementById(`stamp-label-${i}`);
             if (!label) continue;
-            const entry = history.find(h => h.stamp === i);
-            if (entry && i <= stamps) {
-                // Show short service name (first 2 words) + amount
+            // Try matching by stamp number first, then fall back to array index
+            const entry = history.find(h => h.stamp === i) || history[i - 1];
+            if (entry && entry.service && i <= stamps) {
+                // Show short service name (first 2 words)
                 const shortName = entry.service.split(' ').slice(0, 2).join(' ');
                 label.textContent = shortName;
                 label.title = `${entry.service} · $${(entry.amount || 0).toLocaleString()} · ${new Date(entry.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}`;
+            } else if (i <= stamps) {
+                label.textContent = `Servicio ${i}`;
+                label.title = '';
             } else {
                 label.textContent = `Visita ${i}`;
                 label.title = '';

@@ -193,12 +193,34 @@ function redeemStampCode(code, phone) {
   let coRow = -1;
   for (let i = 1; i < codesData.length; i++) { if (String(codesData[i][0]).toUpperCase() === String(code).toUpperCase()) { coRow = i; break; } }
   if (coRow === -1 || String(codesData[coRow][6]).toUpperCase() === 'SI') return { success: false, error: 'Código inválido o usado' };
+  
+  // Mark code as used
   codesSheet.getRange(coRow + 1, 7).setValue('SI');
-  const config = getConfig();
+  codesSheet.getRange(coRow + 1, 8).setValue(phone);
+  
+  // Get service info from the code
+  const service = String(codesData[coRow][1]) || 'Servicio';
+  const amount = Number(codesData[coRow][2]) || 0;
+  
+  // Update stamps
   let stamps = Number(clientData[cRow][2]) + 1;
   clientSheet.getRange(cRow + 1, 3).setValue(stamps);
   clientSheet.getRange(cRow + 1, 4).setValue(Number(clientData[cRow][3]) + 1);
-  return { success: true, message: `¡Sello registrado!`, stamps };
+  
+  // Update history JSON (column 6)
+  let history = safeParseJSON(clientData[cRow][5] || '[]');
+  history.push({
+    stamp: stamps,
+    service: service,
+    amount: amount,
+    date: new Date().toISOString()
+  });
+  clientSheet.getRange(cRow + 1, 6).setValue(JSON.stringify(history));
+  
+  // Update last stamp date (column 7)
+  clientSheet.getRange(cRow + 1, 7).setValue(new Date().toISOString());
+  
+  return { success: true, message: '¡Sello registrado!', stamps, service, amount };
 }
 
 function createGift(pin, giftTo, giftFrom, service, amount) {
