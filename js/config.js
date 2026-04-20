@@ -10,4 +10,4 @@
  * actualizar ÚNICAMENTE este archivo.
  */
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbwWqsyzxQbVUeEMtyyzTLhs4w8yGG13PErX6tX-fCUASc45bH5IBoMpDVjJJzNEXQw/exec';
+window.API_URL = 'https://script.google.com/macros/s/AKfycbwWqsyzxQbVUeEMtyyzTLhs4w8yGG13PErX6tX-fCUASc45bH5IBoMpDVjJJzNEXQw/exec';

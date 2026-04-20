@@ -130,15 +130,28 @@
         </button>
         <p id="pin-error" style="color:#ef4444;font-size:0.85rem;display:none;font-weight:600;">PIN incorrecto</p>
     </div>
-    <script src="../js/config.js"></script>
+    <script src="/js/config.js?v=3.2"></script>
     <script>
     async function checkPin() {
-        const pin = document.getElementById('pin-input').value.trim();
+        const btn = document.querySelector('#pin-gate button');
+        const pinInput = document.getElementById('pin-input');
+        const pin = pinInput.value.trim();
         if (!pin) return;
         const errorEl = document.getElementById('pin-error');
+        
+        const apiBase = window.API_URL || (typeof API_URL !== 'undefined' ? API_URL : null);
+
+        if (!apiBase) {
+            alert('ERROR: Configuración no encontrada. Recarga la página (Cmd+Shift+R).');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Verificando...';
+
         try {
-            const res = await fetch(API_URL + '?action=stats&pin=' + encodeURIComponent(pin));
-            if (!res.ok) throw new Error('Status ' + res.status);
+            const res = await fetch(apiBase + '?action=stats&pin=' + encodeURIComponent(pin));
+            if (!res.ok) throw new Error('Servidor no disponible');
             const data = await res.json();
             if (data.success) {
                 document.getElementById('pin-gate').style.display = 'none';
@@ -146,14 +159,15 @@
             } else {
                 errorEl.textContent = data.error || 'PIN incorrecto';
                 errorEl.style.display = 'block';
-                document.getElementById('pin-input').value = '';
+                pinInput.value = '';
                 setTimeout(() => errorEl.style.display = 'none', 2000);
             }
         } catch(e) {
             console.error('Auth Error:', e);
-            errorEl.textContent = 'Error de conexión / CORS';
-            errorEl.style.display = 'block';
-            setTimeout(() => { errorEl.style.display = 'none'; errorEl.textContent = 'PIN incorrecto'; }, 4000);
+            alert('Fallo de conexión:\n' + e.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Acceder';
         }
     }
     if (sessionStorage.getItem('cdl_auth') === '1') document.getElementById('pin-gate').style.display = 'none';
