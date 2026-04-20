@@ -20,17 +20,20 @@
   li { margin:6px 0; }
   .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
   .section-card h3 { margin-top:0; color:#0e86b0; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:16px;}
-  .tree { font-family:'Courier New', monospace; background:#0f172a; color:#94a3b8; padding:20px 24px; border-radius:12px; font-size:0.82rem; line-height:1.9; margin:16px 0; }
+  .tree { font-family:'Courier New', monospace; background:#0f172a; color:#94a3b8; padding:20px 24px; border-radius:12px; font-size:0.82rem; line-height:1.9; margin:16px 0; white-space:pre-wrap; }
   .tree .folder { color:#22d3ee; font-weight:700; }
   .tree .file { color:#a5f3fc; }
   .tree .desc { color:#64748b; font-style:italic; }
+  .tree .new { color:#4ade80; font-weight:700; }
   .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
   .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
   .security { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
+  .info { background:#eff6ff; border-left:4px solid #3b82f6; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
   table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
   th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
   td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
   tr:nth-child(even) td { background:#f8fafc; }
+  code { background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:0.82rem; color:#0e86b0; }
   .footer { margin-top:40px; padding-top:16px; border-top:2px solid #e2e8f0; font-size:0.75rem; color:#94a3b8; text-align:center; }
   @media print { body { padding:0; } .section-card, .tree { break-inside:avoid; } }
 </style>
@@ -45,84 +48,165 @@
   </div>
   <div style="text-align:right;">
     <div style="font-size:0.75rem; color:#94a3b8;">Desarrollado por Christian Belmont</div>
-    <div style="font-size:0.75rem; color:#94a3b8;">Abril 2026</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">v3.2 · Abril 2026</div>
   </div>
 </div>
 
-<p>Para asegurar una disponibilidad del 99.99% y proteger agresivamente tus datos operativos, he montado una arquitectura basada en tecnologías sólidas de backend, alejándome de soluciones débiles de sitios web constructores.</p>
+<p>Para asegurar una disponibilidad del 99.99% y proteger agresivamente tus datos operativos, he montado una arquitectura basada en tecnologías de grado empresarial, alejándome de soluciones débiles de sitios web constructores.</p>
 
 <!-- ═══ ESTRUCTURA ═══ -->
 <h2>1. Estructura de Componentes Front-End</h2>
-<div class="tree">
-<span class="folder">Ecosistema Claro_De_Luna_v1/</span>
-  <span class="file">index.html</span>               <span class="desc">-- Componente Raíz: VCard y Lealtad Pública</span>
-  <span class="folder">admin/</span>
-    <span class="file">index.html</span>              <span class="desc">-- Entorno aislado: Command Center / Dashboards</span>
-    <span class="file">app.js</span>                  <span class="desc">-- Micro-gestor que valida la firma criptográfica (PIN)</span>
-  <span class="folder">checkin/</span>
-    <span class="file">index.html</span>              <span class="desc">-- Componente de Captación Legal de Paciente/Huésped</span>
-  <span class="folder">loyalty/</span>                  <span class="desc">-- Funciones algorítmicas de validación de sellos </span>
-  <span class="folder">Boveda/</span>                   <span class="desc">-- Sistema interno de entregables y SLAs (Esta guía)</span>
+<div class="tree"><span class="folder">vcard-spa-claro-luna/</span>
+├── <span class="file">index.html</span>               <span class="desc">-- VCard Pública (Catálogo, Lealtad, IA)</span>
+├── <span class="file">politicas.html</span>            <span class="desc">-- Políticas de Privacidad y Términos</span>
+├── <span class="file">vercel.json</span>               <span class="desc">-- Headers de Seguridad (HSTS, CSP, Camera)</span>
+├── <span class="file">gsheet-backend.gs</span>         <span class="desc">-- Backend Maestro (Google Apps Script v3.2)</span>
+├── <span class="folder">js/</span>
+│   ├── <span class="new">config.js</span>              <span class="desc">-- [NUEVO] Configuración centralizada (API_URL)</span>
+│   └── <span class="file">app.js</span>                <span class="desc">-- Lógica principal de la VCard</span>
+├── <span class="folder">css/</span>
+│   └── <span class="file">style.css</span>             <span class="desc">-- Hoja de estilos principal</span>
+├── <span class="folder">api/</span>
+│   └── <span class="file">chat-vcard.js</span>         <span class="desc">-- Edge Function: IA Concierge "Luna"</span>
+├── <span class="folder">admin/</span>
+│   ├── <span class="file">index.html</span>            <span class="desc">-- Command Center (PIN Gate + Dashboard)</span>
+│   └── <span class="file">app.js</span>                <span class="desc">-- Lógica del panel administrativo</span>
+├── <span class="folder">checkin/</span>
+│   └── <span class="file">index.html</span>            <span class="desc">-- Formulario Médico de Check-In</span>
+├── <span class="folder">loyalty/</span>
+│   └── <span class="file">admin.html</span>            <span class="desc">-- Panel Concierge (Lealtad + Certificados)</span>
+├── <span class="folder">Boveda/</span>
+│   ├── <span class="file">index.html</span>            <span class="desc">-- Portal de Entrega (esta documentación)</span>
+│   ├── <span class="file">01_Requerimientos.html</span> <span class="desc">-- Doc 1: Onboarding y Requerimientos</span>
+│   ├── <span class="file">02_Guia_de_Uso.html</span>   <span class="desc">-- Doc 2: Manual Operativo Exhaustivo</span>
+│   └── <span class="file">03_Infraestructura.html</span><span class="desc">-- Doc 3: Este documento</span>
+└── <span class="folder">assets/</span>                   <span class="desc">-- Imágenes, videos y recursos visuales</span>
 </div>
 
 <!-- ═══ CONECTIVIDAD DB ═══ -->
-<h2>2. Sincronía Backend <> Frontend</h2>
+<h2>2. Sincronía Backend → Frontend</h2>
 <div class="section-card">
   <h3>Conexión al Ecosistema "Google Workspace"</h3>
   <p>Tu aplicación se comunica de fondo mediante flujos estructurados de datos bajo <em>Google Apps Script</em>. Funciona con un modelo de triple puente:</p>
   <ol>
-    <li>1️⃣ <strong>Ingesta de Petición:</strong> El huésped en el celular emite sus interacciones.</li>
-    <li>2️⃣ <strong>Cifrado y Transmisión Asíncrona (Endpoint):</strong> El paquete se comprime bajo cabeceras estrictas de seguridad web y viaja a los servidores de Google hacia el identificador único <code>[API ENCRYPTED ENDPOINT] / SSL Handshake</code></li>
-    <li>3️⃣ <strong>Motor Administrativo Central:</strong> El script oculto intercepta el mensaje. Evalúa criptográficamente si cumple las reglas, y lo "aterriza" elegantemente detrás de su barrera de seguridad de tu cuenta principal de Google Sheets de la clínica.</li>
+    <li><strong>Ingesta de Petición:</strong> El usuario (cliente o recepcionista) emite una interacción desde su celular o computadora.</li>
+    <li><strong>Transmisión Cifrada (HTTPS):</strong> El paquete se comprime bajo cabeceras estrictas de seguridad web y viaja por SSL a los servidores de Google.</li>
+    <li><strong>Motor Administrativo Central:</strong> El script evalúa la petición, valida el PIN si es necesario, y ejecuta la operación sobre la hoja correspondiente de Google Sheets.</li>
   </ol>
+</div>
+
+<div class="section-card">
+  <h3>Configuración Centralizada</h3>
+  <p>La URL del backend está definida en un <strong>solo archivo</strong>: <code>js/config.js</code>. Esto significa que:</p>
+  <ul>
+    <li>Si se regenera el deploy de Google Apps Script, solo se actualiza <strong>1 archivo</strong>.</li>
+    <li>Todos los módulos (VCard, Admin, Lealtad, Check-In) importan esta misma configuración.</li>
+    <li>Elimina el riesgo de tener URLs disparadas o desactualizadas en archivos diferentes.</li>
+  </ul>
   <div class="tip">
-    Este enfoque permite la robustez de una app corporativa. Evitándote mantenimientos de bases de datos astronómicos y asegura acceso rápido 24/7 a tu sistema central de control.
+    <strong>URL actual del backend:</strong><br>
+    <code>https://script.google.com/macros/s/AKfycbw...exec</code><br>
+    Definida en: <code>/js/config.js</code> (línea 13)
   </div>
 </div>
 
 <!-- ═══ BLINDAJE ═══ -->
-<h2>3. Protocolos Strict de Seguridad Funcional</h2>
+<h2>3. Protocolos de Seguridad Funcional</h2>
 <div class="section-card">
-  <h3>Filtros Implementados Activamente</h3>
-  <p>Dado que el panel tiene acceso fluido sobre el historial económico y datos médicos del Spa, establecimos 5 candados operables 24/7 de grado avanzado:</p>
+  <h3>6 Capas de Blindaje Activas 24/7</h3>
+  <p>Dado que el panel tiene acceso fluido sobre el historial económico y datos médicos del Spa, establecimos 6 candados de grado avanzado:</p>
   <table>
-    <tr><th>Protocolo / Nivel de Despliegue</th><th>¿Qué protege en la práctica?</th></tr>
-    <tr><td>Blindaje de Acceso (Hash Gate)</td><td>Cifra algorítmicamente la entrada del Command Center de tal forma que ni siquiera administradores del código fuente pueden observar la composición de las credenciales internas.</td></tr>
-    <tr><td>Token Validation Secreto</td><td>Impide que competidores o rastreadores de datos envíen "ruido" al servidor con bots automáticos. La bóveda exige el Token Criptográfico propietario para permitir el paso de datos válidos.</td></tr>
-    <tr><td>Edge Frame Protection</td><td>Bloquea los ciber-ataques. Nadie podrá clonar o incrustar sus portales internos en sitios fraudulentos (Esquemas de intermediación o Click-Hijacking).</td></tr>
-    <tr><td>Continuous Secure Transfer (HSTS)</td><td>Fuerza la comunicación SSL perimetral en milisegundos perpetuamente, impidiendo interceptación de envío de datos durante el uso en redes Wi-Fi públicas.</td></tr>
-    <tr><td>Asset Anti-Theft Protocol</td><td>Evita que páginas de terceros roben y utilicen las imágenes o videos de su negocio afectando el ancho de banda.</td></tr>
+    <tr><th>Protocolo</th><th>¿Qué protege en la práctica?</th></tr>
+    <tr>
+        <td><strong>Validación de PIN en Backend</strong></td>
+        <td>El PIN <strong>nunca se almacena en el código fuente ni en el navegador</strong>. Cada intento de acceso al Command Center y al Panel de Lealtad se valida contra la base de datos del servidor en tiempo real. Imposible extraer el PIN analizando el HTML.</td>
+    </tr>
+    <tr>
+        <td><strong>Session Storage Volátil</strong></td>
+        <td>Una vez autenticado, la sesión solo persiste mientras el navegador esté abierto. Al cerrar la pestaña o el navegador, se requiere PIN de nuevo. No se almacena nada en cookies permanentes.</td>
+    </tr>
+    <tr>
+        <td><strong>HSTS (Strict Transport Security)</strong></td>
+        <td>Fuerza la comunicación SSL perpetuamente, impidiendo interceptación de datos durante el uso en redes Wi-Fi públicas del spa o cafetería.</td>
+    </tr>
+    <tr>
+        <td><strong>X-Frame-Options (SAMEORIGIN)</strong></td>
+        <td>Bloquea ataques de clickjacking. Nadie puede clonar o incrustar los portales internos en sitios fraudulentos.</td>
+    </tr>
+    <tr>
+      <td><strong>Permissions-Policy: camera=(self)</strong></td>
+      <td>La cámara solo puede activarse desde el dominio oficial del spa. Sitios externos no pueden acceder a la cámara del usuario a través de un iframe.</td>
+    </tr>
+    <tr>
+        <td><strong>Token Temporal Anti-Clonación</strong></td>
+        <td>Cada código de sello de lealtad es de un solo uso y expira en 5 minutos. Imposible compartir capturas de pantalla para obtener sellos fraudulentos.</td>
+    </tr>
   </table>
-  <div class="security">
-    <strong>Propiedad Intelectual & Anti-Clonación Estricta:</strong> La arquitectura documentada, lógica de base de datos interconectada, algoritmos comerciales, y la sintaxis procedural constituyen secretos técnicos bajo mi propiedad intelectual. <strong>Aviso Legal y Limitación de Ingeniería Inversa (AI/Manual):</strong> Queda estrictamente prohibida la inserción sistemática o alimentación de este documento y/o el código fuente entregable en sistemas de entrenamiento y modelado de Inteligencia Artificial de terceros con el objetivo de ingeniería inversa o réplica estructural.
-  </div>
-<!-- ═══ AI LIMITS & CEREBRO ═══ -->
+</div>
+
+<div class="security">
+    <strong>Propiedad Intelectual y Anti-Clonación Estricta:</strong> La arquitectura documentada, lógica de base de datos interconectada, algoritmos comerciales, y la sintaxis procedural constituyen secretos técnicos bajo propiedad intelectual. <strong>Aviso Legal y Limitación de Ingeniería Inversa (AI/Manual):</strong> Queda estrictamente prohibida la inserción sistemática o alimentación de este documento y/o el código fuente entregable en sistemas de entrenamiento y modelado de Inteligencia Artificial de terceros con el objetivo de ingeniería inversa o réplica estructural.
+</div>
+
+<!-- ═══ AI ═══ -->
 <h2>4. Cerebro de Inteligencia Artificial (Red de Costo Cero)</h2>
 <div class="section-card">
-  <h3>Modelo de Operación: Google Gemini 1.5 Flash</h3>
-  <p>El ecosistema cuenta con dos asistentes virtuales (Concierge IA y Ops Copilot IA) desplegados mediante <em>Vercel Edge Functions</em>. Esto significa que la IA no corre en el navegador del usuario, sino en servidores remotos in-hackeables.</p>
-    <li><strong>Memoria Contextual & Catálogo (Token Management):</strong> La IA procesa ~800 tokens por interacción (incluyendo catálogo completo y 10 mensajes de memoria). Dado que el motor soporta 1,000,000 de tokens por minuto, el impacto del catálogo es <strong>técnicamente despreciable (0.008%)</strong>, permitiendo una inteligencia superior sin sacrificar velocidad ni estabilidad.</li>
-    <li><strong>Alto Volumen y Tráfico de Pauta:</strong> El servidor absorbe hasta <strong>1,500 peticiones diarias</strong>. Esto significa que el Spa puede recibir una consulta cada minuto, las 24 horas del día, con un tope de 15 personas hablando simultáneamente sin bloqueos.</li>
-    <li><strong>Presupuesto Operativo (Costo $0):</strong> La arquitectura está blindada para mantenerse bajo la capa <em>Free Tier</em> de Google Cloud, garantizando que el Spa no pague un solo centavo por el servicio de Inteligencia Artificial, sin importar cuántos clientes pregunten por precios o servicios.</li>
-    <li><strong>Fallback Seguro:</strong> Si el tráfico llegar a desbordarse, el bot tiene indicaciones de retirarse amablemente con un "Mi servidor está en mantenimiento", blindando la reputación de la marca sin que la página caiga.</li>
-  </ul>
-</div>
+  <h3>Modelo de Operación: Google Gemini 2.0 Flash</h3>
+  <p>El ecosistema cuenta con dos asistentes virtuales desplegados mediante <em>Vercel Edge Functions</em>. Esto significa que la IA no corre en el navegador del usuario, sino en servidores remotos blindados.</p>
 
-<h2>5. Módulo Premium: Evolución de Inteligencia Artificial (Nivel 2 vs Nivel 4)</h2>
-<div class="section-card" style="border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 25px;">
-  <p>El sistema cuenta con la capacidad de habilitar un <strong>Upgrade Arquitectónico</strong> que transforma la naturaleza de las Operaciones del Spa, subiendo el escalafón de Inteligencia Artificial de un estado Consultivo a un estado Autónomo.</p>
+  <table>
+    <tr><th>Asistente</th><th>Ubicación</th><th>Capacidad</th></tr>
+    <tr><td><strong>Luna (Concierge IA)</strong></td><td>VCard Pública (botón flotante)</td><td>Atiende clientes, recomienda servicios, cierra ventas</td></tr>
+    <tr><td><strong>Copilot Admin (Ops IA)</strong></td><td>Command Center</td><td>Consulta datos, ejecuta comandos del sistema, automatiza tareas</td></tr>
+  </table>
+
+  <h3 style="margin-top:20px;">Especificaciones Técnicas</h3>
   <ul>
-    <li><strong>Asistente Consultivo (Nivel 2) - <span style="color:#9A8E82;">VERSIÓN BASE</span>:</strong><br> El bot entiende todo el contexto del Spa, responde rápido y orienta. Sin embargo, su limitante es que sus "manos están atadas". No puede alterar la base de datos, no puede agendar por sí mismo, ni agregar empleados al sistema. Requiere que un humano lea su consejo y ejecute la tarea manualmente.</li>
-    <br>
-    <li><strong>Agente Autónomo de Ejecución (Nivel 4) - <span style="color:var(--accent);">MÓDULO PREMIUM HABILITADO / UPSSELL</span>:</strong><br> Desbloquea la capa motriz de la unidad lógica (DOM-JSON Injection). El agente ya no solo da consejos, sino que tiene las "llaves" del sistema. Si le pides verbalmente o por chat: <em>"Agrega de favor a Arely como terapeuta con este teléfono"</em>, la IA procesará la semántica, enviará un puente de datos oculto, controlará el panel administrativo sin usar el mouse, rellenará las bases de datos y sincronizará la información automáticamente. Esto elimina radicalmente el cuello de botella de la recepcionista, automatizando las tareas administrativas repetitivas sin margen de error humano.</li>
+    <li><strong>Memoria Contextual y Catálogo (Token Management):</strong> La IA procesa ~800 tokens por interacción (incluyendo catálogo completo y 10 mensajes de memoria). Dado que el motor soporta 1,000,000 de tokens por minuto, el impacto del catálogo es <strong>técnicamente despreciable (0.008%)</strong>, permitiendo una inteligencia superior sin sacrificar velocidad.</li>
+    <li><strong>Alto Volumen y Tráfico de Pauta:</strong> El servidor absorbe hasta <strong>1,500 peticiones diarias</strong>. Esto significa que el Spa puede recibir una consulta cada minuto, las 24 horas del día, con un tope de 15 personas hablando simultáneamente sin bloqueos.</li>
+    <li><strong>Presupuesto Operativo (Costo $0):</strong> La arquitectura está blindada para mantenerse bajo la capa <em>Free Tier</em> de Google Cloud, garantizando costos permanentes de $0 MXN por el servicio de Inteligencia Artificial.</li>
+    <li><strong>Fallback Seguro:</strong> Si el tráfico desbordara, el bot se retira amablemente con un "Mi servidor está en mantenimiento", blindando la reputación de la marca sin que la página caiga.</li>
   </ul>
 </div>
 
+<!-- ═══ NIVELES IA ═══ -->
+<h2>5. Módulo Premium: Evolución de Inteligencia Artificial (Nivel 2 vs Nivel 4)</h2>
+<div class="section-card">
+  <p>El sistema cuenta con la capacidad de habilitar un <strong>Upgrade Arquitectónico</strong> que transforma la naturaleza de las Operaciones del Spa:</p>
+  <ul>
+    <li><strong>Asistente Consultivo (Nivel 2) — <span style="color:#9A8E82;">VERSIÓN BASE</span>:</strong><br> El bot entiende todo el contexto del Spa, responde rápido y orienta. Sin embargo, sus "manos están atadas": no puede alterar la base de datos, no puede agendar por sí mismo ni agregar empleados. Requiere que un humano lea su consejo y ejecute la tarea manualmente.</li>
+    <br>
+    <li><strong>Agente Autónomo de Ejecución (Nivel 4) — <span style="color:#D4A373;">MÓDULO PREMIUM HABILITADO</span>:</strong><br> Desbloquea la capa motriz de la unidad lógica. El agente ya no solo da consejos, sino que tiene las "llaves" del sistema. Si le pides verbalmente: <em>"Agrega de favor a Arely como terapeuta con este teléfono"</em>, la IA procesará la semántica, controlará el panel administrativo, rellenará las bases de datos y sincronizará la información automáticamente. Esto elimina radicalmente el cuello de botella de la recepcionista.</li>
+  </ul>
+</div>
+
+<!-- ═══ HOSTING ═══ -->
 <h2>6. Hosting Perimetral Global CDN</h2>
-<p>La infraestructura está hospedada en nodos globales de despliegue. Esto significa que si un paciente carga el portal interfiere el servidor más veloz automáticamente, logrando aperturas ultra rápidas.</p>
+<div class="section-card">
+    <h3>Infraestructura de Despliegue</h3>
+    <table>
+        <tr><th>Componente</th><th>Proveedor</th><th>Costo Mensual</th><th>Función</th></tr>
+        <tr><td>Frontend y CDN</td><td>Vercel</td><td>$0 MXN</td><td>Hosting, SSL, Edge Functions, distribución global</td></tr>
+        <tr><td>Base de Datos</td><td>Google Sheets</td><td>$0 MXN</td><td>Almacenamiento estructurado permanente</td></tr>
+        <tr><td>Backend API</td><td>Google Apps Script</td><td>$0 MXN</td><td>Procesamiento de datos, validaciones, CRUD</td></tr>
+        <tr><td>Motor IA</td><td>Google AI (Gemini 2.0 Flash)</td><td>$0 MXN</td><td>Chatbot consultivo y operativo</td></tr>
+        <tr><td>Repositorio</td><td>GitHub</td><td>$0 MXN</td><td>Control de versiones y código fuente</td></tr>
+    </table>
+    <div class="info"><strong>Total de Costos Recurrentes: $0 MXN / mes.</strong> Sin licencias, sin pagos a plataformas, sin servidores que mantener. Todo corre en capas gratuitas de infraestructura empresarial.</div>
+</div>
+
+<!-- ═══ VERSIONADO ═══ -->
+<h2>7. Registro de Versiones</h2>
+<table>
+    <tr><th>Versión</th><th>Fecha</th><th>Cambios Principales</th></tr>
+    <tr><td>v1.0</td><td>Marzo 2026</td><td>Lanzamiento inicial: VCard, Catálogo, Splash Screen</td></tr>
+    <tr><td>v2.0</td><td>Marzo 2026</td><td>Club de Lealtad QR, Certificados de Regalo, Panel Concierge</td></tr>
+    <tr><td>v3.0</td><td>Abril 2026</td><td>Command Center, Check-In Médico, Motor IA Nivel 4</td></tr>
+    <tr><td>v3.2</td><td>Abril 2026</td><td>Auditoría de seguridad: PIN migrado a backend, API centralizada, camera policy corregida, ortografía, optimización de rendimiento móvil (particle mesh adaptivo), backup localStorage en check-in</td></tr>
+</table>
 
 <div class="footer">
-  Claro de Luna Spa — Infraestructura Hardening &copy; 2026<br>
+  Claro de Luna Spa — Infraestructura Hardening v3.2 &copy; 2026<br>
   <strong>CONFIDENCIAL.</strong> Desarrollado por Christian Belmont. Queda estrictamente inhibida la exposición pública o técnica a terceros no autorizados.
 </div>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manual Exhaustivo de Operación Nivel Cero a Experto — Claro de Luna Spa</title>
+<title>Manual Maestría del Ecosistema — Claro de Luna Spa</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -20,19 +20,26 @@
   li { margin:6px 0; }
   .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
   .section-card h3 { margin-top:0; color:#0e86b0; border-bottom:1px dashed #cbd5e1; padding-bottom:10px; margin-bottom:16px; font-size: 1.05rem;}
-  
-  /* Walkthrough Styling */
   .walkthrough { border-left: 4px solid #3b82f6; margin: 16px 0; padding-left: 18px; }
   .step-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
   .step-box h4 { font-size: 0.9rem; color: #0f172a; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-  .step-circle { background: #3b82f6; color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; font-weight: bold; }
-  
+  .step-circle { background: #3b82f6; color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; font-weight: bold; flex-shrink:0; }
+  .step-circle.gold { background: #D4A373; }
+  .step-circle.green { background: #22c55e; }
+  .step-circle.red { background: #ef4444; }
   .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
   .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
+  .danger { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
+  .info { background:#eff6ff; border-left:4px solid #3b82f6; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
   table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
   th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
   td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
   tr:nth-child(even) td { background:#f8fafc; }
+  code { background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:0.82rem; color:#0e86b0; }
+  .toc { background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; padding:20px 24px; margin:20px 0; }
+  .toc h3 { color:#0369a1; margin:0 0 12px 0; border:none; padding:0; }
+  .toc ol { margin:0; }
+  .toc li { font-size:0.85rem; color:#0369a1; margin:4px 0; }
   .footer { margin-top:40px; padding-top:16px; border-top:2px solid #e2e8f0; font-size:0.75rem; color:#94a3b8; text-align:center; }
   @media print { body { padding:0; } .section-card, .walkthrough { break-inside:avoid; } }
 </style>
@@ -43,129 +50,554 @@
   <div>
     <span class="badge">Documento 2 de 3</span>
     <h1>Manual Maestría del Ecosistema</h1>
-    <div class="sub">Guía explicativa ultra-detallada de cada botón, proceso y base de datos para gerencia.</div>
+    <div class="sub">Guía operativa exhaustiva de cada módulo, botón y proceso — Nivel Cero a Experto</div>
   </div>
   <div style="text-align:right;">
-    <div style="font-size:0.75rem; color:#94a3b8;">Desarrollador: Christian Belmont | Nivel: Experto</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Desarrollador: Christian Belmont</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Versión: 3.2 · Abril 2026</div>
   </div>
 </div>
 
 <div class="warn">
-    <strong>Para Dueños y Gerentes Pyme:</strong> Si es su primera vez sistematizando su negocio a este nivel, le garantizamos que en menos de 10 minutos de lectura comprenderá cómo su Spa ahora opera como una clínica internacional. <strong>No omita ninguna sección.</strong> Le mostraremos flujos que le ahorrarán horas de cuentas administrativas.
+    <strong>Para Dueños y Gerentes Pyme:</strong> Si es su primera vez sistematizando su negocio a este nivel, le garantizamos que en menos de 15 minutos de lectura comprenderá cómo su Spa ahora opera como una clínica internacional. <strong>No omita ninguna sección.</strong> Le mostraremos flujos que le ahorrarán horas de cuentas administrativas.
 </div>
 
-<h2>Introducción: ¿Cómo funciona todo en conjunto?</h2>
-<p>Su negocio ya no depende de libretas ni hojas aisladas. Ahora tiene 3 brazos tecnológicos trabajando de fondo invisiblemente:</p>
-<ul>
-    <li><strong>El Frontend (VCard / Interfaz Pública):</strong> Es la cara bonita. Lo que ven sus clientes en su celular, diseñado para vender y captar atención (Dark/Italian Gold).</li>
-    <li><strong>El Command Center (Panel Admin):</strong> El cerebro operativo. Una zona secreta protegida por criptografía para que usted o su recepcionista lleven contabilidad, check-ins y operen detrás de escenas.</li>
-    <li><strong>El Backend (Google Sheets):</strong> Una carpeta oculta en su cuenta de Google Workspace que guarda todo para siempre. Si cierra la ventana o apaga la computadora, los datos persisten automáticamente en las hojas de cálculo resguardadas. Ningún empleado puede borrar historiales aquí sin dejar rastro.</li>
-</ul>
+<!-- ═══════════════════════════════════════════ -->
+<!-- TABLE OF CONTENTS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="toc">
+    <h3>Contenido del Manual</h3>
+    <ol>
+        <li>Visión General del Ecosistema</li>
+        <li>La Tarjeta Digital Pública (VCard)
+            <ul>
+                <li>2.1 Splash Screen y Portada</li>
+                <li>2.2 Catálogo de Servicios con Cotizador Inteligente</li>
+                <li>2.3 Club de Lealtad Digital (Sección Pública)</li>
+                <li>2.4 Certificados de Regalo</li>
+                <li>2.5 Asistente IA "Luna" (Concierge Nivel 4)</li>
+                <li>2.6 Políticas y Avisos Legales</li>
+                <li>2.7 Contacto, Redes y Ubicación</li>
+            </ul>
+        </li>
+        <li>Check-In Médico Digital (Portal de Lobby)</li>
+        <li>Command Center (Panel Administrativo)
+            <ul>
+                <li>4.1 Acceso: Autenticación por PIN</li>
+                <li>4.2 Estado del Spa</li>
+                <li>4.3 Gestión de Personal</li>
+                <li>4.4 Control de Asistencia</li>
+                <li>4.5 Motor de Comisiones</li>
+                <li>4.6 Registros de Check-In</li>
+                <li>4.7 IA Operativa (Copilot Admin)</li>
+            </ul>
+        </li>
+        <li>Panel de Lealtad y Regalos (Concierge)
+            <ul>
+                <li>5.1 Acceso con PIN</li>
+                <li>5.2 Registro de Clientes</li>
+                <li>5.3 Generación de Sellos QR</li>
+                <li>5.4 Redención de Sellos</li>
+                <li>5.5 Recompensa Automática</li>
+                <li>5.6 Certificados de Regalo</li>
+                <li>5.7 Historial y Estadísticas</li>
+            </ul>
+        </li>
+        <li>Base de Datos Central (Google Sheets)</li>
+        <li>PIN Maestro y Seguridad</li>
+        <li>Preguntas Frecuentes Operativas</li>
+    </ol>
+</div>
 
-<!-- ============================================== -->
-<h2>1. Experiencia del Cliente: La Tarjeta Pública (VCard)</h2>
-<p>La VCard (Tarjeta Digital) reemplaza a su antiguo menú impreso y al clásico PDF pesado de Whatsapp.</p>
+<!-- ═══════════════════════════════════════════ -->
+<!-- 1. VISIÓN GENERAL -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>1. Visión General del Ecosistema</h2>
+<p>Su negocio ya no depende de libretas ni hojas aisladas. Ahora tiene <strong>5 módulos tecnológicos</strong> trabajando de fondo invisiblemente, conectados a una sola base de datos central:</p>
 
+<table>
+    <tr><th>Módulo</th><th>Acceso</th><th>¿Quién lo usa?</th><th>Función Principal</th></tr>
+    <tr><td><strong>VCard Pública</strong></td><td>vcard-spa-claro-luna.vercel.app</td><td>Clientes</td><td>Vitrina digital, cotizador, lealtad pública, chatbot IA</td></tr>
+    <tr><td><strong>Check-In Médico</strong></td><td>.../checkin/</td><td>Pacientes en Lobby</td><td>Formulario médico pre-servicio con consentimiento legal</td></tr>
+    <tr><td><strong>Command Center</strong></td><td>.../admin/</td><td>Gerente / Recepcionista</td><td>Personal, asistencia, comisiones, registros, estado del spa</td></tr>
+    <tr><td><strong>Panel de Lealtad</strong></td><td>.../loyalty/admin.html</td><td>Recepcionista</td><td>Sellos QR, clientes, certificados de regalo, estadísticas</td></tr>
+    <tr><td><strong>Base de Datos</strong></td><td>Google Sheets (tu cuenta)</td><td>Automático</td><td>Almacenamiento permanente de toda la información</td></tr>
+</table>
+
+<div class="info">
+    <strong>Conexión Invisible:</strong> Todos los módulos se comunican con una sola fuente de verdad: un archivo de Google Apps Script conectado a tu Google Sheets. Si cierras el navegador o apagas la computadora, los datos persisten automáticamente. Ningún empleado puede borrar historiales sin dejar rastro.
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 2. VCARD PÚBLICA -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>2. La Tarjeta Digital Pública (VCard)</h2>
+<p>La VCard reemplaza al antiguo menú impreso y al clásico PDF pesado de WhatsApp. Es la cara de tu negocio que ven todos tus clientes.</p>
+
+<!-- 2.1 SPLASH -->
 <div class="section-card">
-    <h3>¿Qué puede hacer el cliente allí?</h3>
+    <h3>2.1 Splash Screen y Portada</h3>
+    <p><strong>¿Qué es?</strong> La primera pantalla que carga al abrir el enlace. Muestra el logotipo oficial de Claro de Luna con una barra de progreso animada durante 3 segundos.</p>
     <div class="walkthrough">
         <div class="step-box">
-            <h4><span class="step-circle">1</span> Ver y Cotizar Catálogo Real-Time</h4>
-            <p>Sus tratamientos médicos y estéticos están categorizados (Faciales, Masajes, Rituales). El cliente toca el botón "(+)" y un cotizador abajo le suma la cuenta. Si presiona "Reservar por WhatsApp", enviará el total pre-calculado a la recepcionista. Adiós malos entendidos e idas y vueltas de mensajes sobre "¿cuánto cuesta esto?".</p>
+            <h4><span class="step-circle">1</span> El cliente abre el enlace (desde WhatsApp, Instagram, QR, etc.)</h4>
+            <p>Se muestra el <strong>Splash Screen</strong> con el logo y barra de carga. Debajo aparece el sello <em>"Powered by Treze Labs"</em> (enlace a la agencia).</p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">2</span> Unirse al Club de Lealtad (Totalmente Digital)</h4>
-            <p>Al fondo de la VCard está su fidelización. El cliente anota su propio teléfono (¡Ni siquiera tiene que descargar ninguna app!). El sistema detecta inmediatamente si ese cliente tiene 0 visitas o si está a una de ganar.</p>
+            <h4><span class="step-circle">2</span> Transición automática al Hero</h4>
+            <p>Después de 3 segundos, el splash desaparece con un fade y se revela la <strong>portada con video cinematográfico</strong> del spa. El video se reproduce automáticamente en silencio con un overlay oscuro elegante.</p>
+        </div>
+    </div>
+    <div class="tip">El video de portada se configura en la carpeta <code>/assets/Portada.MP4</code>. Si desea cambiarlo, suba un archivo .MP4 con el mismo nombre exacto al repositorio.</div>
+</div>
+
+<!-- 2.2 CATÁLOGO -->
+<div class="section-card">
+    <h3>2.2 Catálogo de Servicios con Cotizador Inteligente</h3>
+    <p><strong>¿Qué es?</strong> La sección donde se listan todos los tratamientos organizados por categoría (Rituales, Masajes, Faciales, Corporales, Circuito de Hidroterapia).</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> El cliente navega por categorías</h4>
+            <p>Los tratamientos están organizados en pestañas tocables. Cada tratamiento muestra: <strong>nombre</strong>, <strong>duración</strong> y <strong>precio</strong>. Al tocar el botón <code>(+)</code> de cualquier servicio, se añade al cotizador.</p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">3</span> Interactuar con Luna (IA Concierge Nivel 4)</h4>
-            <p>La VCard incluye un botón flotante atendido por Luna, nuestra Inteligencia Artificial entrenada exclusivamente con su catálogo. Capaz de perfilar al cliente, recomendar masajes según sus dolores y <em>calentar la venta</em> para redirigir al prospecto a su WhatsApp ya listo para agendar.</p>
+            <h4><span class="step-circle">2</span> Cotizador en tiempo real</h4>
+            <p>En la parte inferior aparece una barra flotante con el <strong>total acumulado</strong>. El cliente puede agregar múltiples servicios. Al presionar <strong>"Reservar por WhatsApp"</strong>, se genera automáticamente un mensaje pre-formateado que incluye la lista de servicios seleccionados y el total, y se abre WhatsApp directo a la recepcionista.</p>
+        </div>
+    </div>
+    <div class="tip"><strong>Beneficio Operativo:</strong> Elimina el ida y vuelta de "¿cuánto cuesta esto?" por WhatsApp. El cliente llega ya con su presupuesto armado.</div>
+</div>
+
+<!-- 2.3 LEALTAD PÚBLICA -->
+<div class="section-card">
+    <h3>2.3 Club de Lealtad Digital (Sección Pública)</h3>
+    <p><strong>¿Qué es?</strong> Al fondo de la VCard hay una sección donde el cliente puede consultar su progreso de sellos y escanear códigos QR para acumular puntos, todo sin descargar ninguna aplicación.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> El cliente ingresa su número de teléfono</h4>
+            <p>En el campo de búsqueda del Club de Lealtad, el cliente escribe su número celular (10 dígitos). El sistema consulta instantáneamente la base de datos y muestra: <strong>nombre</strong>, <strong>sellos acumulados</strong>, <strong>nivel</strong>, y si tiene <strong>recompensa disponible</strong>.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">2</span> Escanear QR para sumar sello</h4>
+            <p>El cliente presiona el botón <strong>"Escanear QR con Cámara"</strong>. Se abre la cámara del celular. Apunta al código QR que la recepcionista generó desde el Panel de Lealtad. Si el código es válido y no ha sido usado, se suma 1 sello automáticamente.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">3</span> Recompensa automática</h4>
+            <p>Cuando el cliente alcanza <strong>3 sellos</strong> (configurable), aparece un botón verde <strong>"Canjear Recompensa"</strong>. Al presionarlo, los sellos se reinician a 0 y la recepcionista aplica el descuento correspondiente (50% configurable).</p>
+        </div>
+    </div>
+    <div class="warn"><strong>Seguridad:</strong> La cámara del escáner QR requiere que el sitio esté en HTTPS (ya configurado) y que la política del servidor permita el acceso a la cámara (ya corregido en <code>vercel.json</code> con <code>camera=(self)</code>).</div>
+</div>
+
+<!-- 2.4 CERTIFICADOS -->
+<div class="section-card">
+    <h3>2.4 Certificados de Regalo</h3>
+    <p><strong>¿Qué es?</strong> Sección independiente accesible desde la VCard y desde el Panel de Lealtad. Permite crear tarjetas de regalo digitales con folio único verificable.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle gold">A</span> Creación (Solo desde Panel de Lealtad)</h4>
+            <p>La recepcionista ingresa: <strong>Nombre del destinatario</strong>, <strong>Nombre de quien regala</strong>, <strong>Servicio o monto</strong>. El sistema genera un folio encriptado (ej: <code>CDL-X9K2M</code>) y lo registra en la hoja "Certificados" de Google Sheets con estatus <strong>"ACTIVO"</strong>.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle gold">B</span> Validación</h4>
+            <p>Cuando el portador llega al spa con su folio, la recepcionista busca el código en el Panel de Lealtad. El sistema muestra todos los detalles: para quién es, de quién, qué servicio incluye, la fecha de emisión y si está activo o ya fue canjeado.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle gold">C</span> Canje</h4>
+            <p>Al confirmar el canje, el estatus cambia a <strong>"CANJEADO"</strong> con fecha y hora exacta. El certificado no puede usarse dos veces.</p>
         </div>
     </div>
 </div>
 
-<!-- ============================================== -->
-<h2>2. El Check-In Médico Automático (Portal de Entrada en Lobby)</h2>
-<p>Reemplaza los largos cuestionarios en hojas de papel apiladas en recepción que nunca quedan estructurados.</p>
+<!-- 2.5 IA LUNA -->
+<div class="section-card">
+    <h3>2.5 Asistente IA "Luna" — Concierge Nivel 4</h3>
+    <p><strong>¿Qué es?</strong> Un botón flotante en la esquina inferior derecha de la VCard que abre un chat inteligente. "Luna" es una Inteligencia Artificial entrenada exclusivamente con el catálogo, precios, horarios y filosofía de Claro de Luna.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> El cliente toca el botón de chat</h4>
+            <p>Se abre una ventana de conversación. Luna saluda y se presenta como la concierge del spa.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">2</span> Consulta inteligente</h4>
+            <p>El cliente puede preguntar lo que sea: "¿Qué masaje me recomiendas para dolor de espalda?", "¿Cuánto cuesta un facial?", "¿Tienen paquetes para parejas?". Luna responde con base en el catálogo real y perfila al cliente para recomendar el tratamiento ideal.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">3</span> Cierre de venta</h4>
+            <p>Luna <em>calienta la venta</em> redirigiendo al prospecto a WhatsApp con un mensaje pre-armado cuando detecta intención de compra. Funciona 24/7 sin intervención humana.</p>
+        </div>
+    </div>
+    <div class="info"><strong>Tecnología:</strong> Motor Gemini 2.0 Flash vía Vercel Edge Functions. Costo operativo: <strong>$0 MXN/mes</strong> (capa gratuita de Google AI). Capacidad: ~1,500 consultas diarias.</div>
+</div>
+
+<!-- 2.6 POLÍTICAS -->
+<div class="section-card">
+    <h3>2.6 Políticas y Avisos Legales</h3>
+    <p>Sección estática accesible desde el footer de la VCard (<code>/politicas.html</code>). Incluye:</p>
+    <ul>
+        <li>Política de Privacidad y Manejo de Datos Personales</li>
+        <li>Términos y Condiciones de Uso</li>
+        <li>Aviso Legal de Propiedad Intelectual</li>
+        <li>Última actualización: Abril 2026</li>
+    </ul>
+</div>
+
+<!-- 2.7 CONTACTO -->
+<div class="section-card">
+    <h3>2.7 Contacto, Redes Sociales y Ubicación</h3>
+    <p>Al fondo de la VCard se encuentran los botones de contacto directo:</p>
+    <ul>
+        <li><strong>WhatsApp:</strong> Enlace directo al número oficial del spa con mensaje pre-configurado.</li>
+        <li><strong>Teléfono:</strong> Botón de llamada directa (click-to-call).</li>
+        <li><strong>Instagram:</strong> Enlace al perfil oficial.</li>
+        <li><strong>Facebook:</strong> Enlace a la página oficial.</li>
+        <li><strong>Ubicación:</strong> Botón que abre Google Maps con la dirección exacta del spa.</li>
+    </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 3. CHECK-IN MÉDICO -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>3. Check-In Médico Digital (Portal de Lobby)</h2>
+<p>Reemplaza completamente los cuestionarios en hojas de papel apiladas en recepción. Accesible desde <code>.../checkin/</code> o escaneando el QR de acrílico en recepción.</p>
 
 <div class="section-card">
-    <h3>Uso en el Día a Día (Spa Físico)</h3>
+    <h3>Flujo Operativo Paso a Paso</h3>
     <div class="walkthrough">
         <div class="step-box">
             <h4><span class="step-circle">1</span> Llegada a Recepción</h4>
-            <p>Su recepcionista saluda al paciente y le muestra el Código QR de Acrílico posado en recepción.</p>
+            <p>La recepcionista saluda al paciente y le muestra el <strong>Código QR de Acrílico</strong> posado en el mostrador. El paciente lo escanea con su celular.</p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">2</span> Llenado en Celular Propio</h4>
-            <p>El paciente escanea. El portal detecta que es el lobby y le abre un modo oscuro y elegante. Le pide en pasos intuitivos: Nombre, Whatsapp, Tratamiento a tomar hoy, y su historial médico importante — ¿Presión alta? ¿Cirugías previas? ¿Alergias severas? ¿Menstruación/Embarazo? Condiciones vitales antes de un masaje.</p>
+            <h4><span class="step-circle">2</span> Paso 1 del Formulario: Datos Personales</h4>
+            <p>Se abre un formulario oscuro y elegante en el celular del paciente. Se le pide:</p>
+            <ul>
+                <li>Nombre completo</li>
+                <li>Correo electrónico</li>
+                <li>Número de teléfono</li>
+                <li>Fecha de nacimiento</li>
+                <li>¿Es su primera visita? (Sí/No)</li>
+            </ul>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">3</span> Consentimiento Médico (Firma)</h4>
-            <p>El cliente da check al compromiso médico de las reglas del Spa y envía.</p>
+            <h4><span class="step-circle">3</span> Paso 2: Historial Médico</h4>
+            <p>Preguntas críticas de seguridad antes de un masaje o tratamiento:</p>
+            <ul>
+                <li>¿Padece alguna condición médica? (hipertensión, diabetes, etc.)</li>
+                <li>¿Alergia a cosméticos, aceites o fragancias?</li>
+                <li>¿Cirugía reciente o lesiones?</li>
+                <li>Áreas de atención especial (espalda, cuello, piernas, etc.)</li>
+                <li>Nivel de presión preferido (suave, medio, firme)</li>
+            </ul>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">4</span> Lectura de la Recepcionista</h4>
-            <p>La recepcionista, desde su tablet dentro del Command Center, escucha un sonido, presiona F5 o revisa la lista de Check-Ins. Los datos de salud del paciente llegan encriptados y ordenadísimos frente a ella. Da el pase rápido a la cabina con alertas de alergias marcadas.</p>
+            <h4><span class="step-circle">4</span> Paso 3: Servicio y Consentimiento</h4>
+            <p>El paciente selecciona el tratamiento que tomará (dropdown con todos los servicios), escribe comentarios opcionales, y acepta los <strong>Términos y Condiciones junto con la Política de Privacidad</strong> antes de enviar.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle green">5</span> Envío y Respaldo Automático</h4>
+            <p>Al enviar, los datos viajan al backend de Google Sheets y se registran en la hoja <code>Registros</code> con fecha y hora exactas. <strong>Además, se guarda una copia de respaldo en el localStorage del dispositivo</strong>, por si la señal de internet falla en ese momento.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle green">6</span> Lectura en el Command Center</h4>
+            <p>La recepcionista, desde su tablet o computadora en el Command Center (pestaña "Registros"), ve aparecer el check-in con todos los datos médicos ordenados. Puede dar el pase rápido a cabina con alertas de alergias marcadas.</p>
         </div>
     </div>
 </div>
 
-<!-- ============================================== -->
-<h2>3. Operación Master: El Command Center (Panel Admin)</h2>
-<p>Accesible remotamente. Es una de las interfaces más poderosas y cerradas. Requiere ingresar el código de autorización algorítmico de su SPA. Si la recepcionista escribe mal el acceso o un externo lo intenta abrir, le negará rotundamente la extracción de los reportes por seguridad multicapa.</p>
+<div class="danger">
+    <strong>Dato Médico Crítico:</strong> Un masaje aplicado sin conocer la presión arterial, cirugías previas o embarazo del paciente puede causar complicaciones legales serias. Este formulario resguarda tanto al paciente como a la clínica.
+</div>
 
+<!-- ═══════════════════════════════════════════ -->
+<!-- 4. COMMAND CENTER -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>4. El Command Center (Panel Administrativo)</h2>
+<p>Accesible desde <code>.../admin/</code>. Es la interfaz más poderosa y cerrada del ecosistema. Requiere PIN de autorización.</p>
+
+<!-- 4.1 PIN -->
 <div class="section-card">
-    <h3>Las 4 Máquinas Internas del Panel</h3>
+    <h3>4.1 Acceso: Autenticación por PIN</h3>
     <div class="walkthrough">
         <div class="step-box">
-            <h4><span class="step-circle">A</span> Máquina de Resguardo de Sucursal (Pestaña "Estado Spa")</h4>
-            <p>¿Tuvieron corte de luz? ¿Tienen promoción exprés este fin de semana? Ingresando a esta pestaña, su recepcionista puede pausar la VCard o escribir anuncios flotantes al instante en el banner. Usted interviene su ecosistema comercial sin tocar la programación.</p>
-        </div>
-        
-        <div class="step-box">
-            <h4><span class="step-circle">B</span> Máquina Financiera de Nivel (Pestaña "Comisiones")</h4>
-            <p>El sistema automático le calcula las pagas exactas. <br><strong>Ejemplo Real:</strong> Ha atendido la chica "Alejandra". En la Pestaña "Comisiones", declare: "El servicio cobrado fue un Facial Oxigenante". El sistema extraerá el costo de tablas maestras y aplicará irrevocablemente el porcentaje de comisión. Cero matemática para la recepcionista, cero riesgo de desfalco por equivocarse contando.</p>
-        </div>
-
-        <div class="step-box">
-            <h4><span class="step-circle">C</span> Cajero de Vales Externos (En "Panel de Lealtad y Regalos")</h4>
-            <p>Integrado en el portal independiente de Lealtad. La recepcionista captura qué monto pagó el cliente, anota remitente y destinatario. El sistema crea un folio encriptado en formato PDF listo para descargar y enviar por WhatsApp. Al redimirse, se marca como "Canjeado" para evitar fraudes.</p>
+            <h4><span class="step-circle red">!</span> Validación Segura contra el Servidor</h4>
+            <p>Al abrir el Command Center, aparece una pantalla oscura con un campo de PIN de 4 a 6 dígitos. El PIN <strong>NO se guarda en el código fuente</strong>. Cada intento de acceso se envía al servidor de Google Apps Script, que valida contra la hoja <code>Config</code> en la fila <code>STAFF_PIN</code>. Si es correcto, se abre el panel. Si es incorrecto, se muestra "PIN incorrecto" y se limpia el campo.</p>
         </div>
     </div>
+    <div class="warn"><strong>PIN por defecto:</strong> <code>7741</code>. Debe cambiarse inmediatamente después de la entrega. Para cambiarlo: abrir Google Sheets → Hoja "Config" → Celda del valor <code>STAFF_PIN</code> → Escribir el nuevo PIN.</div>
 </div>
 
-<!-- ============================================== -->
-<h2>4. Dominio de Gamificación: El Club de Lealtad Anti-Fraude</h2>
-<p>El talón de Aquiles de las tarjetas de cartón viejas para sumar una recompensa es que los empleados regalan perforaciones o sellos. Hemos blindado esto en software propietario.</p>
-
+<!-- 4.2 ESTADO SPA -->
 <div class="section-card">
-    <h3>El proceso de Redención: El Sello Imposible de Clonar</h3>
+    <h3>4.2 Pestaña: Estado del Spa</h3>
+    <p><strong>Propósito:</strong> Controlar el estado operativo que ve el cliente en la VCard pública.</p>
     <div class="walkthrough">
         <div class="step-box">
-            <h4><span class="step-circle">A</span> La clienta pide su Sello</h4>
-            <p>Al pagar, su clienta le requiere el punto digital para sumar su recompensa. La clienta entra a su VCard y toca el botón de <strong>[Escanear QR con Cámara]</strong>.</p>
+            <h4><span class="step-circle gold">A</span> Estado de Operación</h4>
+            <p>Un dropdown permite cambiar entre <strong>"ACTIVA"</strong> (funcionamiento normal) y otros estados. Si se marca inactiva, los clientes ven un aviso en la VCard.</p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">B</span> La Recepcionista da de Alta un Sello Efímero</h4>
-            <p>La recepcionista abre el <strong>Panel de Lealtad y Regalos</strong> (separado del Command Center administrativo para máxima seguridad) y genera un "Sello". El sistema creará un Código Aleatorio único asociado al segundo exacto. La recepcionista le enseña ese Código QR a la cliente a través de la vitrina.</p>
+            <h4><span class="step-circle gold">B</span> Horario</h4>
+            <p>Campo de texto libre para ingresar el horario vigente (ej: "9:00 - 18:00"). Este se muestra en la VCard pública.</p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">C</span> Absorción e Ignición del Código</h4>
-            <p>La cámara de la clienta captura y lee el código. Se cruza con nuestro servidor y se le aplica el punto ganado. Si la clienta ya llegó a 3 Sellos, se le libera el Botón de Recompensa.</p>
+            <h4><span class="step-circle gold">C</span> Banner de Anuncios</h4>
+            <p>Campo de texto para escribir un anuncio flotante que aparecerá en la VCard (ej: "Promoción 2x1 en masajes este viernes"). Se puede dejar vacío para no mostrar nada.</p>
+        </div>
+    </div>
+    <div class="tip"><strong>Caso Real:</strong> ¿Hubo un corte de luz? ¿Tienen promoción exprés? La recepcionista puede pausar la VCard o publicar anuncios al instante sin tocar el código.</div>
+</div>
+
+<!-- 4.3 PERSONAL -->
+<div class="section-card">
+    <h3>4.3 Pestaña: Gestión de Personal</h3>
+    <p><strong>Propósito:</strong> Administrar la plantilla de terapeutas y recepcionistas del spa.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle gold">A</span> Alta de Personal</h4>
+            <p>Se llena el formulario con: <strong>Nombre</strong>, <strong>Rol</strong> (Terapeuta / Recepcionista / Gerente), <strong>Teléfono</strong> y <strong>Estatus</strong> (Activo / Inactivo). Al guardar, se sincroniza con Google Sheets inmediatamente.</p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">D</span> Barrera Anti-Trampas</h4>
-            <p>Si la clienta le toma captura de pantalla al código, y se lo envía a una amiga para que "también cobre el sello", el protocolo de bloqueo anulará la jugada (Token temporal gastado).</p>
+            <h4><span class="step-circle gold">B</span> Edición y Eliminación</h4>
+            <p>Cada registro tiene botones de editar (cambiar rol, número, estatus) y eliminar. La lista se muestra en tarjetas con código de colores según el rol.</p>
+        </div>
+    </div>
+    <div class="info">Los nombres dados de alta aquí aparecen automáticamente en los dropdowns de Asistencia y Comisiones.</div>
+</div>
+
+<!-- 4.4 ASISTENCIA -->
+<div class="section-card">
+    <h3>4.4 Pestaña: Control de Asistencia</h3>
+    <p><strong>Propósito:</strong> Registrar entradas, salidas e incidencias del personal.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle gold">A</span> Registro de Evento</h4>
+            <p>Seleccionar la persona (dropdown automático del staff), tipo de evento (<strong>Entrada</strong>, <strong>Salida</strong>, <strong>Falta</strong>, <strong>Retardo</strong>), fecha, hora y notas opcionales. Al guardar, se registra en la hoja <code>Asistencia</code> de Google Sheets.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle gold">B</span> Historial</h4>
+            <p>Debajo del formulario se muestra la tabla con todos los registros del mes actual, filtrable por empleado.</p>
         </div>
     </div>
 </div>
 
-<div class="tip">
-    Todos los datos que fluirán por este enorme organigrama virtual viven asegurados en su nube de Google Workspace, sin costos astronómicos por bases de datos externas. Es tecnología ágil y limpia.
+<!-- 4.5 COMISIONES -->
+<div class="section-card">
+    <h3>4.5 Pestaña: Motor de Comisiones</h3>
+    <p><strong>Propósito:</strong> Calcular automáticamente las comisiones de cada terapeuta basándose en los servicios atendidos.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle gold">A</span> Registrar Comisión</h4>
+            <p>Seleccionar: <strong>Terapeuta</strong> (dropdown), <strong>Servicio realizado</strong> (dropdown con precios), <strong>Fecha</strong>. El sistema automáticamente calcula el 20% del precio (configurable) y lo registra como comisión.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle gold">B</span> Tabla de Resumen</h4>
+            <p>Muestra todos los registros de comisiones con: nombre, servicio, fecha, precio del servicio y monto exacto de comisión ganada. Ideal para crear los sobres de pago semanales.</p>
+        </div>
+    </div>
+    <div class="tip"><strong>Ejemplo Real:</strong> Alejandra atendió un "Facial Antioxidante" ($1,080). El sistema automáticamente registra $216 como su comisión (20%). Cero matemática manual, cero riesgo de error.</div>
+</div>
+
+<!-- 4.6 REGISTROS -->
+<div class="section-card">
+    <h3>4.6 Pestaña: Registros de Check-In</h3>
+    <p><strong>Propósito:</strong> Ver todos los formularios médicos enviados por los pacientes desde el portal de Check-In.</p>
+    <ul>
+        <li>Tabla con todos los registros recibidos (nombre, teléfono, servicio, condiciones médicas, hora de entrada).</li>
+        <li>El badge de la barra lateral muestra cuántos registros nuevos hay.</li>
+        <li>Permite a la recepcionista preparar la cabina antes de que el paciente entre, verificando si tiene alergias o condiciones que el terapeuta debe conocer.</li>
+    </ul>
+</div>
+
+<!-- 4.7 IA ADMIN -->
+<div class="section-card">
+    <h3>4.7 IA Operativa (Copilot Admin) — Nivel 4</h3>
+    <p><strong>¿Qué es?</strong> Un chatbot integrado en el Command Center con permisos de <strong>ejecución directa</strong>. A diferencia del bot público que solo responde preguntas, este Copilot puede <em>operar el sistema</em>.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> Consulta inteligente</h4>
+            <p>Puede responder preguntas operativas: "¿Cuántos check-ins tuvimos hoy?", "¿Cuánto le debo a Mariana en comisiones?"</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">2</span> Ejecución autónoma</h4>
+            <p>Puede ejecutar comandos del panel directamente: <em>"Agrega a Arely como terapeuta con teléfono 2294561234"</em>. La IA procesa la semántica, rellena los campos y guarda en la base de datos sin necesidad de usar el mouse.</p>
+        </div>
+    </div>
+    <div class="danger"><strong>Precaución:</strong> Solo personal autorizado con el PIN debe usar el Copilot Admin, ya que puede modificar datos reales del negocio.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 5. PANEL DE LEALTAD -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>5. Panel de Lealtad y Regalos (Concierge)</h2>
+<p>Accesible desde <code>.../loyalty/admin.html</code>. Módulo independiente del Command Center (separado intencionalmente para máxima seguridad). Tiene su propia autenticación por PIN.</p>
+
+<!-- 5.1 ACCESO -->
+<div class="section-card">
+    <h3>5.1 Acceso con PIN</h3>
+    <p>Mismo PIN que el Command Center (proviene de la misma hoja <code>Config</code>). Al ingresar el PIN correcto, se desbloquea el panel con todas las herramientas de lealtad.</p>
+</div>
+
+<!-- 5.2 REGISTRO -->
+<div class="section-card">
+    <h3>5.2 Registro de Clientes</h3>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle gold">A</span> Nuevo Cliente</h4>
+            <p>La recepcionista ingresa el <strong>teléfono</strong> y <strong>nombre</strong> del cliente. El sistema verifica que no esté duplicado. Si es nuevo, lo registra con 0 sellos, nivel "Invitado" y fecha de creación automática.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle gold">B</span> Búsqueda de Cliente Existente</h4>
+            <p>Ingresando el número de teléfono, el sistema muestra: nombre, sellos acumulados, total de visitas, nivel y si tiene recompensa disponible.</p>
+        </div>
+    </div>
+</div>
+
+<!-- 5.3 SELLOS QR -->
+<div class="section-card">
+    <h3>5.3 Generación de Sellos QR (Flujo Anti-Fraude Completo)</h3>
+    <p>Este es el corazón del sistema de fidelización. Cada sello es un código <strong>único, temporal e irrepetible</strong>.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> La clienta pide su sello</h4>
+            <p>Al pagar su servicio, la clienta le pide a la recepcionista que le sume su punto de lealtad.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">2</span> La recepcionista genera el código</h4>
+            <p>En el Panel de Lealtad, la recepcionista selecciona el <strong>servicio que la clienta pagó</strong> (esto también registra el monto del servicio). Presiona <strong>"Generar Sello"</strong>. El sistema crea un código alfanumérico de 6 caracteres (ej: <code>X9K2WP</code>) que aparece como QR en pantalla.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">3</span> La clienta escanea el QR</h4>
+            <p>La clienta, en la sección de Lealtad de la VCard, presiona <strong>"Escanear QR con Cámara"</strong> y apunta a la pantalla de la recepcionista. El sistema verifica: ¿existe el código? ¿ya fue usado? ¿no ha expirado? Si pasa las 3 validaciones, se suma el sello.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle red">4</span> Protección Anti-Trampas</h4>
+            <p>Si la clienta le toma captura de pantalla al QR y se lo envía a una amiga, <strong>no funcionará</strong>: el código se marca como <code>SI</code> (usado) en la base de datos al primer escaneo exitoso. Intentos posteriores devuelven "Código inválido o usado". El código tiene además expiración temporal (5 minutos por defecto).</p>
+        </div>
+    </div>
+</div>
+
+<!-- 5.4 RECOMPENSA -->
+<div class="section-card">
+    <h3>5.4 y 5.5 Redención de Sellos y Recompensa</h3>
+    <table>
+        <tr><th>Parámetro</th><th>Valor (Configurable)</th><th>Dónde se cambia</th></tr>
+        <tr><td>Sellos necesarios para recompensa</td><td><strong>3 sellos</strong></td><td>Google Sheets → Config → STAMPS_GOAL</td></tr>
+        <tr><td>Descuento de recompensa</td><td><strong>50%</strong></td><td>Google Sheets → Config → DISCOUNT_PCT</td></tr>
+        <tr><td>Tiempo de expiración del código</td><td><strong>5 minutos</strong></td><td>Google Sheets → Config → CODE_EXPIRY</td></tr>
+    </table>
+    <p>Cuando el cliente alcanza el número de sellos configurado, aparece un botón de "Canjear Recompensa" tanto en la VCard pública como en el Panel de Lealtad. Al canjearse, los sellos se reinician a 0 y el ciclo comienza de nuevo.</p>
+</div>
+
+<!-- 5.6 CERTIFICADOS -->
+<div class="section-card">
+    <h3>5.6 Certificados de Regalo (Panel Concierge)</h3>
+    <p>Desde el Panel de Lealtad, la recepcionista accede a las funciones de certificados:</p>
+    <ul>
+        <li><strong>Crear Certificado:</strong> Ingresar destinatario, remitente, servicio y monto. Genera folio único <code>CDL-XXXXX</code>.</li>
+        <li><strong>Validar Certificado:</strong> Buscar por folio para ver detalles completos y estatus.</li>
+        <li><strong>Canjear Certificado:</strong> Marcar como "CANJEADO" con fecha/hora exactas. No se puede usar dos veces.</li>
+        <li><strong>Ver Historial:</strong> Lista completa de todos los certificados emitidos con sus estatus.</li>
+    </ul>
+</div>
+
+<!-- 5.7 ESTADÍSTICAS -->
+<div class="section-card">
+    <h3>5.7 Historial y Estadísticas</h3>
+    <p>El panel muestra en su dashboard superior:</p>
+    <ul>
+        <li><strong>Total de Clientes Registrados</strong> en el programa de lealtad.</li>
+        <li><strong>Total de Certificados Emitidos</strong> (activos + canjeados).</li>
+        <li><strong>Certificados Activos</strong> pendientes de canje.</li>
+        <li><strong>Total de Check-Ins</strong> realizados en el spa.</li>
+    </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 6. BASE DE DATOS -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>6. Base de Datos Central (Google Sheets)</h2>
+<p>Toda la información fluye hacia una Google Spreadsheet en tu cuenta. Las hojas se crean automáticamente si no existen:</p>
+
+<table>
+    <tr><th>Hoja</th><th>Color de Pestaña</th><th>Contenido</th><th>Columnas Principales</th></tr>
+    <tr><td><strong>Config</strong></td><td style="color:#7E57C2;">Morado</td><td>Configuración general del sistema</td><td>Key, Value (STAFF_PIN, STAMPS_GOAL, etc.)</td></tr>
+    <tr><td><strong>Clientes</strong></td><td style="color:#1E88E5;">Azul</td><td>Registro del programa de lealtad</td><td>Phone, Name, Stamps, TotalVisits, Tier, History</td></tr>
+    <tr><td><strong>Códigos</strong></td><td style="color:#FB8C00;">Naranja</td><td>Códigos de sellos generados</td><td>Code, Service, Amount, Pin, ExpiresAt, Used</td></tr>
+    <tr><td><strong>Servicios</strong></td><td style="color:#FDD835;">Amarillo</td><td>Catálogo maestro de tratamientos</td><td>Name, Category, Price, Duration, Active</td></tr>
+    <tr><td><strong>Certificados</strong></td><td style="color:#D81B60;">Rosa</td><td>Tarjetas de regalo emitidas</td><td>Folio, Para, De, Servicio, Monto, Estatus</td></tr>
+    <tr><td><strong>Personal</strong></td><td style="color:#43A047;">Verde</td><td>Staff del spa</td><td>id, name, role, phone, status</td></tr>
+    <tr><td><strong>Asistencia</strong></td><td style="color:#3949AB;">Índigo</td><td>Entradas, salidas e incidencias</td><td>person, type, date, time, notes</td></tr>
+    <tr><td><strong>Comisiones</strong></td><td style="color:#00897B;">Teal</td><td>Comisiones calculadas por servicio</td><td>person, service, date, price, commission</td></tr>
+    <tr><td><strong>Registros</strong></td><td style="color:#455A64;">Gris</td><td>Check-Ins médicos de pacientes</td><td>nombre, email, telefono, condicionMedica, alergias, etc.</td></tr>
+</table>
+
+<div class="warn"><strong>Nunca borrar las filas de encabezados (Fila 1) de ninguna hoja.</strong> El sistema las usa para mapear los datos. Si se borran accidentalmente, el backend dejará de funcionar hasta que se restauren los headers exactos.</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 7. PIN Y SEGURIDAD -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>7. PIN Maestro y Seguridad</h2>
+
+<div class="section-card">
+    <h3>Capas de Protección Activas</h3>
+    <table>
+        <tr><th>Capa</th><th>Descripción</th></tr>
+        <tr><td><strong>PIN Validado en Servidor</strong></td><td>El PIN nunca viaja en el código fuente ni se almacena en el navegador. Cada intento se valida contra la base de datos en tiempo real.</td></tr>
+        <tr><td><strong>Session Storage</strong></td><td>Una vez autenticado, la sesión se mantiene activa mientras el navegador esté abierto. Al cerrar el navegador, se requiere PIN de nuevo.</td></tr>
+        <tr><td><strong>HSTS (SSL Forzado)</strong></td><td>Toda la comunicación está cifrada. Imposible interceptar datos en redes Wi-Fi públicas.</td></tr>
+        <tr><td><strong>X-Frame-Options</strong></td><td>Nadie puede incrustar el panel admin en un sitio fraudulento (protección contra clickjacking).</td></tr>
+        <tr><td><strong>Camera Self-Only</strong></td><td>La cámara solo puede ser usada desde el dominio oficial (<code>camera=(self)</code>). Sitios externos no pueden acceder a la cámara del usuario.</td></tr>
+        <tr><td><strong>Token Temporal (Sellos)</strong></td><td>Cada código de sello expira en 5 minutos y se invalida tras el primer uso. Imposible clonar.</td></tr>
+    </table>
+</div>
+
+<div class="danger">
+    <strong>Para cambiar el PIN:</strong> Abrir Google Sheets → Hoja <code>Config</code> → Buscar la fila con <code>STAFF_PIN</code> → Cambiar el valor → Guardar. El cambio se aplica inmediatamente en todos los paneles sin necesidad de redeploy.
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 8. FAQ -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>8. Preguntas Frecuentes Operativas</h2>
+
+<div class="section-card">
+    <h3>¿Qué pasa si se va el internet mientras un paciente llena el check-in?</h3>
+    <p>El formulario guarda una copia en el almacenamiento local del celular del paciente. Cuando regrese la conexión y vuelva a abrir la página, los datos estarán disponibles para re-envío.</p>
+</div>
+
+<div class="section-card">
+    <h3>¿Puedo cambiar los precios de los servicios?</h3>
+    <p>Sí. Abre Google Sheets → Hoja <code>Servicios</code> → Modifica el precio en la columna "Price". El cambio se refleja automáticamente en la VCard y en los cálculos de comisiones. <strong>No toques las columnas de encabezado.</strong></p>
+</div>
+
+<div class="section-card">
+    <h3>¿Puedo agregar un servicio nuevo?</h3>
+    <p>Sí. Agrega una nueva fila en la hoja <code>Servicios</code> con: Name, Category, Price, Duration y "SI" en Active. Aparecerá automáticamente en la VCard y en el Panel de Lealtad.</p>
+</div>
+
+<div class="section-card">
+    <h3>¿Cuánto cuesta mantener esto funcionando?</h3>
+    <p><strong>$0 MXN/mes.</strong> Todo corre en infraestructura gratuita: Vercel (hosting), Google Sheets (base de datos), Google AI (chatbot). No hay cobros recurrentes, licencias mensuales ni servidores que pagar.</p>
+</div>
+
+<div class="section-card">
+    <h3>¿Qué pasa si olvidé el PIN?</h3>
+    <p>Abrir directamente la Google Spreadsheet del spa → Ir a la hoja <code>Config</code> → Buscar la fila <code>STAFF_PIN</code> → Ahí aparece el PIN actual. Solo quien tenga acceso a la cuenta de Google puede verlo.</p>
+</div>
+
+<div class="section-card">
+    <h3>¿Qué pasa si quiero desactivar un servicio temporalmente?</h3>
+    <p>En la hoja <code>Servicios</code>, cambia el valor de la columna <code>Active</code> de "SI" a "NO". El servicio dejará de aparecer en la VCard y en los dropdowns, pero sus datos históricos se conservan.</p>
+</div>
+
+<div class="section-card">
+    <h3>¿Puedo acceder al panel desde mi celular?</h3>
+    <p>Sí. Tanto el Command Center como el Panel de Lealtad son 100% responsivos. Funcionan en cualquier celular, tablet o computadora con conexión a internet.</p>
 </div>
 
 <div class="footer">
-  Claro de Luna Spa — Manual de Operaciones 360 &copy; 2026<br>
+  Claro de Luna Spa — Manual de Operaciones 360 v3.2 &copy; 2026<br>
   <strong>Aviso Legal y Limitación de Ingeniería (AI/Manual):</strong> Documento técnico blindado por derechos de propiedad intelectual, desarrollado por Christian Belmont. Queda estrictamente prohibida la inserción sistemática, fragmentación, o alimentación de este documento a sistemas de modelado de Inteligencia Artificial de terceros con el fin de ingeniería reversa o replicación algorítmica de los flujos desarrollados.
 </div>
 
