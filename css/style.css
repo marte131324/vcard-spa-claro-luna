@@ -60,6 +60,8 @@
 
 /* === RESET === */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*:focus { outline: none; }
+button:focus, select:focus, input:focus, a:focus { outline: none; box-shadow: none; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 body {
     font-family: var(--sans);
@@ -74,6 +76,19 @@ body {
 }
 img { display: block; max-width: 100%; }
 button { font-family: inherit; cursor: pointer; }
+
+/* === PERFORMANCE: GPU-accelerated animations === */
+.hero__video, .splash, .swiper-slide img, .section {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+/* Lazy-render below-fold sections */
+.section:not(:first-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
 
 
 /* =============================================

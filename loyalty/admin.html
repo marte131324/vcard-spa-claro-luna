@@ -22,6 +22,9 @@
             --ease: cubic-bezier(0.25, 1, 0.5, 1); --radius: 20px;
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *:focus { outline: none; }
+        *:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+        button:focus, select:focus, input:focus { outline: none; box-shadow: none; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: var(--sans); background: var(--bg); color: var(--text);
             min-height: 100vh; display: flex; justify-content: center;
@@ -177,7 +180,7 @@
         <div class="section">
             <h3 class="section__title"><i class="fa-solid fa-lock"></i> Acceso Staff</h3>
             <input type="password" class="input input--pin" id="pin-input" placeholder="PIN" maxlength="8" inputmode="numeric">
-            <button class="btn mt" onclick="login()"><i class="fa-solid fa-lock-open"></i> Acceder</button>
+            <button class="btn mt" id="btn-login" onclick="login()"><i class="fa-solid fa-lock-open"></i> Acceder</button>
             <p class="error" id="login-error" style="color:var(--error);font-size:0.75rem;text-align:center;margin-top:0.5rem;"></p>
         </div>
     </div>
@@ -431,10 +434,10 @@ function login() {
         return;
     }
 
-    const btn = document.querySelector('#login-section .btn-primary');
+    const btn = document.getElementById('btn-login');
     if (btn) {
         btn.disabled = true;
-        btn.textContent = 'Verificando...';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Conectando...';
     }
 
     api('stats', { pin }).then(res => {
@@ -442,12 +445,11 @@ function login() {
         else showError('login-error', res.error || 'PIN incorrecto');
     }).catch(err => {
         console.error('Auth Request failed:', err);
-        showError('login-error', 'Error de conexión / CORS');
-        alert('Fallo de conexión API: ' + err.message);
+        showError('login-error', 'Error de conexión');
     }).finally(() => {
         if (btn) {
             btn.disabled = false;
-            btn.textContent = 'Acceder';
+            btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Acceder';
         }
     });
 }
@@ -556,7 +558,19 @@ function displayCode(code, service, amount, expiresAt) {
 
     box.innerHTML = '';
     const stampUrl = VCARD_URL ? `${VCARD_URL}?stamp=${code}` : `${location.origin}/index.html?stamp=${code}`;
-    QRCode.toCanvas(document.createElement('canvas'), stampUrl, { width: 200, margin: 0, color: { dark: '#1C1917', light: '#fff' } }, (err, canvas) => { if (!err) box.appendChild(canvas); });
+    try {
+        QRCode.toCanvas(document.createElement('canvas'), stampUrl, { width: 200, margin: 2, color: { dark: '#1C1917', light: '#FFFFFF' } }, (err, canvas) => {
+            if (!err && canvas) {
+                box.appendChild(canvas);
+            } else {
+                console.error('QR Error:', err);
+                box.innerHTML = '<p style="color:var(--error);font-size:0.7rem;padding:1rem;">Error generando QR</p>';
+            }
+        });
+    } catch(e) {
+        console.error('QR Library Error:', e);
+        box.innerHTML = '<p style="color:var(--error);font-size:0.7rem;padding:1rem;">Librería QR no disponible</p>';
+    }
 
     startCountdown(new Date(expiresAt));
     showToast('Código listo — muéstralo al cliente');
@@ -580,7 +594,7 @@ function registerClient() {
     if (!name || name.length < 2) { showToast('Ingresa el nombre del cliente', true); return; }
     if (phone.length < 10) { showToast('Teléfono de 10 dígitos requerido', true); return; }
 
-    if (API_URL) {
+    if (window.API_URL) {
         api('register', { pin, phone, name }).then(res => {
             if (res.success) {
                 showToast(res.message || 'Cliente registrado ✓');
@@ -602,7 +616,7 @@ function lookupClient() {
     const phone = document.getElementById('lookup-phone').value.trim().replace(/\D/g, '');
     if (phone.length < 10) { showToast('Teléfono de 10 dígitos', true); return; }
 
-    if (API_URL) {
+    if (window.API_URL) {
         api('lookup', { phone }).then(res => {
             if (res.success && res.found) renderClientCard(res.client);
             else if (res.success && !res.found) showToast('Cliente no registrado', true);
@@ -647,7 +661,7 @@ function renderClientCard(c) {
 
 // ======= CLIENTS LIST =======
 function loadClients() {
-    if (API_URL) {
+    if (window.API_URL) {
         api('stats', { pin }).then(res => { if (res.success) renderStats(res); });
         api('clients', { pin }).then(res => {
             if (res.success) renderClientList(res.clients);
@@ -656,25 +670,33 @@ function loadClients() {
 }
 
 function renderStats(d) {
-    document.getElementById('s-clients').textContent = d.totalClients || 0;
-    document.getElementById('s-visits').textContent = d.totalVisits || 0;
-    document.getElementById('s-rewards').textContent = d.rewardsReady || 0;
+    const stats = d.stats || d;
+    document.getElementById('s-clients').textContent = stats.totalClients || 0;
+    document.getElementById('s-visits').textContent = stats.totalCheckins || stats.totalVisits || 0;
+    document.getElementById('s-rewards').textContent = stats.activeGifts || stats.rewardsReady || 0;
 }
 
 function renderClientList(clients) {
     const list = document.getElementById('client-list');
     if (!clients.length) { list.innerHTML = '<p class="section__desc">Sin clientes registrados</p>'; return; }
-    list.innerHTML = clients.map(c => `
+    list.innerHTML = clients.map(c => {
+        const name = c.Name || c.name || 'Sin nombre';
+        const phone = c.Phone || c.phone || '';
+        const tier = c.Tier || c.tier || 'Invitado';
+        const stamps = Number(c.Stamps || c.stamps || 0);
+        const visits = Number(c.TotalVisits || c.totalVisits || 0);
+        return `
         <div class="client-row">
             <div>
-                <div class="client-row__name">${c.name}</div>
-                <div class="client-row__meta">${c.phone} · ${c.tier} · ${c.totalVisits} visitas</div>
+                <div class="client-row__name">${name}</div>
+                <div class="client-row__meta">${phone} · ${tier} · ${visits} visitas</div>
             </div>
             <div class="client-row__stamps">
-                ${[1,2,3].map(i => `<div class="dot${i <= c.stamps ? ' filled' : ''}"></div>`).join('')}
+                ${[1,2,3].map(i => `<div class="dot${i <= stamps ? ' filled' : ''}"></div>`).join('')}
             </div>
         </div>
-    `).join('');
+    `;
+    }).join('');
 }
 
 // ======= GIFTS ============
@@ -686,7 +708,7 @@ function generateGift() {
     
     if (!giftTo || !giftFrom || !service) { showToast('Completa todos los campos', true); return; }
 
-    if (API_URL) {
+    if (window.API_URL) {
         api('createGift', { pin, giftTo, giftFrom, service, amount }).then(res => {
             if (res.success) {
                 renderGiftCanvas(res.folio, giftTo, giftFrom, service);
@@ -774,7 +796,7 @@ function validateGift() {
     const folio = document.getElementById('lookup-folio').value.trim();
     if (!folio) { showToast('Ingresa un folio', true); return; }
 
-    if (API_URL) {
+    if (window.API_URL) {
         api('validateGift', { pin, folio }).then(res => {
             if (res.success) {
                 const g = res.gift;
@@ -824,7 +846,7 @@ function confirmRedeemGift() {
 }
 
 function loadGifts() {
-    if (API_URL) {
+    if (window.API_URL) {
         api('gifts', { pin }).then(res => {
             if (res.success) {
                 const list = document.getElementById('gifts-list');
@@ -868,7 +890,7 @@ function showToast(msg, err) {
     toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-document.getElementById('pin-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+document.getElementById('pin-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); login(); } });
 </script>
 </body>
 </html>
