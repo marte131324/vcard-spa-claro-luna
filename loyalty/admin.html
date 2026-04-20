@@ -538,14 +538,32 @@ function generateCode() {
     const amount = document.getElementById('service-amount').value;
     if (!service) { showToast('Selecciona el servicio prestado', true); return; }
 
+    const btn = document.getElementById('btn-generate');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generando...';
+    }
+
     if (window.API_URL) {
         api('generateCode', { pin, service, amount }).then(res => {
             if (res.success) displayCode(res.code, service, amount, res.expiresAt);
             else showToast(res.error, true);
+        }).catch(err => {
+            console.error('Code generation failed', err);
+            showToast('Error de conexión', true);
+        }).finally(() => {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-stamp"></i> Generar Código';
+            }
         });
     } else {
         const code = localCode(6);
         displayCode(code, service, amount, new Date(Date.now() + 300000).toISOString());
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-stamp"></i> Generar Código';
+        }
     }
 }
 
@@ -558,19 +576,18 @@ function displayCode(code, service, amount, expiresAt) {
 
     box.innerHTML = '';
     const stampUrl = VCARD_URL ? `${VCARD_URL}?stamp=${code}` : `${location.origin}/index.html?stamp=${code}`;
-    try {
-        QRCode.toCanvas(document.createElement('canvas'), stampUrl, { width: 200, margin: 2, color: { dark: '#1C1917', light: '#FFFFFF' } }, (err, canvas) => {
-            if (!err && canvas) {
-                box.appendChild(canvas);
-            } else {
-                console.error('QR Error:', err);
-                box.innerHTML = '<p style="color:var(--error);font-size:0.7rem;padding:1rem;">Error generando QR</p>';
-            }
-        });
-    } catch(e) {
-        console.error('QR Library Error:', e);
-        box.innerHTML = '<p style="color:var(--error);font-size:0.7rem;padding:1rem;">Librería QR no disponible</p>';
-    }
+    
+    // Using a highly reliable external QR API instead of an unstable client-side CDN library
+    const qrImage = document.createElement('img');
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(stampUrl)}&color=1C1917&bgcolor=FFFFFF`;
+    qrImage.alt = "QR de Sello";
+    qrImage.style.width = "200px";
+    qrImage.style.height = "200px";
+    qrImage.style.margin = "0 auto";
+    qrImage.style.display = "block";
+    qrImage.style.borderRadius = "8px";
+    
+    box.appendChild(qrImage);
 
     startCountdown(new Date(expiresAt));
     showToast('Código listo — muéstralo al cliente');
