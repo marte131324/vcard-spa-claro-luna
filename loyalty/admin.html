@@ -414,7 +414,7 @@
 /* ==========================================
    CONFIG — API_URL viene de /js/config.js
    ========================================== */
-const VCARD_URL = 'https://spa-claro-de-luna.vercel.app'; // ← URL de la VCard desplegada
+const VCARD_URL = 'https://vcard-spa-claro-luna.vercel.app'; // ← URL de la VCard desplegada
 
 let pin = '';
 let countdownTimer = null;
@@ -536,9 +536,9 @@ function generateCode() {
     const amount = document.getElementById('service-amount').value;
     if (!service) { showToast('Selecciona el servicio prestado', true); return; }
 
-    if (API_URL) {
+    if (window.API_URL) {
         api('generateCode', { pin, service, amount }).then(res => {
-            if (res.success) displayCode(res.code, res.service, res.amount, res.expiresAt);
+            if (res.success) displayCode(res.code, service, amount, res.expiresAt);
             else showToast(res.error, true);
         });
     } else {
@@ -848,10 +848,10 @@ function loadGifts() {
 
 // ======= API HELPER =======
 function api(action, params) {
-    const url = new URL(API_URL);
+    const url = new URL(window.API_URL);
     url.searchParams.set('action', action);
     Object.entries(params).forEach(([k, v]) => { if (v !== undefined && v !== null) url.searchParams.set(k, v); });
-    return fetch(url.toString()).then(r => r.json()).catch(() => ({ success: false, error: 'Sin conexión' }));
+    return fetch(url.toString()).then(r => r.json()).catch(e => { console.error('API Error:', e); return { success: false, error: 'Sin conexión' }; });
 }
 
 // ======= UTILS =======
