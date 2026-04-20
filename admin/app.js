@@ -11,7 +11,7 @@
     }
 })();
 
-const API = 'https://script.google.com/macros/s/AKfycbwWqsyzxQbVUeEMtyyzTLhs4w8yGG13PErX6tX-fCUASc45bH5IBoMpDVjJJzNEXQw/exec';
+// API_URL viene de /js/config.js (cargado en admin/index.html)
 const COMMISSION_RATE = 0.20;
 
 let staffData = [];
@@ -57,14 +57,16 @@ function hideLoader() { document.getElementById('loader').style.display = 'none'
 async function postData(payload, msg) {
     showLoader();
     try {
-        await fetch(API, {
+        await fetch(API_URL, {
             method: 'POST', mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload)
         });
         hideLoader();
         toast(msg);
-    } catch(e) { hideLoader(); alert('Error de conexion'); }
+        // Verificar: re-sincronizar datos del servidor después de 2s
+        setTimeout(() => fetchAll(), 2000);
+    } catch(e) { hideLoader(); toast('Error de conexión — Intente de nuevo'); }
 }
 
 // ═══════════════════════════════════════
@@ -93,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchAll() {
     try {
-        const res = await fetch(API + '?action=getAdmin');
+        const res = await fetch(API_URL + '?action=getAdmin');
         const data = await res.json();
         if (data.config) {
             configData = data.config;

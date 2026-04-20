@@ -187,8 +187,8 @@ function redeemStampCode(code, phone) {
   const codesData = codesSheet.getDataRange().getValues();
   let coRow = -1;
   for (let i = 1; i < codesData.length; i++) { if (String(codesData[i][0]).toUpperCase() === String(code).toUpperCase()) { coRow = i; break; } }
-  if (coRow === -1 || String(codesData[coRow][6]).toUpperCase() === 'SÍ') return { success: false, error: 'Código inválido o usado' };
-  codesSheet.getRange(coRow + 1, 7).setValue('SÍ');
+  if (coRow === -1 || String(codesData[coRow][6]).toUpperCase() === 'SI') return { success: false, error: 'Código inválido o usado' };
+  codesSheet.getRange(coRow + 1, 7).setValue('SI');
   const config = getConfig();
   let stamps = Number(clientData[cRow][2]) + 1;
   clientSheet.getRange(cRow + 1, 3).setValue(stamps);

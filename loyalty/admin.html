@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/js/config.js"></script>
     <style>
         :root {
             --copper: #D4A373; --copper-deep: #B88655; --bg: #0D0B09;
@@ -411,9 +412,8 @@
 })();
 
 /* ==========================================
-   CONFIG — CAMBIAR ESTAS URLs DESPUÉS DEL DEPLOY
+   CONFIG — API_URL viene de /js/config.js
    ========================================== */
-const API_URL = 'https://script.google.com/macros/s/AKfycbwWqsyzxQbVUeEMtyyzTLhs4w8yGG13PErX6tX-fCUASc45bH5IBoMpDVjJJzNEXQw/exec'; // ← URL del Apps Script deployment
 const VCARD_URL = 'https://spa-claro-de-luna.vercel.app'; // ← URL de la VCard desplegada
 
 let pin = '';
@@ -488,12 +488,12 @@ function renderServiceSelect() {
         opt.textContent = `${s.name} — $${s.price.toLocaleString()}`;
         sel.appendChild(opt);
     });
-    sel.addEventListener('change', () => {
+    sel.onchange = () => {
         const opt = sel.selectedOptions[0];
         if (opt && opt.dataset.price) {
             document.getElementById('service-amount').value = opt.dataset.price;
         }
-    });
+    };
 }
 
 function renderGiftServiceSelect() {
@@ -507,12 +507,12 @@ function renderGiftServiceSelect() {
         opt.textContent = `${s.name} — $${s.price.toLocaleString()}`;
         sel.appendChild(opt);
     });
-    sel.addEventListener('change', () => {
+    sel.onchange = () => {
         const opt = sel.selectedOptions[0];
         if (opt && opt.dataset.price) {
             document.getElementById('gift-amount-input').value = opt.dataset.price;
         }
-    });
+    };
 }
 
 // ======= GENERATE CODE =======

@@ -44,7 +44,7 @@ TUS CONOCIMIENTOS DEL SPA (CATALOGO EXACTO):
 - *Drenaje Linfático* ($1650 50m / $2500 80m): Masaje suave, reduce inflamación y retención de líquidos (piernas cansadas).
 - *Masaje 4 Manos* ($3300 60m): 2 terapeutas en sincronía para relajación profunda.
 
-2. **FACIALES (60 minutos):**
+3. **FACIALES (60 minutos):**
 - *Facial Antioxidante* ($1080): Limpieza profunda natural, antiedad.
 - *Facial Control Grasa* ($1080): Purifica poros, pieles con acné.
 

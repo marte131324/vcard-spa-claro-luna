@@ -130,21 +130,26 @@
         </button>
         <p id="pin-error" style="color:#ef4444;font-size:0.85rem;display:none;font-weight:600;">PIN incorrecto</p>
     </div>
+    <script src="/js/config.js"></script>
     <script>
-    const PIN_HASH = '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab';
-    async function hashPin(pin) {
-        const d = new TextEncoder().encode(pin);
-        const h = await crypto.subtle.digest('SHA-256', d);
-        return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2,'0')).join('');
-    }
     async function checkPin() {
-        if (await hashPin(document.getElementById('pin-input').value) === PIN_HASH) {
-            document.getElementById('pin-gate').style.display = 'none';
-            sessionStorage.setItem('cdl_auth', '1');
-        } else {
+        const pin = document.getElementById('pin-input').value.trim();
+        if (!pin) return;
+        try {
+            const res = await fetch(API_URL + '?action=stats&pin=' + encodeURIComponent(pin));
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('pin-gate').style.display = 'none';
+                sessionStorage.setItem('cdl_auth', '1');
+            } else {
+                document.getElementById('pin-error').style.display = 'block';
+                document.getElementById('pin-input').value = '';
+                setTimeout(() => document.getElementById('pin-error').style.display = 'none', 2000);
+            }
+        } catch(e) {
+            document.getElementById('pin-error').textContent = 'Error de conexión';
             document.getElementById('pin-error').style.display = 'block';
-            document.getElementById('pin-input').value = '';
-            setTimeout(() => document.getElementById('pin-error').style.display = 'none', 2000);
+            setTimeout(() => { document.getElementById('pin-error').style.display = 'none'; document.getElementById('pin-error').textContent = 'PIN incorrecto'; }, 2000);
         }
     }
     if (sessionStorage.getItem('cdl_auth') === '1') document.getElementById('pin-gate').style.display = 'none';
@@ -504,5 +509,6 @@
         });
     </script>
     <script src="app.js"></script>
+    <!-- config.js ya cargado en PIN gate -->
 </body>
 </html>

@@ -25,9 +25,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ==================================================
-       CONFIGURACIÓN API
+       CONFIGURACIÓN API — viene de /js/config.js
        ================================================== */
-    const API_URL = 'https://script.google.com/macros/s/AKfycbwWqsyzxQbVUeEMtyyzTLhs4w8yGG13PErX6tX-fCUASc45bH5IBoMpDVjJJzNEXQw/exec'; // ← URL de Google Apps Script deployment
 
     /* ========================================================
        SPLASH SCREEN

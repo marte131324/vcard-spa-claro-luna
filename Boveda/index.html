@@ -317,7 +317,11 @@
     window.addEventListener('resize', resize);
     resize();
 
-    const COLS = 60, ROWS = 40;
+    // Adaptive grid: less particles on mobile for performance
+    const isMobile = window.innerWidth < 768;
+    const isTablet = window.innerWidth < 1024;
+    const COLS = isMobile ? 30 : isTablet ? 40 : 60;
+    const ROWS = isMobile ? 20 : isTablet ? 28 : 40;
     const points = [];
     for (let j = 0; j < ROWS; j++) {
         for (let i = 0; i < COLS; i++) {
