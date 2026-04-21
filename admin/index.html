@@ -158,6 +158,7 @@
             if (data.success) {
                 document.getElementById('pin-gate').style.display = 'none';
                 sessionStorage.setItem('cdl_auth', '1');
+                sessionStorage.setItem('cdl_pin', pin);
             } else {
                 errorEl.textContent = data.error || 'PIN incorrecto';
                 errorEl.style.display = 'block';
@@ -195,12 +196,16 @@
             <div class="nav-item" onclick="switchView('v-comisiones', this)"><i class="ri-money-dollar-circle-line"></i> Comisiones</div>
             <div class="nav-item" onclick="switchView('v-checkins', this)"><i class="ri-user-heart-line"></i> Registros <span class="badge" id="badge-checkins">0</span></div>
             
+            <div style="font-size: 9px; color: var(--accent); margin: 30px 0 10px 16px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; opacity: 0.6;">Programa de Lealtad</div>
+            <div class="nav-item" onclick="switchView('v-loyalty', this)"><i class="ri-vip-crown-line"></i> Club de Lealtad <span class="badge" id="badge-loyalty">0</span></div>
+            <div class="nav-item" onclick="switchView('v-gifts', this)"><i class="ri-gift-line"></i> Certificados <span class="badge" id="badge-gifts">0</span></div>
+            
             <div style="font-size: 9px; color: var(--accent); margin: 30px 0 10px 16px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; opacity: 0.6;">Accesos Rápidos</div>
+            <div class="nav-item" onclick="window.open('../loyalty/admin.html', '_blank')"><i class="ri-qr-code-line"></i> Panel Concierge</div>
             <div class="nav-item" onclick="window.open('../checkin/', '_blank')"><i class="ri-send-plane-line"></i> Formulario Check-In</div>
             <div class="nav-item" onclick="window.open('https://vcard-spa-claro-luna.vercel.app', '_blank')"><i class="ri-external-link-line"></i> Ver VCard Pro</div>
-            <div class="nav-item" onclick="window.open('https://spaclarodeluna.mx/', '_blank')"><i class="ri-global-line"></i> Web Oficial</div>
         </nav>
-        <div class="sidebar-footer">Treze Labs · v3.2</div>
+        <div class="sidebar-footer">Treze Labs · v4.2</div>
     </aside>
 
     <!-- Workspace -->
@@ -322,7 +327,65 @@
             <div id="dom-checkins"></div>
         </section>
 
+        <!-- ═══ CLUB DE LEALTAD ═══ -->
+        <section id="v-loyalty" class="view">
+            <div class="header">
+                <div>
+                    <h2>Club de Lealtad</h2>
+                    <p>Administración de tarjetas de sellos, visitas y recompensas de clientes.</p>
+                </div>
+                <button class="btn btn-secondary" onclick="fetchLoyaltyData()" style="gap:8px;"><i class="ri-refresh-line"></i> Actualizar</button>
+            </div>
+            <div class="stat-grid" id="loyalty-stats">
+                <div class="stat-card"><div class="num" id="ls-clients">0</div><div class="lbl">Miembros</div></div>
+                <div class="stat-card"><div class="num" id="ls-visits">0</div><div class="lbl">Visitas Totales</div></div>
+                <div class="stat-card"><div class="num" id="ls-rewards">0</div><div class="lbl">Recompensas Listas</div></div>
+                <div class="stat-card"><div class="num" id="ls-avg" style="font-size:16px;">--</div><div class="lbl">Prom. Visitas</div></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Todos los Miembros</div>
+                <div id="dom-loyalty" style="max-height: 500px; overflow-y: auto;"></div>
+            </div>
+        </section>
+
+        <!-- ═══ CERTIFICADOS DE REGALO ═══ -->
+        <section id="v-gifts" class="view">
+            <div class="header">
+                <div>
+                    <h2>Certificados de Regalo</h2>
+                    <p>Gestión de certificados emitidos, validación y canje.</p>
+                </div>
+                <button class="btn btn-secondary" onclick="fetchGiftsData()" style="gap:8px;"><i class="ri-refresh-line"></i> Actualizar</button>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card"><div class="num" id="gs-total">0</div><div class="lbl">Emitidos</div></div>
+                <div class="stat-card"><div class="num" id="gs-active" style="color:var(--success);">0</div><div class="lbl">Activos</div></div>
+                <div class="stat-card"><div class="num" id="gs-redeemed">0</div><div class="lbl">Canjeados</div></div>
+                <div class="stat-card"><div class="num" id="gs-value">--</div><div class="lbl">Valor Aprox.</div></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Todos los Certificados</div>
+                <div id="dom-gifts-cc" style="max-height: 500px; overflow-y: auto;"></div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- Modal Detalle Cliente Lealtad -->
+    <div class="modal" id="modal-loyalty-detail">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header"><span>Detalle de Miembro</span><i class="ri-close-line" onclick="document.getElementById('modal-loyalty-detail').classList.remove('show')"></i></div>
+            <div id="loyalty-detail-body"></div>
+        </div>
+    </div>
+
+    <!-- Modal Detalle Certificado -->
+    <div class="modal" id="modal-gift-detail">
+        <div class="modal-content" style="max-width: 550px;">
+            <div class="modal-header"><span>Detalle de Certificado</span><i class="ri-close-line" onclick="document.getElementById('modal-gift-detail').classList.remove('show')"></i></div>
+            <div id="gift-detail-body"></div>
+        </div>
+    </div>
 
     <!-- Modal Staff -->
     <div class="modal" id="modal-staff">
