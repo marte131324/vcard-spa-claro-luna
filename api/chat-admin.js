@@ -62,35 +62,55 @@ No emitas este JSON a menos que te hayan proveído los 3 datos.`;
       generationConfig: { temperature: 0.2 }
     };
 
-    // Triple-Model Armor (Resilience focus)
+    // Triple-Model Armor with progressive backoff
     const modelsToTry = [
+      'gemini-2.0-flash',
       'gemini-2.5-flash',
-      'gemini-2.5-pro',
-      'gemini-2.0-flash'
+      'gemini-2.5-pro'
     ];
 
     let data;
+    let lastError = null;
     for (let i = 0; i < modelsToTry.length; i++) {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelsToTry[i]}:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        
-        data = await response.json();
-        
-        // If successful, break the loop
-        if (!data.error) break;
-        
-        // If error is high demand or rate limit, wait 1s and try next model
-        if (data.error && (data.error.message.includes("429") || data.error.message.includes("limit") || response.status === 429)) {
-            await new Promise(r => setTimeout(r, 1000));
-            continue;
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 25000);
+            
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelsToTry[i]}:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            data = await response.json();
+            
+            if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) break;
+            
+            if (data.error) {
+                lastError = data.error;
+                if (i < modelsToTry.length - 1) {
+                    await new Promise(r => setTimeout(r, 1500 * (i + 1)));
+                }
+                continue;
+            }
+            
+            if (i < modelsToTry.length - 1) {
+                await new Promise(r => setTimeout(r, 1000));
+                continue;
+            }
+        } catch (fetchErr) {
+            lastError = { message: fetchErr.message || 'Network error' };
+            if (i < modelsToTry.length - 1) {
+                await new Promise(r => setTimeout(r, 2000));
+                continue;
+            }
         }
     }
     
-    if (data.error) {
-       return new Response(JSON.stringify({ reply: 'Sistema IA saturado momentáneamente. Intenta de nuevo en 30 segundos.' }), { 
+    if (!data || !data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
+       return new Response(JSON.stringify({ reply: 'Procesando muchas consultas. Intenta en unos segundos.' }), { 
         status: 200, headers: { 'Content-Type': 'application/json' }
       });
     }

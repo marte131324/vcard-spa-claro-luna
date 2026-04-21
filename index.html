@@ -27,8 +27,75 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" media="print" onload="this.media='all'"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Driver.js Luxury Theme Override */
+        .driver-popover {
+            background: linear-gradient(135deg, #1C1917 0%, #292524 100%) !important;
+            border: 1px solid rgba(212, 163, 115, 0.3) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,163,115,0.1) !important;
+            color: #F5F0EC !important;
+            max-width: 320px !important;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+        .driver-popover * { color: #F5F0EC !important; }
+        .driver-popover-title {
+            font-family: 'Cormorant Garamond', serif !important;
+            font-size: 1.35rem !important;
+            font-weight: 600 !important;
+            color: #D4A373 !important;
+            padding: 20px 20px 8px !important;
+            line-height: 1.3 !important;
+        }
+        .driver-popover-description {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.82rem !important;
+            font-weight: 300 !important;
+            line-height: 1.6 !important;
+            color: #A8A29E !important;
+            padding: 0 20px 16px !important;
+        }
+        .driver-popover-footer {
+            padding: 12px 20px !important;
+            background: rgba(0,0,0,0.2) !important;
+            border-top: 1px solid rgba(212,163,115,0.15) !important;
+        }
+        .driver-popover-progress-text {
+            font-size: 0.7rem !important;
+            color: #78716C !important;
+        }
+        .driver-popover-prev-btn,
+        .driver-popover-next-btn {
+            background: transparent !important;
+            border: 1px solid rgba(212,163,115,0.4) !important;
+            color: #D4A373 !important;
+            border-radius: 8px !important;
+            padding: 6px 16px !important;
+            font-size: 0.78rem !important;
+            font-weight: 500 !important;
+            transition: all 0.2s !important;
+            text-shadow: none !important;
+        }
+        .driver-popover-next-btn {
+            background: linear-gradient(135deg, #D4A373, #C5A059) !important;
+            color: #fff !important;
+            border: none !important;
+        }
+        .driver-popover-next-btn:hover {
+            background: linear-gradient(135deg, #C5A059, #B88655) !important;
+            transform: translateY(-1px) !important;
+        }
+        .driver-popover-arrow-side-left.driver-popover-arrow,
+        .driver-popover-arrow-side-right.driver-popover-arrow,
+        .driver-popover-arrow-side-top.driver-popover-arrow,
+        .driver-popover-arrow-side-bottom.driver-popover-arrow {
+            border-color: #1C1917 !important;
+        }
+        .driver-overlay { background: rgba(0,0,0,0.7) !important; }
+    </style>
 </head>
 <body>
 
@@ -809,11 +876,11 @@
     <script src="js/app.js"></script>
 
 <!-- FLOATING ACTIONS & CHATBOT UI -->
-<div class="floating-actions" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px;">
-    <button id="btn-tour" style="width: 50px; height: 50px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); color: var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: transform 0.3s; backdrop-filter: blur(10px);">
+<div class="floating-actions" id="floating-actions" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; transition: opacity 0.3s, transform 0.3s;">
+    <button id="btn-tour" style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); color: var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: transform 0.3s; backdrop-filter: blur(10px);">
         <i class="fa-regular fa-lightbulb"></i>
     </button>
-    <button id="btn-chat" style="width: 50px; height: 50px; border-radius: 50%; background: var(--gold); border: none; color: #fff; box-shadow: 0 4px 15px rgba(179, 147, 89, 0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: transform 0.3s;">
+    <button id="btn-chat" style="width: 48px; height: 48px; border-radius: 50%; background: var(--gold); border: none; color: #fff; box-shadow: 0 4px 15px rgba(179, 147, 89, 0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: transform 0.3s;">
         <i class="fa-solid fa-bell-concierge"></i>
     </button>
 </div>
@@ -841,35 +908,109 @@
 <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
 <script>
 (function() {
-    // ═══ GUARD: Wait for driver.js to be available ═══
     function initTourAndChat() {
-        // ── Tour VCard ──
+        var floatingActions = document.getElementById('floating-actions');
+
+        // ══════════════════════════════════════
+        // TOUR — Premium Guided Experience
+        // ══════════════════════════════════════
         if (window.driver && window.driver.js && window.driver.js.driver) {
-            const driverFn = window.driver.js.driver;
-            const tour = driverFn({
+            var driverFn = window.driver.js.driver;
+            var tour = driverFn({
                 showProgress: true,
                 animate: true,
+                smoothScroll: true,
+                stagePadding: 8,
+                stageRadius: 12,
+                allowClose: true,
+                overlayOpacity: 0.7,
                 nextBtnText: 'Siguiente →',
                 prevBtnText: '← Anterior',
-                doneBtnText: '¡Entendido!',
+                doneBtnText: '✨ ¡Listo!',
+                onDestroyStarted: function() {
+                    if (floatingActions) floatingActions.style.opacity = '1';
+                    tour.destroy();
+                },
                 steps: [
-                    { popover: { title: 'Bienvenido', description: 'Descubre cómo usar nuestro catálogo digital para reservar.' } },
-                    { element: '#cat-nav', popover: { title: 'Categorías', description: 'Navega rápidamente entre Faciales, Masajes y Rituales.', side: "bottom", align: 'start' } },
-                    { element: '#mode-toggle', popover: { title: 'Comprar o Regalar', description: 'Con un clic, cambia los botones para reservar para ti o solicitar un certificado de regalo para alguien más.', side: "bottom" } },
-                    { element: '.catalog__grid', popover: { title: 'Añadir al Carrito', description: 'Usa los botones de (+) para cotizar al instante. El total se pre-calcula abajo de tu pantalla.', side: "top" } },
-                    { element: '#rewards', popover: { title: 'Club de Lealtad', description: 'Anota tu teléfono aquí después de un servicio para que nuestra recepcionista te escanee el QR y sumes descuentos.', side: "top" } }
+                    {
+                        popover: {
+                            title: '🌙 Bienvenido a Claro de Luna',
+                            description: 'Te guiaremos paso a paso por nuestro catálogo digital. En menos de 1 minuto sabrás cómo reservar tu experiencia perfecta.',
+                            side: 'center',
+                            align: 'center'
+                        }
+                    },
+                    {
+                        element: '#cat-nav',
+                        popover: {
+                            title: 'Explora por Categoría',
+                            description: 'Desliza entre <strong>Rituales</strong>, <strong>Masajes</strong>, <strong>Faciales</strong>, <strong>Corporales</strong> y <strong>Bienestar</strong>. Cada pestaña filtra el catálogo al instante.',
+                            side: 'bottom',
+                            align: 'center'
+                        }
+                    },
+                    {
+                        element: '#mode-toggle',
+                        popover: {
+                            title: '¿Para Ti o Para Regalar?',
+                            description: 'Activa el modo <strong>"Regalar"</strong> para solicitar un <em>Certificado de Regalo Premium</em> personalizado con dedicatoria.',
+                            side: 'bottom',
+                            align: 'center'
+                        }
+                    },
+                    {
+                        element: '#filters-section',
+                        popover: {
+                            title: 'Filtros Sensoriales',
+                            description: '¿Tensión muscular? ¿Tratamiento de piel? ¿Escapada en pareja? Filtra los servicios según lo que tu cuerpo necesita.',
+                            side: 'bottom',
+                            align: 'center'
+                        }
+                    },
+                    {
+                        element: '.service',
+                        popover: {
+                            title: 'Selecciona Servicios',
+                            description: 'Toca cualquier servicio para añadirlo a tu cotización. Puedes seleccionar varios y el total se calcula automáticamente.',
+                            side: 'top',
+                            align: 'center'
+                        }
+                    },
+                    {
+                        element: '#rewards',
+                        popover: {
+                            title: 'Club de Lealtad ✨',
+                            description: 'Después de cada visita, ingresa tu teléfono y escanea el QR que te da la recepcionista. Con <strong>3 sellos</strong> ganas <strong>50% de descuento</strong>.',
+                            side: 'top',
+                            align: 'center'
+                        }
+                    },
+                    {
+                        element: '#btn-chat',
+                        popover: {
+                            title: 'Luna — Tu Concierge IA',
+                            description: '¿Dudas sobre qué servicio elegir? Toca este botón y chatea con <strong>Luna</strong>, nuestra asistente inteligente que conoce cada ritual a fondo.',
+                            side: 'left',
+                            align: 'center'
+                        }
+                    }
                 ]
             });
 
             var btnTour = document.getElementById('btn-tour');
             if (btnTour) {
                 btnTour.addEventListener('click', function() {
-                    tour.drive();
+                    if (floatingActions) floatingActions.style.opacity = '0.3';
+                    // Scroll to top before starting tour
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setTimeout(function() { tour.drive(); }, 400);
                 });
             }
         }
 
-        // ── Chatbot VCard ──
+        // ══════════════════════════════════════
+        // CHATBOT — Luna Concierge
+        // ══════════════════════════════════════
         var btnChat = document.getElementById('btn-chat');
         var chatWindow = document.getElementById('chat-window');
         var btnCloseChat = document.getElementById('btn-close-chat');
@@ -877,15 +1018,34 @@
         var chatInput = document.getElementById('chat-input');
         var chatMessages = document.getElementById('chat-messages');
 
+        function toggleChat(show) {
+            if (show) {
+                chatWindow.style.display = 'flex';
+                // Hide floating buttons to prevent overlap
+                if (floatingActions) {
+                    floatingActions.style.opacity = '0';
+                    floatingActions.style.pointerEvents = 'none';
+                }
+                setTimeout(function() { chatInput.focus(); }, 200);
+            } else {
+                chatWindow.style.display = 'none';
+                if (floatingActions) {
+                    floatingActions.style.opacity = '1';
+                    floatingActions.style.pointerEvents = 'auto';
+                }
+            }
+        }
+
         if (btnChat) {
             btnChat.addEventListener('click', function() {
-                chatWindow.style.display = chatWindow.style.display === 'none' || chatWindow.style.display === '' ? 'flex' : 'none';
+                var isOpen = chatWindow.style.display === 'flex';
+                toggleChat(!isOpen);
             });
         }
 
         if (btnCloseChat) {
             btnCloseChat.addEventListener('click', function() {
-                chatWindow.style.display = 'none';
+                toggleChat(false);
             });
         }
 
@@ -904,7 +1064,7 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             chatHistory.push({ role: 'user', text: text });
-            if (chatHistory.length > 10) chatHistory.shift();
+            if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
 
             fetch('/api/chat-vcard', {
                 method: 'POST',
@@ -918,7 +1078,6 @@
                 
                 var replyText = data.reply || 'Lo siento, hubo un error técnico.';
                 
-                // Markdown to HTML
                 var html = replyText.replace(/###\s(.*?)\n/g, '<strong style="display:block; margin-top:8px;">$1</strong><br>');
                 html = html.replace(/##\s(.*?)\n/g, '<strong style="display:block; margin-top:8px;">$1</strong><br>');
                 html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--gold);">$1</strong>');
@@ -926,7 +1085,7 @@
                 html = html.replace(/\n/g, '<br>');
                 
                 chatHistory.push({ role: 'model', text: replyText });
-                if (chatHistory.length > 10) chatHistory.shift();
+                if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
 
                 chatMessages.innerHTML += '<div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text); line-height: 1.5; border: 1px solid var(--border); max-width: 85%;">' + html + '</div>';
                 chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -934,7 +1093,7 @@
             .catch(function(err) {
                 var el = document.getElementById(typingId);
                 if (el) el.remove();
-                chatMessages.innerHTML += '<div style="align-self: flex-start; background: rgba(239, 68, 68, 0.1); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: #ef4444; line-height: 1.4; border: 1px solid rgba(239, 68, 68, 0.3);">Error de conexión al cerebro IA.</div>';
+                chatMessages.innerHTML += '<div style="align-self: flex-start; background: rgba(239, 68, 68, 0.1); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: #ef4444; line-height: 1.4; border: 1px solid rgba(239, 68, 68, 0.3);">Error de conexión. Intenta de nuevo.</div>';
             });
         }
 
@@ -944,7 +1103,6 @@
         });
     }
 
-    // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initTourAndChat);
     } else {
