@@ -105,8 +105,12 @@
         <!-- TREZE LABS CO-BRANDING SPLASH -->
         <a href="https://wa.me/522214092478?text=Hola%20Treze%20Labs%2C%20me%20gustar%C3%ADa%20solicitar%20el%20desarrollo%20de%20un%20sistema%20profesional." target="_blank" style="position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeInTreze 1.5s ease 0.5s forwards; text-decoration: none; -webkit-tap-highlight-color: transparent; outline: none; border: none; z-index: 9999999;">
             <p style="color: #64748b; font-size: 11px; font-family: 'Inter', sans-serif; letter-spacing: 2px; text-transform: uppercase; margin: 0;">Powered by</p>
-            <img src="treze_footer.png" style="height: 30px; filter: brightness(0) invert(1); opacity: 0.9;" alt="Treze Labs">
-            <style>@keyframes fadeInTreze { to { opacity: 1; } }</style>
+            <img src="treze_footer.png" class="splash-treze-img" alt="Treze Labs">
+            <style>
+                @keyframes fadeInTreze { to { opacity: 1; } }
+                .splash-treze-img { height: 30px; opacity: 0.8; filter: none; }
+                [data-theme="dark"] .splash-treze-img { filter: brightness(0) invert(1) !important; opacity: 0.9 !important; }
+            </style>
         </a>
 
         <div class="splash-inner">
@@ -726,13 +730,13 @@
     <div id="checkout-modal" class="modal">
         <div class="modal__card">
             <button class="modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="modal__title" id="checkout-title">Configuración de Reserva</h3>
-            <p class="modal__desc" id="checkout-desc">Permítanos conocer su preferencia de fecha para asegurar disponibilidad.</p>
+            <h3 class="modal__title" id="checkout-title">Revisar Disponibilidad</h3>
+            <p class="modal__desc" id="checkout-desc">Permítanos conocer su preferencia de fecha para confirmar disponibilidad.</p>
 
             <div id="checkout-booking-fields">
                 <div class="modal__field">
                     <label>Fecha Deseada</label>
-                    <input type="date" id="booking-date" class="modal__input">
+                    <input type="date" id="booking-date" class="modal__input" min="2024-01-01" max="2027-12-31">
                 </div>
                 <div class="modal__field">
                     <label>Número de Personas</label>
@@ -761,9 +765,14 @@
                     *Certificado válido por 3 meses tras la compra. No reembolsable. Previa cita sujeta a disponibilidad.
                 </p>
             </div>
+            <div id="checkout-disclaimer" style="margin: 1.5rem 0 1rem;">
+                <p style="font-size: 0.65rem; color: rgba(255,255,255,0.4); text-align: center; line-height: 1.4;">
+                    * Esta solicitud es para revisar disponibilidad. Su espacio no estará asegurado hasta confirmar directamente y realizar el depósito correspondiente.
+                </p>
+            </div>
 
             <button id="btn-final-whatsapp" class="modal__btn modal__btn--wa">
-                Enviar Petición Claro de Luna Spa <i class="fa-brands fa-whatsapp"></i>
+                Consultar Disponibilidad <i class="fa-brands fa-whatsapp"></i>
             </button>
         </div>
     </div>
@@ -780,7 +789,7 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
                 <button id="btn-checkout" class="cart__btn">
-                    <span id="btn-book-text">Reservar</span>
+                    <span id="btn-book-text">Consultar Disp.</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </div>

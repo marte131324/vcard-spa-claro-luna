@@ -278,7 +278,7 @@ button { font-family: inherit; cursor: pointer; }
     position: relative; z-index: 2;
     transition: color 0.4s;
 }
-.mode-toggle__btn.active { color: #fff; }
+.mode-toggle__btn.active { color: var(--bg); }
 .mode-toggle__slider {
     position: absolute; top: 5px; left: 5px; bottom: 5px;
     width: calc(50% - 5px);

@@ -585,6 +585,69 @@ function copyCheckinLink() {
     navigator.clipboard.writeText(url).then(() => toast('Link copiado al portapapeles'));
 }
 
+function exportCheckinsPDF() {
+    if (checkinData.length === 0) return toast('No hay registros');
+    const win = window.open('', '_blank');
+    const recent = [...checkinData].reverse();
+    win.document.write(`<html><head><title>Registros Check-In</title>
+        <style>
+            body { font-family: sans-serif; padding: 20px; color: #333; }
+            h1 { color: #D4A373; text-align: center; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background: #f4f4f4; color: #555; }
+        </style></head><body>
+        <h1>Registros de Check-In Claro de Luna</h1>
+        <table>
+            <tr><th>Nombre</th><th>Contacto</th><th>Fecha</th><th>Servicio</th><th>Detalles Médicos / Obj</th></tr>
+            ${recent.map(c => `
+                <tr>
+                    <td>${c.nombre || '-'}</td>
+                    <td>${c.telefono || ''} <br> ${c.email || ''}</td>
+                    <td>${c.fecha || ''} ${c.hora || ''}</td>
+                    <td>${c.servicio || '-'}</td>
+                    <td>Condición: ${c.condicionMedica || 'Ninguna'}<br>Alergias: ${c.alergias || 'Ninguna'}<br>Obj: ${c.objetivo || '-'}</td>
+                </tr>
+            `).join('')}
+        </table>
+        </body></html>`);
+    win.document.close();
+    setTimeout(() => win.print(), 500);
+}
+
+function exportCheckinsCSV() {
+    if (checkinData.length === 0) return toast('No hay registros');
+    const recent = [...checkinData].reverse();
+    let csv = 'Nombre,Telefono,Email,Fecha,Hora,Servicio,1ra Visita,Presion,Objetivo,Areas,Condicion,Alergias,Comentarios\n';
+    recent.forEach(c => {
+        const clean = (s) => `"${(s || '').toString().replace(/"/g, '""')}"`;
+        csv += `${clean(c.nombre)},${clean(c.telefono)},${clean(c.email)},${clean(c.fecha)},${clean(c.hora)},${clean(c.servicio)},${clean(c.primeraVisita)},${clean(c.presion)},${clean(c.objetivo)},${clean(c.areasAtencion)},${clean(c.condicionMedica)},${clean(c.alergias)},${clean(c.comentarios)}\n`;
+    });
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Registros_ClaroDeLuna_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    toast('CSV descargado');
+}
+
+function exportCheckinsWA() {
+    if (checkinData.length === 0) return toast('No hay registros');
+    const recent = [...checkinData].reverse().slice(0, 10); // limited to last 10
+    let msg = `*Registros Recientes Check-In | Claro de Luna Spa*\n\n`;
+    recent.forEach((c, idx) => {
+        msg += `*${idx + 1}. ${c.nombre || 'Sin nombre'}*\n`;
+        msg += `📞 ${c.telefono || '-'}\n`;
+        msg += `🗓 ${c.fecha || ''} ${c.hora || ''}\n`;
+        msg += `Servicio: ${c.servicio || '-'}\n`;
+        msg += `Obj: ${c.objetivo || '-'}\n`;
+        if (c.condicionMedica && c.condicionMedica !== 'Ninguna') msg += `⚠️ Condición: ${c.condicionMedica}\n`;
+        if (c.alergias && c.alergias !== 'Ninguna') msg += `⚠️ Alergias: ${c.alergias}\n`;
+        msg += `\n`;
+    });
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
 // ═══════════════════════════════════════
 // LOYALTY CLUB (COMMAND CENTER)
 // ═══════════════════════════════════════

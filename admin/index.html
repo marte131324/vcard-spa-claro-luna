@@ -353,7 +353,12 @@
                     <h2>Registros de Huespedes</h2>
                     <p>Formularios de check-in recibidos antes de cada visita.</p>
                 </div>
-                <button class="btn btn-secondary" onclick="copyCheckinLink()"><i class="ri-links-line"></i> Copiar Link Check-In</button>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <button class="btn btn-secondary" style="padding:6px 10px;font-size:10px;" onclick="exportCheckinsPDF()" title="Guardar como PDF"><i class="ri-file-pdf-line"></i> PDF</button>
+                    <button class="btn btn-secondary" style="padding:6px 10px;font-size:10px;" onclick="exportCheckinsCSV()" title="Descargar CSV"><i class="ri-file-excel-line"></i> CSV</button>
+                    <button class="btn btn-secondary" style="padding:6px 10px;font-size:10px;" onclick="exportCheckinsWA()" title="Enviar por WhatsApp"><i class="ri-whatsapp-line"></i> WA</button>
+                    <button class="btn btn-secondary" style="padding:6px 10px;font-size:10px;" onclick="copyCheckinLink()"><i class="ri-links-line"></i> Link</button>
+                </div>
             </div>
             <div id="dom-checkins"></div>
         </section>
