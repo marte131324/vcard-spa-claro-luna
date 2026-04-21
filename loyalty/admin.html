@@ -313,14 +313,23 @@
                 </div>
                 <div class="field">
                     <label>Estilo Visual del Certificado</label>
-                    <select class="input" id="gift-bg-select">
-                        <option value="../assets/DSC_0426.jpg">Rituales (Ambientacion)</option>
-                        <option value="../assets/DSC_0212.jpg">Masajes (Manos y Piedras)</option>
-                        <option value="../assets/IMG_3130.jpg">Faciales (Tratamiento)</option>
-                        <option value="../assets/IMG_3055.jpg">Envolturas (Exfoliacion)</option>
-                        <option value="../assets/DSC_0553.jpg">Hidroterapia (Circuito)</option>
-                        <option value="../assets/DSC_0441.jpg">Ambiente General (Spa)</option>
-                    </select>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <select class="input" id="gift-bg-select" onchange="resetBgIndex()" style="flex:1;">
+                            <option value="ritual_claro">Ritual Claro de Luna</option>
+                            <option value="ritual_ancestral">Ritual Ancestral</option>
+                            <option value="ritual_intenciones">Ritual de Intenciones</option>
+                            <option value="masaje_manos">Masaje 4 Manos</option>
+                            <option value="masaje_herbal">Masaje Herbal</option>
+                            <option value="masaje_piernas">Masaje Piernas Cansadas</option>
+                            <option value="faciales">Faciales</option>
+                            <option value="hidroterapia">Circuito Hidroterapia</option>
+                            <option value="ambiente">Ambiente General</option>
+                        </select>
+                        <button type="button" class="btn btn--ghost" style="padding:8px 12px;min-width:auto;font-size:14px;" onclick="cycleBgPhoto()" title="Cambiar foto del mismo estilo">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                    </div>
+                    <p style="font-size:10px;color:var(--text-muted);margin-top:4px;" id="bg-photo-counter"></p>
                 </div>
                 <div class="field">
                     <label>Dedicatoria (opcional)</label>
@@ -787,6 +796,85 @@ function renderClientList(clients) {
     }).join('');
 }
 
+// ======= CERTIFICATE BACKGROUND MAP ============
+const CERT_BACKGROUNDS = {
+    ritual_claro: [
+        '../assets/Ritual Claro de Luna.jpg',
+        '../assets/Ritual Claro de Luna 2.jpg',
+        '../assets/Ritual Claro de Luna 3.jpg'
+    ],
+    ritual_ancestral: [
+        '../assets/Ritual Ancestral1.jpg',
+        '../assets/Ritual Ancestral2.jpg'
+    ],
+    ritual_intenciones: [
+        '../assets/Ritual de Intenciones.jpg',
+        '../assets/Ritual de Intenciones 2.jpg'
+    ],
+    masaje_manos: [
+        '../assets/Masaje 4 manos.jpg',
+        '../assets/Masaje 4 Manos2.jpg',
+        '../assets/Masaje 4 Manos3.jpg'
+    ],
+    masaje_herbal: [
+        '../assets/Masaje Herbal.jpg'
+    ],
+    masaje_piernas: [
+        '../assets/Masaje piernas cansadas.jpg'
+    ],
+    faciales: [
+        '../assets/Faciales.jpg',
+        '../assets/Faciales 2.jpg',
+        '../assets/Facial 2.jpg'
+    ],
+    hidroterapia: [
+        '../assets/Circuito de Hidroterapia 2.jpg',
+        '../assets/DSC_0553.jpg'
+    ],
+    ambiente: [
+        '../assets/General.jpg',
+        '../assets/DSC_0441.jpg',
+        '../assets/Spa Claro de Luna (204).jpg',
+        '../assets/Spa Claro de Luna 2 (1).jpg',
+        '../assets/Spa Claro de Luna 2 (22).jpg'
+    ]
+};
+
+let bgPhotoIndex = 0;
+
+function resetBgIndex() {
+    bgPhotoIndex = 0;
+    updateBgCounter();
+}
+
+function cycleBgPhoto() {
+    const category = document.getElementById('gift-bg-select').value;
+    const photos = CERT_BACKGROUNDS[category] || [];
+    if (photos.length <= 1) return;
+    bgPhotoIndex = (bgPhotoIndex + 1) % photos.length;
+    // Live update preview if visible
+    const previewImg = document.getElementById('gc-bg-img');
+    if (previewImg && !document.getElementById('gift-preview-section').classList.contains('hidden')) {
+        previewImg.src = photos[bgPhotoIndex];
+    }
+    updateBgCounter();
+}
+
+function updateBgCounter() {
+    const category = document.getElementById('gift-bg-select').value;
+    const photos = CERT_BACKGROUNDS[category] || [];
+    const counter = document.getElementById('bg-photo-counter');
+    if (counter) {
+        counter.textContent = photos.length > 1 ? `Foto ${bgPhotoIndex + 1} de ${photos.length}` : '';
+    }
+}
+
+function getCurrentBgImage() {
+    const category = document.getElementById('gift-bg-select').value;
+    const photos = CERT_BACKGROUNDS[category] || ['../assets/General.jpg'];
+    return photos[bgPhotoIndex % photos.length];
+}
+
 // ======= GIFTS ============
 function generateGift() {
     const giftTo = document.getElementById('gift-to-input').value.trim();
@@ -800,7 +888,7 @@ function generateGift() {
         api('createGift', { pin, giftTo, giftFrom, service, amount }).then(res => {
             if (res.success) {
                 renderGiftCanvas(res.folio, giftTo, giftFrom, service);
-                showToast('Diseño generado. ¡Descárgalo y envíalo!');
+                showToast('Diseno generado. Descargalo y envialo!');
                 loadGifts();
             } else {
                 showToast(res.error, true);
@@ -818,8 +906,8 @@ function renderGiftCanvas(folio, to, from, service) {
     document.getElementById('gc-service').textContent = service;
     document.getElementById('gc-folio').textContent = folio;
     
-    // Use user-selected background from dropdown
-    const bgImg = document.getElementById('gift-bg-select').value || '../assets/DSC_0426.jpg';
+    // Use category-based background from map
+    const bgImg = getCurrentBgImage();
     document.getElementById('gc-bg-img').src = bgImg;
     
     // Dedicatoria
@@ -832,6 +920,8 @@ function renderGiftCanvas(folio, to, from, service) {
         msgWrap.style.display = 'none';
     }
     
+    // Update counter
+    updateBgCounter();
     document.getElementById('gift-preview-section').classList.remove('hidden');
     window.currentGiftFolio = folio;
     window.currentGiftService = service;
