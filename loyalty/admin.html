@@ -20,6 +20,7 @@
             --serif: 'Cormorant Garamond', Georgia, serif;
             --sans: 'Inter', -apple-system, sans-serif;
             --ease: cubic-bezier(0.25, 1, 0.5, 1); --radius: 20px;
+            --surface-hover: rgba(212, 163, 115, 0.05);
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         *:focus { outline: none; }
@@ -172,7 +173,7 @@
     <div class="header">
         <img src="../assets/LOGO CLARO DE LUNA 1920 x 1080.png" alt="Claro de Luna">
         <h1>Panel Concierge</h1>
-        <p>Club de Lealtad</p>
+        <p>Club de Lealtad <span style="font-size: 0.6rem; opacity: 0.3; margin-left: 5px;">v4.1</span></p>
     </div>
 
     <!-- LOGIN -->
@@ -650,23 +651,15 @@ function lookupClient() {
 }
 
 function quickLookupClient(phone) {
-    // Switch to Stamp (Lookup) Tab
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    document.querySelector('.tab-btn[data-tab="stamp"]').classList.add('active');
-    document.getElementById('tab-stamp').classList.add('active');
-    
+    // Switch to Stamp Tab (where the lookup section is)
+    switchTab('stamp');
     document.getElementById('lookup-phone').value = phone;
     lookupClient();
 }
 
 function quickValidateGift(folio) {
-    // Switch to Gifts Tab
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    document.querySelector('.tab-btn[data-tab="gifts"]').classList.add('active');
-    document.getElementById('tab-gifts').classList.add('active');
-    
+    // Switch to Gifts Tab (where the validation section is)
+    switchTab('gifts');
     document.getElementById('lookup-folio').value = folio;
     validateGift();
 }
