@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Operación Ejecutiva — Claro de Luna Spa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @page { size: letter; margin: 2cm 2.5cm; }
+  body { font-family:'Inter',sans-serif; color:#1e293b; line-height:1.7; padding:40px 50px; max-width:850px; margin:0 auto; }
+  .header { border-bottom:3px solid #0e86b0; padding-bottom:18px; margin-bottom:30px; display:flex; justify-content:space-between; align-items:flex-end; }
+  .header h1 { font-size:1.6rem; font-weight:800; color:#042d3d; }
+  .header .sub { font-size:0.8rem; color:#64748b; }
+  .badge { display:inline-block; background:#0e86b0; color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  h2 { font-size:1.15rem; font-weight:700; color:#0e86b0; margin:32px 0 12px; padding-bottom:6px; border-bottom:1px solid #e2e8f0; }
+  h3 { font-size:0.95rem; font-weight:700; color:#334155; margin:22px 0 8px; }
+  p, li { font-size:0.88rem; color:#475569; }
+  ul, ol { padding-left:22px; margin:8px 0; }
+  li { margin:6px 0; }
+  .section-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px 24px; margin:16px 0; page-break-inside:avoid; }
+  .section-card h3 { margin-top:0; color:#0e86b0; border-bottom:1px dashed #cbd5e1; padding-bottom:10px; margin-bottom:16px; font-size: 1.05rem;}
+  .walkthrough { border-left: 4px solid #3b82f6; margin: 16px 0; padding-left: 18px; }
+  .step-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+  .step-box h4 { font-size: 0.9rem; color: #0f172a; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .step-circle { background: #3b82f6; color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; font-weight: bold; flex-shrink:0; }
+  .step-circle.gold { background: #D4A373; }
+  .step-circle.green { background: #22c55e; }
+  .step-circle.red { background: #ef4444; }
+  .tip { background:#f0fdf4; border-left:4px solid #22c55e; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#166534; }
+  .warn { background:#fef3c7; border-left:4px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#92400e; }
+  .danger { background:#fef2f2; border-left:4px solid #ef4444; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#991b1b; }
+  .info { background:#eff6ff; border-left:4px solid #3b82f6; padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:0.84rem; color:#1e40af; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.84rem; }
+  th { background:#0e86b0; color:white; padding:10px 14px; text-align:left; font-weight:600; }
+  td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
+  tr:nth-child(even) td { background:#f8fafc; }
+  code { background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:0.82rem; color:#0e86b0; }
+  .toc { background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; padding:20px 24px; margin:20px 0; }
+  .toc h3 { color:#0369a1; margin:0 0 12px 0; border:none; padding:0; }
+  .toc ol { margin:0; }
+  .toc li { font-size:0.85rem; color:#0369a1; margin:4px 0; }
+  .footer { margin-top:40px; padding-top:16px; border-top:2px solid #e2e8f0; font-size:0.75rem; color:#94a3b8; text-align:center; }
+  @media print { body { padding:0; } .section-card, .walkthrough { break-inside:avoid; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <span class="badge">Documento 2 de 3</span>
+    <h1>Manual de Operación Ejecutiva</h1>
+    <div class="sub">Guía operativa del Ecosistema — Operación Segura y Módulos</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="font-size:0.75rem; color:#94a3b8;">Tecnología: Treze Labs</div>
+    <div style="font-size:0.75rem; color:#94a3b8;">Versión: 3.2 · Abril 2026</div>
+  </div>
+</div>
+
+<div class="warn">
+    <strong>Para Dueños y Gerentes:</strong> En menos de 15 minutos de lectura comprenderá cómo su Spa ahora opera como una clínica internacional mediante la infraestructura segura provista. <strong>No omita ninguna sección.</strong> Aprenderá los flujos operativos para gestionar reservaciones, check-ins, lealtad y caja.
+</div>
+
+<div class="toc">
+    <h3>Contenido del Manual</h3>
+    <ol>
+        <li>Visión General del Ecosistema</li>
+        <li>La Tarjeta Digital Pública (VCard)
+            <ul>
+                <li>2.1 Splash Screen y Portada</li>
+                <li>2.2 Catálogo de Servicios y Cotizador Integrado</li>
+                <li>2.3 Club de Lealtad (Portal de Clientes)</li>
+                <li>2.4 Certificados de Regalo</li>
+                <li>2.5 Asistente de IA Cognitiva (Concierge)</li>
+                <li>2.6 Políticas y Contacto</li>
+            </ul>
+        </li>
+        <li>Check-In Médico Digital (Portal de Lobby)</li>
+        <li>Command Center (Panel Administrativo Privado)</li>
+        <li>Panel de Lealtad y Concierge (Recepción)</li>
+        <li>Matriz de Datos Centralizada</li>
+        <li>Seguridad y Accesos</li>
+        <li>Preguntas Frecuentes Operativas</li>
+    </ol>
+</div>
+
+<h2>1. Visión General del Ecosistema</h2>
+<p>Su negocio ahora cuenta con <strong>5 módulos tecnológicos independientes</strong> trabajando de fondo invisiblemente, conectados de forma cifrada a una matriz de datos centralizada de alta disponibilidad:</p>
+
+<table>
+    <tr><th>Módulo</th><th>Acceso</th><th>¿Quién lo usa?</th><th>Función Principal</th></tr>
+    <tr><td><strong>VCard Pública</strong></td><td>Enlace Oficial Principal</td><td>Clientes</td><td>Vitrina, cotizador interactivo, portal de lealtad y bot de IA</td></tr>
+    <tr><td><strong>Check-In Médico</strong></td><td>Portal Lobby</td><td>Pacientes</td><td>Formulario médico previo al servicio con firma de consentimiento legal</td></tr>
+    <tr><td><strong>Command Center</strong></td><td>Acceso Privado Administrador</td><td>Gerente / Staff</td><td>Control de empleados, asistencia, motor de comisiones y registros</td></tr>
+    <tr><td><strong>Panel de Lealtad</strong></td><td>Acceso Privado Recepción</td><td>Recepcionista</td><td>Generación de PINs de lealtad, altas de clientes y certificados</td></tr>
+    <tr><td><strong>Matriz de Datos</strong></td><td>Nube Protegida (Drive)</td><td>Automático</td><td>Almacenamiento permanente y sincronización en tiempo real</td></tr>
+</table>
+
+<div class="info">
+    <strong>Sincronización Transaccional:</strong> Todos los módulos mantienen comunicación en tiempo real. Si el Command Center registra un nuevo servicio, el cliente y el panel de lealtad se actualizan sin requerir descargas ni refrescos manuales.
+</div>
+
+<h2>2. La Tarjeta Digital Pública (VCard)</h2>
+<p>Reemplaza al menú impreso y al PDF estático. Es el canal primario de adquisición y retención.</p>
+
+<div class="section-card">
+    <h3>2.2 Catálogo de Servicios con Cotizador Inteligente</h3>
+    <p><strong>¿Qué es?</strong> La sección de tratamientos organizados por categoría. Incluye un switch dual interactivo entre modo "Para Mí" y "Regalar".</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> Selección y Modo Regalo</h4>
+            <p>Los tratamientos muestran nombre, duración y precio. Al tocar el botón <code>(+)</code>, se añaden directamente al cotizador. Si el usuario activa el switch <strong>"Regalar"</strong>, el sistema ajustará el flujo para solicitar datos de envío (De parte de, Para, Mensaje Especial) de forma automatizada al finalizar la selección.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">2</span> Proceso de Disponibilidad</h4>
+            <p>Al presionar <strong>"Consultar Disponibilidad"</strong>, el sistema verifica que la fecha deseada cumpla las reglas de negocio, y recalca con un aviso legal que la solicitud no asegura el espacio hasta confirmar y realizar depósito. La petición procesada viaja ya tabulada a la recepción.</p>
+        </div>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>2.3 Club de Lealtad (Sección Pública)</h3>
+    <p><strong>¿Qué es?</strong> Módulo integrado que permite a los clientes acumular visitas de forma inviolable sin descargar aplicaciones.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> Autenticación de Usuario</h4>
+            <p>El cliente ingresa su teléfono. El sistema recupera su estado, nivel y balance de visitas bajo cifrado.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle">2</span> Validación de Visitas (Anti-Fraude)</h4>
+            <p>La recepcionista dicta al cliente un código único y dinámico de 6 caracteres. El cliente lo ingresa en su dispositivo. El sistema valida contra la matriz que el código esté activo, que pertenezca a la misma sucursal, y aplica el punto invalidando el código en milisegundos para evitar copias.</p>
+        </div>
+    </div>
+    <div class="warn"><strong>Seguridad del Modelo:</strong> Esta arquitectura elimina las fallas de los escáneres de QR tradicionales y previene el fraude interno/externo mediante tokens de un solo uso.</div>
+</div>
+
+<div class="section-card">
+    <h3>2.5 Asistente de IA Cognitiva (Concierge)</h3>
+    <p><strong>¿Qué es?</strong> Una inteligencia artificial entrenada en los límites de negocio, catálogo de Claro de Luna y perfilamiento de ventas. Opera bajo infraestructura de procesamiento profundo para sugerir, asesorar y cerrar intenciones de compra 24/7.</p>
+</div>
+
+<h2>3. Check-In Médico Digital</h2>
+<p>Sistema estructurado para resguardar legalmente al negocio y preparar a los terapeutas antes del servicio.</p>
+
+<div class="section-card">
+    <h3>Flujo de Alta Disponibilidad</h3>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle">1</span> Recolección Clínica</h4>
+            <p>El paciente, desde su celular, provee condiciones médicas, alergias y firma la política de privacidad. El sistema aplica validaciones pre-envío.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle green">2</span> Tolerancia a Fallos</h4>
+            <p>Si la red del spa falla en el momento exacto del envío, la plataforma usa caché local. Los datos no se pierden y viajan cuando retorna la señal.</p>
+        </div>
+    </div>
+</div>
+
+<h2>4. Command Center (Panel Administrativo)</h2>
+<p>El cerebro operativo del ecosistema, restringido por Autenticación de Servidor.</p>
+
+<div class="section-card">
+    <h3>4.6 Pestaña: Registros de Check-In (Reportes de Exportación)</h3>
+    <p>Permite visualizar y extraer expedientes clínicos para los terapeutas.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle gold">A</span> Motor de Extracción</h4>
+            <p>Con botones integrados, la administración puede generar un <strong>PDF</strong> formal para archivo, un <strong>CSV</strong> para análisis financiero profundo, o un reporte vía <strong>WhatsApp</strong> que usa un motor lógico para resaltar con alertas de riesgo (⚠️) cualquier alergia crítica antes de enviar a las terapeutas.</p>
+        </div>
+    </div>
+</div>
+
+<h2>6. Matriz de Datos Centralizada</h2>
+<p>Todos los registros alimentan una Base de Datos en la Nube (ubicada en su unidad digital encriptada), estructurada en colecciones separadas (Clientes, Códigos, Servicios, Personal, Comisiones, etc.). Usted tiene acceso directo a esta consola administrativa para visualizar métricas, cambiar precios en masa, y gestionar altas/bajas sin costo de mantenimiento.</p>
+
+<div class="warn"><strong>Protección Estructural:</strong> Los encabezados de datos de esta matriz son inmutables. Modificarlos romperá el enlace con los ecosistemas front-end. Los valores debajo de ellos (precios, nombres) son libres de manipulación.</div>
+
+<h2>8. Preguntas Frecuentes Operativas</h2>
+
+<div class="section-card">
+    <h3>¿Puedo cambiar los precios de los servicios o dar de alta nuevos?</h3>
+    <p>Sí. Desde su Consola de Datos Central, ubique la colección de "Servicios" y edite las tarifas. El ecosistema detecta el cambio y actualiza cotizadores y calculadoras de comisiones inmediatamente.</p>
+</div>
+
+<div class="section-card">
+    <h3>¿Qué pasa si olvidé el PIN maestro de acceso?</h3>
+    <p>Acceda de manera segura a su Consola de Datos Central como administrador. En la configuración de sistema, visualizará el parámetro de seguridad actual. Si requiere mayor asistencia, contacte al soporte de agencia.</p>
+</div>
+
+<div class="footer">
+  Claro de Luna Spa — Manual Ejecutivo Operativo 360 v3.2 &copy; 2026<br>
+  <strong>Aviso Legal y Restricción:</strong> Infraestructura digital desplegada por Treze Labs. Queda prohibida la extracción de la lógica de negocio y arquitectura operativa.
+</div>
+
+</body>
+</html>
