@@ -665,7 +665,7 @@ function quickValidateGift(folio) {
 }
 
 function redeemLoyaltyReward(phone) {
-    if (!confirm('¿Aplicar el descuento de 50% y regresar a 0 los 3 sellos visuales?\n\n(Las visitas totales se conservan intactas)')) return;
+    if (!confirm('\u00bfCanjear el descuento de 50% y reiniciar la tarjeta a 0 sellos?\n\nLa visita de canje NO cuenta como sello.\n(Las visitas totales se conservan intactas)')) return;
     
     document.querySelector('#reward-action-container button').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Aplicando...';
     
@@ -676,7 +676,7 @@ function redeemLoyaltyReward(phone) {
                 quickLookupClient(phone);
                 loadClients();
             } else {
-                document.querySelector('#reward-action-container button').innerHTML = '<i class="fa-solid fa-gift"></i> Aplicar Recompensa (-3 Sellos)';
+                document.querySelector('#reward-action-container button').innerHTML = '<i class="fa-solid fa-gift"></i> Canjear Recompensa (Reiniciar Tarjeta)';
                 showToast(res.error, true);
             }
         });
@@ -721,7 +721,7 @@ function renderClientCard(c) {
     }
     
     if (c.stamps >= 3) {
-        redeemContainer.innerHTML = `<button class="c-submit" onclick="redeemLoyaltyReward('${c.phone}')" style="background:var(--accent);color:#fff;width:100%;margin-top:10px;"><i class="fa-solid fa-gift"></i> Aplicar Recompensa (-3 Sellos)</button>`;
+        redeemContainer.innerHTML = `<button class="c-submit" onclick="redeemLoyaltyReward('${c.phone}')" style="background:var(--accent);color:#fff;width:100%;margin-top:10px;"><i class="fa-solid fa-gift"></i> Canjear Recompensa (Reiniciar Tarjeta)</button>`;
     } else {
         redeemContainer.innerHTML = '';
     }

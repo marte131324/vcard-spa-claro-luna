@@ -520,7 +520,7 @@ async function openLoyaltyDetail(phone) {
 
         // Reward button
         const rewardBtn = rewardReady
-            ? `<button class="btn btn-primary" style="width:100%;margin-top:16px;gap:8px;" onclick="redeemLoyaltyCC('${c.phone}')"><i class="ri-gift-line"></i> Aplicar Recompensa 50% (-3 Sellos)</button>`
+            ? `<button class="btn btn-primary" style="width:100%;margin-top:16px;gap:8px;" onclick="redeemLoyaltyCC('${c.phone}')"><i class="ri-gift-line"></i> Canjear Recompensa 50% (Reiniciar Tarjeta)</button>`
             : `<div style="text-align:center;padding:12px;margin-top:16px;background:rgba(0,0,0,0.15);border-radius:8px;font-size:12px;color:var(--text-dim);"><i class="ri-information-line"></i> El cliente necesita ${3 - stamps} sello${3 - stamps !== 1 ? 's' : ''} más para su recompensa.</div>`;
 
         document.getElementById('loyalty-detail-body').innerHTML = `
@@ -540,7 +540,7 @@ async function openLoyaltyDetail(phone) {
 }
 
 async function redeemLoyaltyCC(phone) {
-    if (!confirm('¿Aplicar el descuento de 50% y restar 3 sellos?\n\n(Las visitas totales se conservan intactas)')) return;
+    if (!confirm('¿Canjear el descuento de 50% y reiniciar la tarjeta de sellos a 0?\n\nLa visita de canje NO cuenta como sello.\n(Las visitas totales se conservan intactas)')) return;
     const pin = getPin();
     if (!pin) return;
     toast('Aplicando recompensa...');

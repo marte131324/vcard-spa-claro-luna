@@ -309,10 +309,10 @@ function redeemReward(phone, pin) {
   for (let i = 1; i < data.length; i++) {
     if (normalizePhone(String(data[i][0])) === phone) {
       const currentStamps = Number(data[i][2]) || 0;
-      if (currentStamps < 3) return { success: false, error: 'Sellos insuficientes' };
+      if (currentStamps < 3) return { success: false, error: 'Sellos insuficientes (' + currentStamps + '/3)' };
       
-      const newStamps = currentStamps - 3;
-      sheet.getRange(i + 1, 3).setValue(newStamps);
+      // ABSOLUTE RESET to 0 — the redemption visit does NOT count as stamp
+      sheet.getRange(i + 1, 3).setValue(0);
       
       let history = safeParseJSON(data[i][5] || '[]');
       history.push({
@@ -323,7 +323,7 @@ function redeemReward(phone, pin) {
       });
       sheet.getRange(i + 1, 6).setValue(JSON.stringify(history));
       
-      return { success: true, message: 'Recompensa canjeada. Sellos ajustados.', stamps: newStamps };
+      return { success: true, message: 'Recompensa canjeada. Tarjeta reiniciada a 0 sellos.', stamps: 0 };
     }
   }
   return { success: false, error: 'Cliente no encontrado' };
