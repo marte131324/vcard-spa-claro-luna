@@ -649,6 +649,49 @@ function lookupClient() {
     }
 }
 
+function quickLookupClient(phone) {
+    // Switch to Lookup Tab
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    document.querySelector('.tab-btn[data-tab="lookup"]').classList.add('active');
+    document.getElementById('lookup-tab').classList.add('active');
+    
+    document.getElementById('lookup-phone').value = phone;
+    lookupClient();
+}
+
+function quickValidateGift(folio) {
+    // Switch to Validation Tab
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    document.querySelector('.tab-btn[data-tab="validate"]').classList.add('active');
+    document.getElementById('validate-tab').classList.add('active');
+    
+    document.getElementById('lookup-folio').value = folio;
+    validateGift();
+}
+
+function redeemLoyaltyReward(phone) {
+    if (!confirm('¿Aplicar el descuento de 50% y regresar a 0 los 3 sellos visuales?\n\n(Las visitas totales se conservan intactas)')) return;
+    
+    document.querySelector('#reward-action-container button').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Aplicando...';
+    
+    if (window.API_URL) {
+        api('redeemreward', { pin, phone }).then(res => {
+            if (res.success) {
+                showToast(res.message || 'Recompensa canjeada. Sellos ajustados.');
+                quickLookupClient(phone);
+                loadClients();
+            } else {
+                document.querySelector('#reward-action-container button').innerHTML = '<i class="fa-solid fa-gift"></i> Aplicar Recompensa (-3 Sellos)';
+                showToast(res.error, true);
+            }
+        });
+    } else {
+        showToast('Modo Demo: No se puede aplicar la recompensa');
+    }
+}
+
 function renderClientCard(c) {
     const card = document.getElementById('client-card');
     card.classList.add('show');
@@ -674,6 +717,21 @@ function renderClientCard(c) {
     reward.className = 'mini-stamp mini-stamp--reward' + (c.stamps >= 3 ? ' filled' : '');
     reward.innerHTML = `<div class="mini-stamp__circle"><i class="fa-solid fa-gift"></i></div><span class="mini-stamp__label">50% OFF</span>`;
     stamps.appendChild(reward);
+    
+    // Redeem Reward Section
+    let redeemContainer = document.getElementById('reward-action-container');
+    if (!redeemContainer) {
+        redeemContainer = document.createElement('div');
+        redeemContainer.id = 'reward-action-container';
+        redeemContainer.style.marginTop = '16px';
+        card.querySelector('.cc-body').appendChild(redeemContainer);
+    }
+    
+    if (c.stamps >= 3) {
+        redeemContainer.innerHTML = `<button class="c-submit" onclick="redeemLoyaltyReward('${c.phone}')" style="background:var(--accent);color:#fff;width:100%;margin-top:10px;"><i class="fa-solid fa-gift"></i> Aplicar Recompensa (-3 Sellos)</button>`;
+    } else {
+        redeemContainer.innerHTML = '';
+    }
 }
 
 // ======= CLIENTS LIST =======
@@ -703,7 +761,7 @@ function renderClientList(clients) {
         const stamps = Number(c.Stamps || c.stamps || 0);
         const visits = Number(c.TotalVisits || c.totalVisits || 0);
         return `
-        <div class="client-row">
+        <div class="client-row" onclick="quickLookupClient('${phone}')" style="cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='var(--surface-hover)'" onmouseout="this.style.background=''">
             <div>
                 <div class="client-row__name">${name}</div>
                 <div class="client-row__meta">${phone} · ${tier} · ${visits} visitas</div>
@@ -872,7 +930,7 @@ function loadGifts() {
                     return; 
                 }
                 list.innerHTML = res.gifts.map(g => `
-                    <div class="client-row">
+                    <div class="client-row" onclick="quickValidateGift('${g.folio}')" style="cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='var(--surface-hover)'" onmouseout="this.style.background=''">
                         <div>
                             <div class="client-row__name">${g.folio}</div>
                             <div class="client-row__meta">Para: ${g.giftTo} · ${g.service.split(' ').slice(0,3).join(' ')}...</div>

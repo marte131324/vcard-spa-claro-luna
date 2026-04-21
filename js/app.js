@@ -601,6 +601,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showActiveCard();
                     showToast(`¡Bienvenido${res.client.name ? ', ' + res.client.name : ''}! 🌙`);
                     checkPendingStamp();
+                    setTimeout(() => document.getElementById('rewards').scrollIntoView({ behavior: 'smooth' }), 300);
                 } else if (res.success && !res.found) {
                     showNotFound();
                     showToast('Solicita tu registro al concierge', true);
@@ -647,6 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     saveSession(loyaltyUser);
                     renderStamps(loyaltyUser);
                     showToast(res.message || '¡Sello registrado! ✨');
+                    setTimeout(() => document.getElementById('rewards').scrollIntoView({ behavior: 'smooth' }), 300);
                 } else {
                     showToast(res.error || 'Código inválido', true);
                 }

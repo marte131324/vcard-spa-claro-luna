@@ -301,8 +301,22 @@ function redeemReward(phone, pin) {
   const data = sheet.getDataRange().getValues();
   for (let i = 1; i < data.length; i++) {
     if (normalizePhone(String(data[i][0])) === phone) {
-      sheet.getRange(i + 1, 3).setValue(0); // Reiniciar sellos
-      return { success: true, message: 'Recompensa canjeada. Sellos reiniciados.' };
+      const currentStamps = Number(data[i][2]) || 0;
+      if (currentStamps < 3) return { success: false, error: 'Sellos insuficientes' };
+      
+      const newStamps = currentStamps - 3;
+      sheet.getRange(i + 1, 3).setValue(newStamps);
+      
+      let history = safeParseJSON(data[i][5] || '[]');
+      history.push({
+        stamp: 0,
+        service: 'RECOMPENSA 50% APLICADA',
+        amount: 0,
+        date: new Date().toISOString()
+      });
+      sheet.getRange(i + 1, 6).setValue(JSON.stringify(history));
+      
+      return { success: true, message: 'Recompensa canjeada. Sellos ajustados.', stamps: newStamps };
     }
   }
   return { success: false, error: 'Cliente no encontrado' };
