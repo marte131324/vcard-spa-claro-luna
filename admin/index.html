@@ -307,16 +307,38 @@
         <section id="v-comisiones" class="view">
             <div class="header">
                 <div>
-                    <h2>Comisiones</h2>
-                    <p>Registro de servicios realizados y calculo de comisiones por terapeuta (20% fijo).</p>
+                    <h2>Tablero Financiero</h2>
+                    <p>Dashboard de servicios, facturacion y comisiones por terapeuta.</p>
                 </div>
-                <button class="btn btn-primary" onclick="openCommModal()"><i class="ri-add-line"></i> Registrar Servicio</button>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <select id="comm-date-filter" onchange="renderCommissions()" style="padding:8px 12px;background:var(--bg-panel);border:1px solid var(--border);color:var(--text-pure);border-radius:8px;font-size:12px;">
+                        <option value="day">Hoy</option>
+                        <option value="week">Semanal</option>
+                        <option value="biweek">Quincenal</option>
+                        <option value="month" selected>Mensual</option>
+                        <option value="all">Todo</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="openCommModal()"><i class="ri-add-line"></i> Registrar</button>
+                </div>
             </div>
+            <!-- Stats row -->
+            <div class="stat-grid" style="margin-bottom:16px;">
+                <div class="stat-card"><div class="num" id="s-comm-services">0</div><div class="lbl">Servicios</div></div>
+                <div class="stat-card"><div class="num" id="s-comm-revenue">$0</div><div class="lbl">Facturado</div></div>
+                <div class="stat-card"><div class="num" id="s-comm-commission">$0</div><div class="lbl">Comisiones</div></div>
+            </div>
+            <!-- Therapist cards -->
             <div class="card">
-                <div class="card-title">Resumen del Mes</div>
+                <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;">Detalle por Terapeuta
+                    <div style="display:flex;gap:6px;">
+                        <button class="btn btn-secondary" style="padding:6px 10px;font-size:10px;" onclick="exportReportPDF()" title="Guardar como PDF"><i class="ri-file-pdf-line"></i> PDF</button>
+                        <button class="btn btn-secondary" style="padding:6px 10px;font-size:10px;" onclick="exportReportCSV()" title="Descargar CSV"><i class="ri-file-excel-line"></i> CSV</button>
+                        <button class="btn btn-secondary" style="padding:6px 10px;font-size:10px;" onclick="exportReportWA()" title="Enviar por WhatsApp"><i class="ri-whatsapp-line"></i> WA</button>
+                    </div>
+                </div>
                 <div id="dom-comm-summary"></div>
             </div>
-            <div class="card">
+            <div class="card" style="margin-top:16px;">
                 <div class="card-title">Historial de Servicios</div>
                 <div id="dom-commissions"></div>
             </div>
@@ -404,10 +426,9 @@
                 <div class="form-group"><label>Puesto</label>
                     <select id="sf-role">
                         <option value="Terapeuta">Terapeuta</option>
-                        <option value="Recepcionista">Recepcionista</option>
-                        <option value="Coordinador(a)">Coordinador(a)</option>
                         <option value="Gerente">Gerente</option>
-                        <option value="Otro">Otro</option>
+                        <option value="Valet">Valet</option>
+                        <option value="Admin">Admin</option>
                     </select>
                 </div>
                 <div class="form-group"><label>Telefono</label><input type="tel" id="sf-phone" placeholder="229 000 0000"></div>
@@ -458,7 +479,7 @@
             </div>
             <div class="grid-2">
                 <div class="form-group"><label>Precio del Servicio ($MXN)</label><input type="number" id="cm-price" placeholder="0"></div>
-                <div class="form-group"><label>Comision (20%)</label><input type="number" id="cm-commission" readonly style="opacity:0.6;"></div>
+                <div class="form-group"><label>Comision (20% sugerido)</label><input type="number" id="cm-commission" placeholder="Editable"></div>
             </div>
             <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">
                 <button class="btn btn-secondary" onclick="document.getElementById('modal-comm').classList.remove('show')">Cancelar</button>

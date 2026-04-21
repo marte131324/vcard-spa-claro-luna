@@ -288,41 +288,96 @@ function logAttendance() {
 // ═══════════════════════════════════════
 // COMMISSIONS
 // ═══════════════════════════════════════
+// COMISIONES — TABLERO FINANCIERO
+// ═══════════════════════════════════════
+function getFilteredCommissions() {
+    const filter = document.getElementById('comm-date-filter')?.value || 'month';
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    return commissionData.filter(c => {
+        if (filter === 'all') return true;
+        const d = new Date(c.date);
+        if (isNaN(d)) return true;
+        const diffDays = Math.floor((today - d) / 86400000);
+        if (filter === 'day') return diffDays === 0;
+        if (filter === 'week') return diffDays <= 7;
+        if (filter === 'biweek') return diffDays <= 15;
+        if (filter === 'month') return diffDays <= 30;
+        return true;
+    });
+}
+
+function getFilterLabel() {
+    const v = document.getElementById('comm-date-filter')?.value || 'month';
+    return { day: 'Hoy', week: 'Semanal', biweek: 'Quincenal', month: 'Mensual', all: 'Todo el Historial' }[v];
+}
+
 function renderCommissions() {
     const domHist = document.getElementById('dom-commissions');
     const domSum = document.getElementById('dom-comm-summary');
     if (!domHist) return;
 
-    if (commissionData.length === 0) {
-        domHist.innerHTML = '<p style="color:var(--text-dim);font-size:12px;text-align:center;padding:20px;">Sin servicios registrados.</p>';
+    const filtered = getFilteredCommissions();
+
+    // Update stat cards
+    const totalServices = filtered.length;
+    const totalRevenue = filtered.reduce((s, c) => s + (parseFloat(c.price) || 0), 0);
+    const totalComm = filtered.reduce((s, c) => s + (parseFloat(c.commission) || 0), 0);
+    const elSvc = document.getElementById('s-comm-services');
+    const elRev = document.getElementById('s-comm-revenue');
+    const elCom = document.getElementById('s-comm-commission');
+    if (elSvc) elSvc.textContent = totalServices;
+    if (elRev) elRev.textContent = '$' + totalRevenue.toLocaleString();
+    if (elCom) elCom.textContent = '$' + totalComm.toLocaleString();
+
+    if (filtered.length === 0) {
+        domHist.innerHTML = '<p style="color:var(--text-dim);font-size:12px;text-align:center;padding:20px;">Sin servicios en este periodo.</p>';
         domSum.innerHTML = domHist.innerHTML;
         return;
     }
 
     // Summary by therapist
     const summary = {};
-    commissionData.forEach(c => {
-        if (!summary[c.person]) summary[c.person] = { services: 0, revenue: 0, commission: 0 };
+    filtered.forEach(c => {
+        if (!summary[c.person]) summary[c.person] = { services: 0, revenue: 0, commission: 0, details: [] };
         summary[c.person].services++;
         summary[c.person].revenue += parseFloat(c.price) || 0;
         summary[c.person].commission += parseFloat(c.commission) || 0;
+        summary[c.person].details.push(c);
     });
 
     domSum.innerHTML = Object.entries(summary).map(([name, d]) => `
-        <div class="list-item">
-            <div class="info">
-                <div class="name">${name}</div>
-                <div class="meta">${d.services} servicios | Facturado: $${d.revenue.toLocaleString()}</div>
+        <div class="list-item" style="flex-direction:column;align-items:stretch;cursor:pointer;" onclick="this.querySelector('.therapist-detail').classList.toggle('hidden')">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="info">
+                    <div class="name" style="font-size:14px;">${name}</div>
+                    <div class="meta">${d.services} servicios | Facturado: $${d.revenue.toLocaleString()}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="color:var(--accent);font-family:var(--font-display);font-size:20px;font-weight:600;">$${d.commission.toLocaleString()}</div>
+                    <div style="font-size:9px;color:var(--text-dim);">COMISION</div>
+                </div>
             </div>
-            <div style="text-align:right;">
-                <div style="color:var(--accent);font-family:var(--font-display);font-size:18px;font-weight:600;">$${d.commission.toLocaleString()}</div>
-                <div style="font-size:9px;color:var(--text-dim);">COMISION</div>
+            <div class="therapist-detail hidden" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+                ${d.details.map(s => `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:11px;">
+                        <div>
+                            <span style="color:var(--text-pure);">${s.service}</span>
+                            <span style="color:var(--text-dim);margin-left:6px;">${s.date}</span>
+                        </div>
+                        <div style="display:flex;gap:12px;">
+                            <span>$${parseFloat(s.price).toLocaleString()}</span>
+                            <span style="color:var(--accent);">Com: $${parseFloat(s.commission).toLocaleString()}</span>
+                        </div>
+                    </div>
+                `).join('')}
             </div>
         </div>
     `).join('');
 
     // History
-    const recent = [...commissionData].reverse().slice(0, 30);
+    const recent = [...filtered].reverse().slice(0, 50);
     domHist.innerHTML = recent.map(c => `
         <div class="list-item">
             <div class="info">
@@ -350,17 +405,102 @@ function saveCommission() {
     const person = document.getElementById('cm-person').value;
     if (!person) { alert('Seleccione un terapeuta'); return; }
     const price = parseFloat(document.getElementById('cm-price').value) || 0;
+    const commission = parseFloat(document.getElementById('cm-commission').value) || Math.round(price * COMMISSION_RATE);
     const record = {
         person,
         service: document.getElementById('cm-service').value,
         date: document.getElementById('cm-date').value,
         price,
-        commission: Math.round(price * COMMISSION_RATE)
+        commission
     };
     commissionData.push(record);
     renderCommissions(); updateStats();
     document.getElementById('modal-comm').classList.remove('show');
     postData({ action: 'logCommission', record }, 'Comision Registrada');
+}
+
+// ═══ EXPORT FUNCTIONS ═══
+function exportReportPDF() {
+    const filtered = getFilteredCommissions();
+    const label = getFilterLabel();
+    const summary = {};
+    filtered.forEach(c => {
+        if (!summary[c.person]) summary[c.person] = { services: 0, revenue: 0, commission: 0, details: [] };
+        summary[c.person].services++;
+        summary[c.person].revenue += parseFloat(c.price) || 0;
+        summary[c.person].commission += parseFloat(c.commission) || 0;
+        summary[c.person].details.push(c);
+    });
+    const totalRev = filtered.reduce((s, c) => s + (parseFloat(c.price) || 0), 0);
+    const totalComm = filtered.reduce((s, c) => s + (parseFloat(c.commission) || 0), 0);
+
+    const win = window.open('', '_blank');
+    win.document.write(`<!DOCTYPE html><html><head><title>Reporte ${label} - Claro de Luna</title>
+        <style>
+            body{font-family:'Segoe UI',sans-serif;padding:40px;color:#1A1814;max-width:800px;margin:0 auto;}
+            h1{color:#8B6E53;font-size:24px;border-bottom:2px solid #D4A373;padding-bottom:10px;}
+            h2{color:#8B6E53;font-size:16px;margin-top:30px;}
+            table{width:100%;border-collapse:collapse;margin:10px 0;}
+            th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px;}
+            th{background:#FAF8F5;color:#8B6E53;font-weight:600;}
+            .total-row{font-weight:bold;background:#FAF8F5;}
+            .footer{margin-top:40px;text-align:center;color:#999;font-size:11px;}
+            @media print{body{padding:20px;}}
+        </style></head><body>
+        <h1>Claro de Luna Spa</h1>
+        <p>Reporte Financiero: <strong>${label}</strong> | Generado: ${new Date().toLocaleDateString('es-MX')}</p>
+        ${Object.entries(summary).map(([name, d]) => `
+            <h2>${name}</h2>
+            <table>
+                <tr><th>Servicio</th><th>Fecha</th><th>Precio</th><th>Comision</th></tr>
+                ${d.details.map(s => `<tr><td>${s.service}</td><td>${s.date}</td><td>$${parseFloat(s.price).toLocaleString()}</td><td>$${parseFloat(s.commission).toLocaleString()}</td></tr>`).join('')}
+                <tr class="total-row"><td colspan="2">Subtotal ${name}</td><td>$${d.revenue.toLocaleString()}</td><td>$${d.commission.toLocaleString()}</td></tr>
+            </table>
+        `).join('')}
+        <h2>Totales Generales</h2>
+        <table>
+            <tr class="total-row"><td>Servicios: ${filtered.length}</td><td></td><td>$${totalRev.toLocaleString()}</td><td>$${totalComm.toLocaleString()}</td></tr>
+        </table>
+        <div class="footer">Generado por Command Center - Claro de Luna Spa</div>
+        </body></html>`);
+    win.document.close();
+    setTimeout(() => win.print(), 500);
+}
+
+function exportReportCSV() {
+    const filtered = getFilteredCommissions();
+    let csv = 'Terapeuta,Servicio,Fecha,Precio,Comision\n';
+    filtered.forEach(c => {
+        csv += `"${c.person}","${c.service}","${c.date}",${c.price},${c.commission}\n`;
+    });
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Reporte_ClaroDeLuna_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    toast('CSV descargado');
+}
+
+function exportReportWA() {
+    const filtered = getFilteredCommissions();
+    const label = getFilterLabel();
+    const summary = {};
+    filtered.forEach(c => {
+        if (!summary[c.person]) summary[c.person] = { services: 0, revenue: 0, commission: 0 };
+        summary[c.person].services++;
+        summary[c.person].revenue += parseFloat(c.price) || 0;
+        summary[c.person].commission += parseFloat(c.commission) || 0;
+    });
+    const totalRev = filtered.reduce((s, c) => s + (parseFloat(c.price) || 0), 0);
+    const totalComm = filtered.reduce((s, c) => s + (parseFloat(c.commission) || 0), 0);
+
+    let msg = `*Claro de Luna Spa*\nReporte ${label} | ${new Date().toLocaleDateString('es-MX')}\n\n`;
+    Object.entries(summary).forEach(([name, d]) => {
+        msg += `*${name}*\nServicios: ${d.services}\nFacturado: $${d.revenue.toLocaleString()}\nComision: $${d.commission.toLocaleString()}\n\n`;
+    });
+    msg += `---\n*TOTALES*\nServicios: ${filtered.length}\nFacturado: $${totalRev.toLocaleString()}\nComisiones: $${totalComm.toLocaleString()}`;
+
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 // ═══════════════════════════════════════

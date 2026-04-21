@@ -311,8 +311,23 @@
                     <label>Monto pagado (MXN)</label>
                     <input type="number" class="input" id="gift-amount-input" placeholder="0" inputmode="numeric">
                 </div>
+                <div class="field">
+                    <label>Estilo Visual del Certificado</label>
+                    <select class="input" id="gift-bg-select">
+                        <option value="../assets/DSC_0426.jpg">Rituales (Ambientacion)</option>
+                        <option value="../assets/DSC_0212.jpg">Masajes (Manos y Piedras)</option>
+                        <option value="../assets/IMG_3130.jpg">Faciales (Tratamiento)</option>
+                        <option value="../assets/IMG_3055.jpg">Envolturas (Exfoliacion)</option>
+                        <option value="../assets/DSC_0553.jpg">Hidroterapia (Circuito)</option>
+                        <option value="../assets/DSC_0441.jpg">Ambiente General (Spa)</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Dedicatoria (opcional)</label>
+                    <textarea class="input" id="gift-message-input" placeholder="Escribe un mensaje especial para el destinatario..." rows="3" style="resize:vertical;"></textarea>
+                </div>
                 <button class="btn" onclick="generateGift()">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Crear Diseño Visual
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Crear Certificado Visual
                 </button>
             </div>
 
@@ -322,23 +337,27 @@
                 <p class="section__desc">Descarga la imagen para enviarla al cliente.</p>
                 
                 <div class="gift-canvas-wrapper" style="overflow-x: auto; margin-bottom: 1rem;">
-                    <div id="gift-canvas" style="width: 400px; height: 400px; background: #000; color: #fff; position: relative; font-family: 'Inter', sans-serif; overflow: hidden; border: 1px solid #D4A373;">
+                    <div id="gift-canvas" style="width: 400px; min-height: 400px; background: #000; color: #fff; position: relative; font-family: 'Inter', sans-serif; overflow: hidden; border: 1px solid #D4A373;">
                         <!-- Background Overlay -->
                         <img id="gc-bg-img" src="../assets/DSC_0426.jpg" crossorigin="anonymous" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; opacity: 0.3; z-index: 1;">
                         
                         <!-- Content -->
-                        <div style="position: relative; z-index: 2; padding: 2rem; width: 100%; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="position: relative; z-index: 2; padding: 2rem; width: 100%; min-height: 400px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                             <div style="text-align: center; margin-bottom: 1rem;">
                                 <img src="../assets/LOGO CLARO DE LUNA 1920 x 1080.png" style="width: 100px; filter: brightness(0) invert(1); opacity: 0.9;">
                                 <h2 style="font-family: 'Cormorant Garamond', serif; color: #D4A373; font-weight: 300; font-size: 1.4rem; letter-spacing: 2px; margin-top: 5px;">CERTIFICADO DE REGALO</h2>
                             </div>
                             <div style="margin-bottom: 1rem; text-align: center;">
                                 <p style="font-size: 0.7rem; color: #A8A29E; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Especialmente para</p>
-                                <h3 id="gc-to" style="font-size: 1.5rem; font-weight: 300;">Ana Martínez</h3>
+                                <h3 id="gc-to" style="font-size: 1.5rem; font-weight: 300;">Ana Martinez</h3>
                             </div>
                             <div style="margin-bottom: 1rem; text-align: center; padding: 10px; background: rgba(0,0,0,0.5); border-radius: 8px; border: 1px solid rgba(212,163,115,0.3);">
                                 <p style="font-size: 0.7rem; color: #D4A373; margin-bottom: 5px;">Vale por un:</p>
                                 <h4 id="gc-service" style="font-size: 1.1rem; font-weight: 500;">Circuito Premium</h4>
+                            </div>
+                            <div id="gc-message-wrap" style="display:none; margin-bottom: 1rem; text-align: center; padding: 8px 12px; background: rgba(212,163,115,0.08); border-radius: 8px; border: 1px dashed rgba(212,163,115,0.25);">
+                                <p style="font-size: 0.6rem; color: #D4A373; text-transform: uppercase; margin-bottom: 4px;">Dedicatoria</p>
+                                <p id="gc-message" style="font-size: 0.75rem; font-style: italic; color: #e8e0d8; line-height: 1.4;"></p>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(212,163,115,0.5); padding-top: 0.8rem;">
                                 <div>
@@ -350,7 +369,7 @@
                                     <p id="gc-folio" style="font-size: 0.9rem; font-family: monospace; color: #D4A373; font-weight: bold;">CDL-XXXX</p>
                                 </div>
                             </div>
-                            <p style="font-size: 0.5rem; color: rgba(255,255,255,0.5); text-align: center; position: absolute; bottom: 8px; left: 0; width: 100%;">* Válido por 3 meses. Previa cita sujeta a disponibilidad.</p>
+                            <p style="font-size: 0.5rem; color: rgba(255,255,255,0.5); text-align: center; margin-top: 12px;">* Valido por 3 meses. Previa cita sujeta a disponibilidad.</p>
                         </div>
                     </div>
                 </div>
@@ -799,15 +818,19 @@ function renderGiftCanvas(folio, to, from, service) {
     document.getElementById('gc-service').textContent = service;
     document.getElementById('gc-folio').textContent = folio;
     
-    // Choose background based on service name
-    const serviceLower = service.toLowerCase();
-    let bgImg = '../assets/DSC_0426.jpg'; // default rituales
-    if (serviceLower.includes('masaje') || serviceLower.includes('manos') || serviceLower.includes('piedras')) bgImg = '../assets/DSC_0212.jpg';
-    if (serviceLower.includes('facial') || serviceLower.includes('limpieza')) bgImg = '../assets/IMG_3130.jpg';
-    if (serviceLower.includes('exfoliación') || serviceLower.includes('envoltura')) bgImg = '../assets/IMG_3055.jpg';
-    if (serviceLower.includes('circuito') || serviceLower.includes('hidroterapia')) bgImg = '../assets/DSC_0553.jpg';
-    
+    // Use user-selected background from dropdown
+    const bgImg = document.getElementById('gift-bg-select').value || '../assets/DSC_0426.jpg';
     document.getElementById('gc-bg-img').src = bgImg;
+    
+    // Dedicatoria
+    const message = (document.getElementById('gift-message-input')?.value || '').trim();
+    const msgWrap = document.getElementById('gc-message-wrap');
+    if (message && msgWrap) {
+        document.getElementById('gc-message').textContent = message;
+        msgWrap.style.display = 'block';
+    } else if (msgWrap) {
+        msgWrap.style.display = 'none';
+    }
     
     document.getElementById('gift-preview-section').classList.remove('hidden');
     window.currentGiftFolio = folio;
@@ -842,16 +865,15 @@ function downloadGiftImage() {
             link.click();
             showToast('¡Imagen descargada exitosamente!');
             
-            // Redirect to WhatsApp
-            const phone = document.getElementById('gift-phone-input').value.replace(/\D/g, '');
+            // Redirect to WhatsApp — always let user pick contact
             const service = window.currentGiftService || '';
-            const msg = `¡Hola! ✨\n\nAquí tienes tu *Certificado de Regalo Oficial* del Spa Claro de Luna (Folio: ${folio}).\nEs válido por un: *${service}*.\n\nPara hacerlo válido, tu invitado solo debe mencionar este folio al contactarnos.\n\nTe adjunto la imagen del Certificado para que se la compartas. ¡Gracias por tu preferencia! 🌙`;
+            const dedicatoria = (document.getElementById('gift-message-input')?.value || '').trim();
+            let msg = 'Hola!\n\nAqui tienes tu Certificado de Regalo Oficial del Spa Claro de Luna.\n\nFolio: ' + folio + '\nServicio: ' + service + '\n\nPara hacerlo valido, solo debe mencionar este folio al contactarnos.\n\nTe adjunto la imagen del Certificado para que se la compartas.';
+            if (dedicatoria) msg += '\n\nDedicatoria: "' + dedicatoria + '"';
+            msg += '\n\nGracias por tu preferencia!';
             
             setTimeout(() => {
-                const waUrl = phone.length >= 10 
-                    ? `https://wa.me/52${phone.slice(-10)}?text=${encodeURIComponent(msg)}`
-                    : `https://wa.me/?text=${encodeURIComponent(msg)}`; // Let user select contact
-                window.open(waUrl, '_blank');
+                window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
             }, 1000);
             
         }).catch(err => {

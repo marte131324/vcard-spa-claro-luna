@@ -123,7 +123,7 @@ function saveStaff(personal) {
     const rows = personal.map(p => [p.id, p.name, p.role, p.phone, p.status]);
     sheet.getRange(2, 1, rows.length, 5).setValues(rows);
   }
-  embellecerBaseDeDatos();
+  // embellecerBaseDeDatos() removed for speed — staff registration is now instant
   return { success: true };
 }
 
