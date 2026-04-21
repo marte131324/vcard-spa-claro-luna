@@ -154,39 +154,39 @@
 <!-- 2.2 CATÁLOGO -->
 <div class="section-card">
     <h3>2.2 Catálogo de Servicios con Cotizador Inteligente</h3>
-    <p><strong>¿Qué es?</strong> La sección donde se listan todos los tratamientos organizados por categoría (Rituales, Masajes, Faciales, Corporales, Circuito de Hidroterapia).</p>
+    <p><strong>¿Qué es?</strong> La sección donde se listan todos los tratamientos organizados por categoría. Incluye un switch dual entre modo "Para Mí" y "Regalar".</p>
     <div class="walkthrough">
         <div class="step-box">
             <h4><span class="step-circle">1</span> El cliente navega por categorías</h4>
-            <p>Los tratamientos están organizados en pestañas tocables. Cada tratamiento muestra: <strong>nombre</strong>, <strong>duración</strong> y <strong>precio</strong>. Al tocar el botón <code>(+)</code> de cualquier servicio, se añade al cotizador.</p>
+            <p>Los tratamientos muestran: <strong>nombre</strong>, <strong>duración</strong> y <strong>precio</strong>. Al tocar el botón <code>(+)</code> de un servicio, se añade directamente al cotizador flotante. <em>Nota: Si selecciona el "Ritual Claro de Luna", se mostrará un aviso informando que incluye una copa de vino de cortesía para el jacuzzi, pero no bloquea la navegación.</em></p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">2</span> Cotizador en tiempo real</h4>
-            <p>En la parte inferior aparece una barra flotante con el <strong>total acumulado</strong>. El cliente puede agregar múltiples servicios. Al presionar <strong>"Reservar por WhatsApp"</strong>, se genera automáticamente un mensaje pre-formateado que incluye la lista de servicios seleccionados y el total, y se abre WhatsApp directo a la recepcionista.</p>
+            <h4><span class="step-circle">2</span> Cotizador y Modo Regalo</h4>
+            <p>En la barra inferior flotante se ve el <strong>total acumulado</strong>. Si el cliente activa el switch superior en <strong>"Regalar"</strong>, el sistema pedirá datos adicionales (De parte de, Para, Mensaje) al confirmar. Al presionar <strong>"Consultar Disponibilidad"</strong>, el sistema pide la fecha deseada (con límites lógicos de año para evitar errores) y recalca con un aviso legal que la solicitud <strong>no asegura el espacio hasta confirmar disponibilidad y depósito</strong>. Todo viaja vía WhatsApp a la recepcionista.</p>
         </div>
     </div>
-    <div class="tip"><strong>Beneficio Operativo:</strong> Elimina el ida y vuelta de "¿cuánto cuesta esto?" por WhatsApp. El cliente llega ya con su presupuesto armado.</div>
+    <div class="tip"><strong>Beneficio Operativo:</strong> Elimina el ida y vuelta. El cliente llega a WhatsApp con presupuesto armado, fecha propuesta y claridad de que debe hacer un depósito.</div>
 </div>
 
 <!-- 2.3 LEALTAD PÚBLICA -->
 <div class="section-card">
     <h3>2.3 Club de Lealtad Digital (Sección Pública)</h3>
-    <p><strong>¿Qué es?</strong> Al fondo de la VCard hay una sección donde el cliente puede consultar su progreso de sellos y escanear códigos QR para acumular puntos, todo sin descargar ninguna aplicación.</p>
+    <p><strong>¿Qué es?</strong> Al fondo de la VCard hay una sección donde el cliente consulta su progreso y sella visitas ingresando un código único sin apps extras.</p>
     <div class="walkthrough">
         <div class="step-box">
             <h4><span class="step-circle">1</span> El cliente ingresa su número de teléfono</h4>
-            <p>En el campo de búsqueda del Club de Lealtad, el cliente escribe su número celular (10 dígitos). El sistema consulta instantáneamente la base de datos y muestra: <strong>nombre</strong>, <strong>sellos acumulados</strong>, <strong>nivel</strong>, y si tiene <strong>recompensa disponible</strong>.</p>
+            <p>El sistema muestra instantáneamente su <strong>nombre</strong>, <strong>sellos acumulados</strong> y el progreso visual (ej: "1 de 3 visitas").</p>
         </div>
         <div class="step-box">
-            <h4><span class="step-circle">2</span> Escanear QR para sumar sello</h4>
-            <p>El cliente presiona el botón <strong>"Escanear QR con Cámara"</strong>. Se abre la cámara del celular. Apunta al código QR que la recepcionista generó desde el Panel de Lealtad. Si el código es válido y no ha sido usado, se suma 1 sello automáticamente.</p>
+            <h4><span class="step-circle">2</span> Ingresar Código para sumar sello</h4>
+            <p>La recepcionista le proporciona al cliente un código único de 6 caracteres (ej: <code>AB12CD</code>) generado desde el Panel de Lealtad. El cliente lo teclea en su celular y presiona "Sellar". Si el código es válido, se suma 1 visita y la barra de progreso se llena.</p>
         </div>
         <div class="step-box">
             <h4><span class="step-circle">3</span> Recompensa automática</h4>
-            <p>Cuando el cliente alcanza <strong>3 sellos</strong> (configurable), aparece un botón verde <strong>"Canjear Recompensa"</strong>. Al presionarlo, los sellos se reinician a 0 y la recepcionista aplica el descuento correspondiente (50% configurable).</p>
+            <p>Al llegar a <strong>3 sellos</strong>, aparece un cartel de "Recompensa Desbloqueada" y un botón para canjearla directo con Concierge por WhatsApp (ej: 50% de descuento).</p>
         </div>
     </div>
-    <div class="warn"><strong>Seguridad:</strong> La cámara del escáner QR requiere que el sitio esté en HTTPS (ya configurado) y que la política del servidor permita el acceso a la cámara (ya corregido en <code>vercel.json</code> con <code>camera=(self)</code>).</div>
+    <div class="warn"><strong>Seguridad Anti-Fraude:</strong> Al eliminar la cámara y usar códigos de 6 dígitos que expiran con un solo uso, anulamos el riesgo de que los clientes o empleados fotografíen un QR estático y se lo auto-sellen.</div>
 </div>
 
 <!-- 2.4 CERTIFICADOS -->
@@ -401,12 +401,23 @@
 <!-- 4.6 REGISTROS -->
 <div class="section-card">
     <h3>4.6 Pestaña: Registros de Check-In</h3>
-    <p><strong>Propósito:</strong> Ver todos los formularios médicos enviados por los pacientes desde el portal de Check-In.</p>
-    <ul>
-        <li>Tabla con todos los registros recibidos (nombre, teléfono, servicio, condiciones médicas, hora de entrada).</li>
-        <li>El badge de la barra lateral muestra cuántos registros nuevos hay.</li>
-        <li>Permite a la recepcionista preparar la cabina antes de que el paciente entre, verificando si tiene alergias o condiciones que el terapeuta debe conocer.</li>
-    </ul>
+    <p><strong>Propósito:</strong> Ver todos los formularios médicos enviados por los pacientes desde el portal de Check-In, con capacidad de exportación profesional para la operación y terapeutas.</p>
+    <div class="walkthrough">
+        <div class="step-box">
+            <h4><span class="step-circle gold">A</span> Visualización de Registros</h4>
+            <p>Tabla con todos los formularios recibidos (nombre, servicio, condiciones médicas, alergias, hora de entrada, etc). Permite a recepción evaluar al cliente antes de que entre a cabina.</p>
+        </div>
+        <div class="step-box">
+            <h4><span class="step-circle gold">B</span> Motor de Exportación Multi-Formato</h4>
+            <p>Integrado directamente en el encabezado, permite extraer la data con un solo clic:</p>
+            <ul>
+                <li><strong>PDF:</strong> Genera un documento formal (con tabla estilizada) listo para imprimir o enviar por correo a los expedientes.</li>
+                <li><strong>CSV:</strong> Descarga la tabla en crudo compatible con Excel para bases de datos profundas.</li>
+                <li><strong>WhatsApp (WA):</strong> Extrae los 10 últimos registros en texto plano, y usa banderas visuales (emojis ⚠️) para resaltar condiciones médicas y alergias. Ideal para enviar rápidamente al chat privado de las terapeutas para advertirles antes del servicio.</li>
+                <li><strong>Link:</strong> Botón rápido para copiar y enviar el portal de check-in al celular del cliente si olvidó escanear el QR.</li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <!-- 4.7 IA ADMIN -->
