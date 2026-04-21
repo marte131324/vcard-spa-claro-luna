@@ -159,6 +159,8 @@
                 document.getElementById('pin-gate').style.display = 'none';
                 sessionStorage.setItem('cdl_auth', '1');
                 sessionStorage.setItem('cdl_pin', pin);
+                // Re-fetch all data now that PIN is available (loads loyalty/gifts badges)
+                if (typeof fetchAll === 'function') fetchAll();
             } else {
                 errorEl.textContent = data.error || 'PIN incorrecto';
                 errorEl.style.display = 'block';
@@ -212,7 +214,7 @@
             <div class="nav-item" onclick="window.open('../checkin/', '_blank')"><i class="ri-send-plane-line"></i> Formulario Check-In</div>
             <div class="nav-item" onclick="window.open('https://vcard-spa-claro-luna.vercel.app', '_blank')"><i class="ri-external-link-line"></i> Ver VCard Pro</div>
         </nav>
-        <div class="sidebar-footer">Treze Labs · v4.2</div>
+        <div class="sidebar-footer">Treze Labs · v4.4</div>
     </aside>
 
     <!-- Workspace -->
@@ -322,7 +324,7 @@
                 </div>
             </div>
             <!-- Stats row -->
-            <div class="stat-grid" style="margin-bottom:16px;">
+            <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom:16px;">
                 <div class="stat-card"><div class="num" id="s-comm-services">0</div><div class="lbl">Servicios</div></div>
                 <div class="stat-card"><div class="num" id="s-comm-revenue">$0</div><div class="lbl">Facturado</div></div>
                 <div class="stat-card"><div class="num" id="s-comm-commission">$0</div><div class="lbl">Comisiones</div></div>

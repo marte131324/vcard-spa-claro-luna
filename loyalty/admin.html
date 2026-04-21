@@ -173,7 +173,7 @@
     <div class="header">
         <img src="../assets/LOGO CLARO DE LUNA 1920 x 1080.png" alt="Claro de Luna">
         <h1>Panel Concierge</h1>
-        <p>Club de Lealtad <span style="font-size: 0.6rem; opacity: 0.3; margin-left: 5px;">v4.1</span></p>
+        <p>Club de Lealtad <span style="font-size: 0.6rem; opacity: 0.3; margin-left: 5px;">v4.4</span></p>
     </div>
 
     <!-- LOGIN -->
@@ -329,7 +329,7 @@
                             <i class="fa-solid fa-arrows-rotate"></i>
                         </button>
                     </div>
-                    <p style="font-size:10px;color:var(--text-muted);margin-top:4px;" id="bg-photo-counter"></p>
+                    <p style="font-size:10px;color:var(--muted);margin-top:4px;" id="bg-photo-counter"></p>
                 </div>
                 <div class="field">
                     <label>Dedicatoria (opcional)</label>
@@ -746,11 +746,11 @@ function renderClientCard(c) {
         redeemContainer = document.createElement('div');
         redeemContainer.id = 'reward-action-container';
         redeemContainer.style.marginTop = '16px';
-        card.querySelector('.cc-body').appendChild(redeemContainer);
+        card.appendChild(redeemContainer);
     }
     
     if (c.stamps >= 3) {
-        redeemContainer.innerHTML = `<button class="c-submit" onclick="redeemLoyaltyReward('${c.phone}')" style="background:var(--accent);color:#fff;width:100%;margin-top:10px;"><i class="fa-solid fa-gift"></i> Canjear Recompensa (Reiniciar Tarjeta)</button>`;
+        redeemContainer.innerHTML = `<button class="btn" onclick="redeemLoyaltyReward('${c.phone}')" style="background:var(--copper);color:#fff;width:100%;margin-top:10px;"><i class="fa-solid fa-gift"></i> Canjear Recompensa (Reiniciar Tarjeta)</button>`;
     } else {
         redeemContainer.innerHTML = '';
     }
