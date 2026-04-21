@@ -244,34 +244,24 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', () => {
             const name = item.dataset.name;
             const price = parseInt(item.dataset.price);
-            const tags = item.dataset.tags || '';
-            const isCouple = tags.includes('pareja');
 
             if (item.classList.contains('selected')) {
                 item.classList.remove('selected');
                 totalPrice -= price;
-                const idx = selectedServices.findIndex(s => (s.originalName || s.name) === name);
+                const idx = selectedServices.findIndex(s => s.name === name);
                 if (idx > -1) selectedServices.splice(idx, 1);
                 updateCart();
             } else {
                 item.classList.add('selected');
                 totalPrice += price;
-                if (isCouple && companionModal) {
+                selectedServices.push({ name, price });
+                updateCart();
+
+                if (name === 'Ritual Claro de Luna' && companionModal) {
                     companionModal.classList.add('active');
                     document.getElementById('btn-companion').onclick = () => {
-                        const guest = companionInput.value.trim();
-                        selectedServices.push({ 
-                            name: guest ? `${name} (con ${guest})` : name, 
-                            originalName: name,
-                            price 
-                        });
                         companionModal.classList.remove('active');
-                        companionInput.value = '';
-                        updateCart();
                     };
-                } else {
-                    selectedServices.push({ name, originalName: name, price });
-                    updateCart();
                 }
             }
         });

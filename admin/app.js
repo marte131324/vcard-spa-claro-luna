@@ -257,15 +257,46 @@ function renderAttendance() {
         return;
     }
     const recent = [...attendanceData].reverse().slice(0, 20);
-    dom.innerHTML = recent.map(a => `
-        <div class="list-item">
+    dom.innerHTML = recent.map(a => {
+        const formatDate = (isoStr) => {
+            if (!isoStr) return '';
+            try {
+                // If it's a raw date string or ISO
+                const d = new Date(isoStr);
+                if (isNaN(d)) return isoStr; 
+                return d.toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            } catch { return isoStr; }
+        };
+        const formatTime = (isoStr) => {
+            if (!isoStr) return '';
+            try {
+                const d = new Date(isoStr);
+                if (isNaN(d)) return isoStr;
+                return d.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+            } catch { return isoStr; }
+        };
+        
+        let displayDate = a.date;
+        let displayTime = a.time;
+        
+        // Handle weird GAS backend date formats (e.g. 1899 for times, 2026T... for dates)
+        if (typeof a.date === 'string' && a.date.includes('T')) displayDate = formatDate(a.date);
+        if (typeof a.time === 'string' && a.time.includes('T')) displayTime = formatTime(a.time);
+        
+        return `
+        <div class="list-item" style="display:grid; grid-template-columns: 80px 1fr auto; align-items:center; gap: 16px;">
+            <span class="status ${a.type === 'ENTRADA' ? 'status-on' : 'status-warn'}" style="text-align:center; padding: 6px;">${a.type}</span>
             <div class="info">
-                <div class="name">${a.person}</div>
-                <div class="meta">${a.date} | ${a.time} | ${a.notes || ''}</div>
+                <div class="name" style="font-size:14px; font-weight:500;">${a.person}</div>
+                <div class="meta" style="font-size:11px; opacity:0.8;">${a.notes || 'Sin notas'}</div>
             </div>
-            <span class="status ${a.type === 'ENTRADA' ? 'status-on' : 'status-warn'}">${a.type}</span>
+            <div style="text-align:right; font-family:'Inter', sans-serif;">
+                <div style="font-size:12px; color:var(--text-pure);">${displayDate}</div>
+                <div style="font-size:11px; color:var(--text-dim);">${displayTime}</div>
+            </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function logAttendance() {
@@ -347,6 +378,15 @@ function renderCommissions() {
         summary[c.person].details.push(c);
     });
 
+    const formatDate = (isoStr) => {
+        if (!isoStr) return '';
+        try {
+            const d = new Date(isoStr);
+            if (isNaN(d)) return isoStr; 
+            return d.toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        } catch { return isoStr; }
+    };
+
     domSum.innerHTML = Object.entries(summary).map(([name, d]) => `
         <div class="list-item" style="flex-direction:column;align-items:stretch;cursor:pointer;" onclick="this.querySelector('.therapist-detail').classList.toggle('hidden')">
             <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -355,7 +395,7 @@ function renderCommissions() {
                     <div class="meta">${d.services} servicios | Facturado: $${d.revenue.toLocaleString()}</div>
                 </div>
                 <div style="text-align:right;">
-                    <div style="color:var(--accent);font-family:var(--font-display);font-size:20px;font-weight:600;">$${d.commission.toLocaleString()}</div>
+                    <div style="color:var(--accent);font-family:'Inter', sans-serif;font-size:20px;font-weight:600;">$${d.commission.toLocaleString()}</div>
                     <div style="font-size:9px;color:var(--text-dim);">COMISION</div>
                 </div>
             </div>
@@ -364,9 +404,9 @@ function renderCommissions() {
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:11px;">
                         <div>
                             <span style="color:var(--text-pure);">${s.service}</span>
-                            <span style="color:var(--text-dim);margin-left:6px;">${s.date}</span>
+                            <span style="color:var(--text-dim);margin-left:6px;">${(typeof s.date === 'string' && s.date.includes('T')) ? formatDate(s.date) : s.date}</span>
                         </div>
-                        <div style="display:flex;gap:12px;">
+                        <div style="display:flex;gap:12px;font-family:'Inter', sans-serif;">
                             <span>$${parseFloat(s.price).toLocaleString()}</span>
                             <span style="color:var(--accent);">Com: $${parseFloat(s.commission).toLocaleString()}</span>
                         </div>
@@ -379,14 +419,17 @@ function renderCommissions() {
     // History
     const recent = [...filtered].reverse().slice(0, 50);
     domHist.innerHTML = recent.map(c => `
-        <div class="list-item">
+        <div class="list-item" style="display:grid; grid-template-columns: 1fr auto; align-items:center; gap: 16px; padding: 12px 16px;">
             <div class="info">
-                <div class="name">${c.service}</div>
-                <div class="meta">${c.person} | ${c.date}</div>
+                <div class="name" style="font-size:14px; font-weight:500; color:var(--text-pure);">${c.service}</div>
+                <div class="meta" style="font-size:11px; display:flex; gap:12px; margin-top:4px;">
+                    <span style="color:var(--accent);"><i class="ri-user-line"></i> ${c.person}</span>
+                    <span><i class="ri-calendar-line"></i> ${(typeof c.date === 'string' && c.date.includes('T')) ? formatDate(c.date) : c.date}</span>
+                </div>
             </div>
-            <div style="text-align:right;">
-                <div style="font-size:12px;">$${parseFloat(c.price).toLocaleString()}</div>
-                <div style="font-size:10px;color:var(--accent);">Com: $${parseFloat(c.commission).toLocaleString()}</div>
+            <div style="text-align:right; font-family:'Inter', sans-serif; background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
+                <div style="font-size:11px; color:var(--text-dim); margin-bottom:2px;">Facturado: $${parseFloat(c.price).toLocaleString('en-US')}</div>
+                <div style="font-size:13px; color:var(--success); font-weight:600;">Com: $${parseFloat(c.commission).toLocaleString('en-US')}</div>
             </div>
         </div>
     `).join('');
@@ -570,7 +613,7 @@ async function fetchLoyaltyData() {
             document.getElementById('ls-rewards').textContent = s.rewardsReady || 0;
             const avg = s.totalClients > 0 ? (s.totalVisits / s.totalClients).toFixed(1) : '--';
             document.getElementById('ls-avg').textContent = avg;
-            document.getElementById('badge-loyalty').textContent = s.rewardsReady || 0;
+            document.getElementById('badge-loyalty').textContent = s.totalClients || 0;
         }
     } catch(e) {
         console.error('Loyalty fetch error:', e);

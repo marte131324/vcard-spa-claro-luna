@@ -666,17 +666,7 @@
                         </button>
                     </div>
                 </div>
-                <div style="display:flex; justify-content:center; align-items:center; flex-direction:column; gap:12px; margin-top:10px;">
-                    <button id="btn-scan-qr" class="rewards__cta" style="width: auto; padding: 12px 28px; border-radius: 50px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); font-size: 0.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-camera"></i> <span>Escanear QR con Cámara</span>
-                    </button>
-                    <button id="btn-close-qr" class="rewards__cta" style="width: auto; padding: 10px 24px; border-radius: 50px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); font-size: 0.75rem; display: none; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-xmark"></i> <span>Cancelar Escaneo</span>
-                    </button>
-                </div>
-                <div id="qr-reader" style="width:100%; max-width:320px; margin:16px auto 0; display:none; border-radius:16px; overflow:hidden; border:2px solid rgba(255,255,255,0.05); box-shadow: 0 10px 25px rgba(0,0,0,0.5);"></div>
-                
-                <p class="loyalty-code__hint" style="margin-top:16px;">Pídele a la recepcionista el código QR para sumar una visita.</p>
+                <p class="loyalty-code__hint" style="margin-top:16px;">Escanea el código QR con tu cámara o ingresa el código manual que te proporcione la recepcionista para sumar una visita.</p>
 
                 <!-- REWARD READY (shown when 3 stamps complete) -->
                 <div class="loyalty-reward" id="loyalty-reward-section" style="display:none;">
@@ -722,16 +712,13 @@
         </footer>
     </main>
 
-    <!-- ============ MODAL: COMPANION (PAREJA) ============ -->
+    <!-- ============ MODAL: COURTESY (VINO) ============ -->
     <div id="companion-modal" class="modal">
         <div class="modal__card">
-            <div class="modal__icon"><i class="fa-solid fa-champagne-glasses"></i></div>
-            <h3 class="modal__title">Detalle de Bienvenida</h3>
-            <p class="modal__desc">Podemos preparar batas bordadas y una bienvenida a nombre suyo en la Suite privada.</p>
-            <div class="modal__field">
-                <input type="text" id="companion-name" class="modal__input" placeholder="Nombre completo del Invitado">
-            </div>
-            <button id="btn-companion" class="modal__btn">Añadir Elegancia</button>
+            <div class="modal__icon" style="color: var(--gold);"><i class="fa-solid fa-wine-glass"></i></div>
+            <h3 class="modal__title">¡Excelente elección!</h3>
+            <p class="modal__desc">El Ritual Claro de Luna incluye una cortesía especial: <strong>una copa de vino</strong> para acompañar tu relajación en el jacuzzi.</p>
+            <button id="btn-companion" class="modal__btn" style="margin-top: 1rem;">Entendido</button>
         </div>
     </div>
 
@@ -803,75 +790,7 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnScan = document.getElementById('btn-scan-qr');
-            const btnCloseScan = document.getElementById('btn-close-qr');
-            const qrReaderDiv = document.getElementById('qr-reader');
-            const stampInput = document.getElementById('stamp-code-input');
-            const btnRedeem = document.getElementById('btn-redeem-code');
-            let html5QrcodeScanner;
 
-            if (btnScan) {
-                btnScan.addEventListener('click', () => {
-                    qrReaderDiv.style.display = 'block';
-                    btnScan.style.display = 'none';
-                    btnCloseScan.style.display = 'block';
-                    
-                    html5QrcodeScanner = new Html5QrcodeScanner(
-                        "qr-reader", { fps: 10, qrbox: 250 }, false);
-                    
-                    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-                });
-            }
-
-            if (btnCloseScan) {
-                btnCloseScan.addEventListener('click', () => {
-                    if(html5QrcodeScanner) {
-                        html5QrcodeScanner.clear();
-                    }
-                    qrReaderDiv.style.display = 'none';
-                    btnCloseScan.style.display = 'none';
-                    btnScan.style.display = 'block';
-                });
-            }
-
-            function onScanSuccess(decodedText, decodedResult) {
-                if(html5QrcodeScanner) {
-                    html5QrcodeScanner.clear();
-                }
-                qrReaderDiv.style.display = 'none';
-                btnCloseScan.style.display = 'none';
-                btnScan.style.display = 'block';
-
-                // Verify if it contains a URL or just a code
-                let codeToApply = decodedText;
-                try {
-                    const url = new URL(decodedText);
-                    const params = new URLSearchParams(url.search);
-                    if(params.has('code')) {
-                        codeToApply = params.get('code');
-                    }
-                } catch(e) {
-                    // Not a URL, use raw text
-                }
-
-                // If VCard passed an 'action=stamp', ignore that part, we just want the pure text or parameter.
-                // Usually the code is a 6 char string
-                if (codeToApply.length <= 10) {
-                    stampInput.value = codeToApply;
-                    if(btnRedeem) btnRedeem.click();
-                } else {
-                    alert("Código QR no válido para sellar.");
-                }
-            }
-
-            function onScanFailure(error) {
-                // handle scan failure, usually better to ignore and keep scanning
-            }
-        });
-    </script>
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
 
