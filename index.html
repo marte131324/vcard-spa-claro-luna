@@ -736,7 +736,7 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript" defer></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const btnScan = document.getElementById('btn-scan-qr');
@@ -838,105 +838,119 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
 <script>
-    // Configuración del Tour VCard
-    const driver = window.driver.js.driver;
-    const tour = driver({
-        showProgress: true,
-        animate: true,
-        nextBtnText: 'Siguiente →',
-        prevBtnText: '← Anterior',
-        doneBtnText: '¡Entendido!',
-        steps: [
-            { popover: { title: 'Bienvenido', description: 'Descubre cómo usar nuestro catálogo digital para reservar.' } },
-            { element: '#cat-nav', popover: { title: 'Categorías', description: 'Navega rápidamente entre Faciales, Masajes y Rituales.', side: "bottom", align: 'start' } },
-            { element: '#mode-toggle', popover: { title: 'Comprar o Regalar', description: 'Con un clic, cambia los botones para reservar para ti o solicitar un certificado de regalo para alguien más.', side: "bottom" } },
-            { element: '.catalog__grid', popover: { title: 'Añadir al Carrito', description: 'Usa los botones de (+) para cotizar al instante. El total se pre-calcula abajo de tu pantalla.', side: "top" } },
-            { element: '#rewards', popover: { title: 'Club de Lealtad', description: 'Anota tu teléfono aquí después de un servicio para que nuestra recepcionista te escanee el QR y sumes descuentos.', side: "top" } }
-        ]
-    });
+(function() {
+    // ═══ GUARD: Wait for driver.js to be available ═══
+    function initTourAndChat() {
+        // ── Tour VCard ──
+        if (window.driver && window.driver.js && window.driver.js.driver) {
+            const driverFn = window.driver.js.driver;
+            const tour = driverFn({
+                showProgress: true,
+                animate: true,
+                nextBtnText: 'Siguiente →',
+                prevBtnText: '← Anterior',
+                doneBtnText: '¡Entendido!',
+                steps: [
+                    { popover: { title: 'Bienvenido', description: 'Descubre cómo usar nuestro catálogo digital para reservar.' } },
+                    { element: '#cat-nav', popover: { title: 'Categorías', description: 'Navega rápidamente entre Faciales, Masajes y Rituales.', side: "bottom", align: 'start' } },
+                    { element: '#mode-toggle', popover: { title: 'Comprar o Regalar', description: 'Con un clic, cambia los botones para reservar para ti o solicitar un certificado de regalo para alguien más.', side: "bottom" } },
+                    { element: '.catalog__grid', popover: { title: 'Añadir al Carrito', description: 'Usa los botones de (+) para cotizar al instante. El total se pre-calcula abajo de tu pantalla.', side: "top" } },
+                    { element: '#rewards', popover: { title: 'Club de Lealtad', description: 'Anota tu teléfono aquí después de un servicio para que nuestra recepcionista te escanee el QR y sumes descuentos.', side: "top" } }
+                ]
+            });
 
-    document.getElementById('btn-tour').addEventListener('click', () => {
-        tour.drive();
-    });
+            var btnTour = document.getElementById('btn-tour');
+            if (btnTour) {
+                btnTour.addEventListener('click', function() {
+                    tour.drive();
+                });
+            }
+        }
 
-    // Lógica del Chatbot
-    const btnChat = document.getElementById('btn-chat');
-    const chatWindow = document.getElementById('chat-window');
-    const btnCloseChat = document.getElementById('btn-close-chat');
-    const btnSendChat = document.getElementById('btn-send-chat');
-    const chatInput = document.getElementById('chat-input');
-    const chatMessages = document.getElementById('chat-messages');
+        // ── Chatbot VCard ──
+        var btnChat = document.getElementById('btn-chat');
+        var chatWindow = document.getElementById('chat-window');
+        var btnCloseChat = document.getElementById('btn-close-chat');
+        var btnSendChat = document.getElementById('btn-send-chat');
+        var chatInput = document.getElementById('chat-input');
+        var chatMessages = document.getElementById('chat-messages');
 
-    btnChat.addEventListener('click', () => {
-        chatWindow.style.display = chatWindow.style.display === 'none' || chatWindow.style.display === '' ? 'flex' : 'none';
-    });
+        if (btnChat) {
+            btnChat.addEventListener('click', function() {
+                chatWindow.style.display = chatWindow.style.display === 'none' || chatWindow.style.display === '' ? 'flex' : 'none';
+            });
+        }
 
-    btnCloseChat.addEventListener('click', () => {
-        chatWindow.style.display = 'none';
-    });
+        if (btnCloseChat) {
+            btnCloseChat.addEventListener('click', function() {
+                chatWindow.style.display = 'none';
+            });
+        }
 
-    let chatHistory = [];
+        var chatHistory = [];
 
-    async function sendMessage() {
-        const text = chatInput.value.trim();
-        if (!text) return;
+        function sendMessage() {
+            var text = chatInput.value.trim();
+            if (!text) return;
 
-        // Añadir mensaje del usuario
-        chatMessages.innerHTML += `<div style="align-self: flex-end; background: var(--gold); color: #fff; padding: 10px 14px; border-radius: 12px 12px 0 12px; max-width: 80%; line-height: 1.4;">${text}</div>`;
-        chatInput.value = '';
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatMessages.innerHTML += '<div style="align-self: flex-end; background: var(--gold); color: #fff; padding: 10px 14px; border-radius: 12px 12px 0 12px; max-width: 80%; line-height: 1.4;">' + text + '</div>';
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Añadir typing indicator
-        const typingId = 'typing-' + Date.now();
-        chatMessages.innerHTML += `<div id="${typingId}" style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text-subtle); border: 1px solid var(--border);">Escribiendo...</div>`;
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+            var typingId = 'typing-' + Date.now();
+            chatMessages.innerHTML += '<div id="' + typingId + '" style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text-subtle); border: 1px solid var(--border);">Escribiendo...</div>';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        chatHistory.push({ role: 'user', text: text });
-        if (chatHistory.length > 10) chatHistory.shift();
+            chatHistory.push({ role: 'user', text: text });
+            if (chatHistory.length > 10) chatHistory.shift();
 
-        try {
-            const res = await fetch('/api/chat-vcard', {
+            fetch('/api/chat-vcard', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: text, history: chatHistory })
-            });
-            const data = await res.json();
-            document.getElementById(typingId).remove();
-            
-            let replyText = data.reply || 'Lo siento, hubo un error técnico.';
-            
-            // UX Polish: Markdown to HTML Parser
-            const formatLunaText = (text) => {
-                // Remove Markdown headers if the bot hallucinates them (e.g., ### Title)
-                let html = text.replace(/###\s(.*?)\n/g, '<strong style="display:block; margin-top:8px;">$1</strong><br>');
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                var el = document.getElementById(typingId);
+                if (el) el.remove();
+                
+                var replyText = data.reply || 'Lo siento, hubo un error técnico.';
+                
+                // Markdown to HTML
+                var html = replyText.replace(/###\s(.*?)\n/g, '<strong style="display:block; margin-top:8px;">$1</strong><br>');
                 html = html.replace(/##\s(.*?)\n/g, '<strong style="display:block; margin-top:8px;">$1</strong><br>');
-                // Bold text
                 html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--gold);">$1</strong>');
                 html = html.replace(/\*(.*?)\*/g, '<em style="color:var(--text);">$1</em>');
-                // Line breaks (spacing)
                 html = html.replace(/\n/g, '<br>');
-                return html;
-            };
+                
+                chatHistory.push({ role: 'model', text: replyText });
+                if (chatHistory.length > 10) chatHistory.shift();
 
-            const formattedReply = formatLunaText(replyText);
-            
-            chatHistory.push({ role: 'model', text: replyText });
-            if (chatHistory.length > 10) chatHistory.shift();
-
-            chatMessages.innerHTML += `<div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text); line-height: 1.5; border: 1px solid var(--border); max-width: 85%;">${formattedReply}</div>`;
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        } catch (err) {
-            document.getElementById(typingId).remove();
-            chatMessages.innerHTML += `<div style="align-self: flex-start; background: rgba(239, 68, 68, 0.1); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: #ef4444; line-height: 1.4; border: 1px solid rgba(239, 68, 68, 0.3);">Error de conexión al cerebro IA.</div>`;
+                chatMessages.innerHTML += '<div style="align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: var(--text); line-height: 1.5; border: 1px solid var(--border); max-width: 85%;">' + html + '</div>';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(function(err) {
+                var el = document.getElementById(typingId);
+                if (el) el.remove();
+                chatMessages.innerHTML += '<div style="align-self: flex-start; background: rgba(239, 68, 68, 0.1); padding: 10px 14px; border-radius: 12px 12px 12px 0; color: #ef4444; line-height: 1.4; border: 1px solid rgba(239, 68, 68, 0.3);">Error de conexión al cerebro IA.</div>';
+            });
         }
+
+        if (btnSendChat) btnSendChat.addEventListener('click', sendMessage);
+        if (chatInput) chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
     }
 
-    btnSendChat.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage();
-    });
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTourAndChat);
+    } else {
+        initTourAndChat();
+    }
+})();
 </script>
 
 </body>

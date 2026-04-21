@@ -525,25 +525,32 @@
 
     <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
     <script>
-        // Configuración Tour Admin
-        const driverAdmin = window.driver.js.driver;
-        const tourAdmin = driverAdmin({
-            showProgress: true,
-            animate: true,
-            nextBtnText: 'Siguiente →',
-            prevBtnText: '← Anterior',
-            doneBtnText: '¡Listo!',
-            steps: [
-                { popover: { title: 'Command Center', description: 'Bienvenido al panel centralizado del Spa. Aquí controlas bases de datos y operaciones en tiempo real.' } },
-                { element: '.sidebar', popover: { title: 'Navegación Vertical', description: 'Usa estas pestañas para cambiar entre Check-ins médicos, Certificados de regalo y el calculador de Comisiones.', side: "right" } },
-                { element: '[onclick="switchTab(\'loyalty\')"]', popover: { title: 'Generador de QR (Lealtad)', description: 'Entra aquí para generar el token efímero que la clienta escaneará desde su VCard para sumar una visita.', side: "right" } },
-                { element: '#dash-container', popover: { title: 'Dashboard Resumen', description: 'Aquí verás un despliegue numérico de qué áreas requieren tu atención.', side: "bottom" } }
-            ]
-        });
+        // Configuración Tour Admin — Safe Init
+        (function() {
+            if (!window.driver || !window.driver.js || !window.driver.js.driver) {
+                console.warn('driver.js not loaded — tour disabled');
+                return;
+            }
+            var driverAdmin = window.driver.js.driver;
+            var tourAdmin = driverAdmin({
+                showProgress: true,
+                animate: true,
+                nextBtnText: 'Siguiente →',
+                prevBtnText: '← Anterior',
+                doneBtnText: '¡Listo!',
+                steps: [
+                    { popover: { title: 'Command Center', description: 'Bienvenido al panel centralizado del Spa. Aquí controlas bases de datos y operaciones en tiempo real.' } },
+                    { element: '.sidebar', popover: { title: 'Navegación Lateral', description: 'Cambia entre Estado, Personal, Asistencia, Comisiones, Registros, Lealtad y Certificados.', side: "right" } },
+                    { element: '.stat-grid', popover: { title: 'Dashboard Resumen', description: 'Aquí verás los indicadores clave: terapeutas activos, estado del spa, registros y comisiones del mes.', side: "bottom" } },
+                    { element: '.nav-item:nth-child(5)', popover: { title: 'Club de Lealtad', description: 'Visualiza miembros, sellos acumulados y clientes con recompensa lista para canjear.', side: "right" } }
+                ]
+            });
 
-        document.getElementById('btn-tour-admin').addEventListener('click', () => {
-            tourAdmin.drive();
-        });
+            var btnTourAdmin = document.getElementById('btn-tour-admin');
+            if (btnTourAdmin) {
+                btnTourAdmin.addEventListener('click', function() { tourAdmin.drive(); });
+            }
+        })();
 
         // Lógica Chatbot Admin
         const btnChatA = document.getElementById('btn-chat-admin');
