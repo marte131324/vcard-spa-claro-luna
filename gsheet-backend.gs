@@ -248,13 +248,20 @@ function getStats(pin) {
   const checkins = sheetToArray(getSheet('Registros'));
   const config = getConfig();
   
+  // Sum of all visits across all clients
+  const totalVisits = clients.reduce((acc, c) => acc + (Number(c.TotalVisits) || 0), 0);
+  // Clients currently at 3 or more stamps
+  const rewardsReady = clients.filter(c => (Number(c.Stamps) || 0) >= 3).length;
+
   return { 
     success: true, 
     stats: {
       totalClients: clients.length,
       totalGifts: gifts.length,
       activeGifts: gifts.filter(g => String(g.Estatus).toUpperCase() === 'ACTIVO').length,
-      totalCheckins: checkins.length
+      totalCheckins: checkins.length,
+      totalVisits: totalVisits,
+      rewardsReady: rewardsReady
     },
     config: config
   };

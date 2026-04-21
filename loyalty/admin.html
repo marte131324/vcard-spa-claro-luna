@@ -650,22 +650,22 @@ function lookupClient() {
 }
 
 function quickLookupClient(phone) {
-    // Switch to Lookup Tab
+    // Switch to Stamp (Lookup) Tab
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    document.querySelector('.tab-btn[data-tab="lookup"]').classList.add('active');
-    document.getElementById('lookup-tab').classList.add('active');
+    document.querySelector('.tab-btn[data-tab="stamp"]').classList.add('active');
+    document.getElementById('tab-stamp').classList.add('active');
     
     document.getElementById('lookup-phone').value = phone;
     lookupClient();
 }
 
 function quickValidateGift(folio) {
-    // Switch to Validation Tab
+    // Switch to Gifts Tab
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    document.querySelector('.tab-btn[data-tab="validate"]').classList.add('active');
-    document.getElementById('validate-tab').classList.add('active');
+    document.querySelector('.tab-btn[data-tab="gifts"]').classList.add('active');
+    document.getElementById('tab-gifts').classList.add('active');
     
     document.getElementById('lookup-folio').value = folio;
     validateGift();
