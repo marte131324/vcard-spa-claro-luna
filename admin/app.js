@@ -479,9 +479,10 @@ async function openLoyaltyDetail(phone) {
         const history = c.history || [];
         const rewardReady = stamps >= 3;
 
+        const reversedHistory = [...history].reverse();
         // Stamps visual
         const stampsHTML = [1,2,3].map(i => {
-            const entry = history.find(h => h.stamp === i);
+            const entry = reversedHistory.find(h => h.stamp === i);
             const filled = i <= stamps;
             return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
                 <div style="width:48px;height:48px;border-radius:50%;border:3px ${filled ? 'solid var(--accent)' : 'dashed var(--border)'};display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:${filled ? 'rgba(212,163,115,0.15)' : 'transparent'};color:${filled ? 'var(--accent)' : 'var(--text-dim)'};transition:0.3s;">
@@ -504,7 +505,7 @@ async function openLoyaltyDetail(phone) {
         if (history.length > 0) {
             historyHTML = `<div style="margin-top:20px;">
                 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:10px;font-weight:600;">Historial Completo</div>
-                ${history.map(h => {
+                ${reversedHistory.map(h => {
                     const isReward = h.service === 'RECOMPENSA 50% APLICADA';
                     const date = h.date ? new Date(h.date).toLocaleDateString('es-MX', {day:'numeric',month:'short',year:'numeric'}) : '--';
                     return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:${isReward ? 'rgba(255,215,0,0.05)' : 'rgba(0,0,0,0.15)'};border:1px solid ${isReward ? 'rgba(255,215,0,0.2)' : 'var(--border)'};border-radius:8px;margin-bottom:6px;font-size:12px;">

@@ -696,8 +696,9 @@ function renderClientCard(c) {
     stamps.innerHTML = '';
     const history = c.history || [];
 
+    const reversedHistory = [...history].reverse();
     for (let i = 1; i <= 3; i++) {
-        const entry = history.find(h => h.stamp === i);
+        const entry = reversedHistory.find(h => h.stamp === i);
         const div = document.createElement('div');
         div.className = 'mini-stamp' + (i <= c.stamps ? ' filled' : '');
         div.innerHTML = `
