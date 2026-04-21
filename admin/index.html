@@ -173,7 +173,14 @@
             btn.textContent = 'Acceder';
         }
     }
-    if (sessionStorage.getItem('cdl_auth') === '1') document.getElementById('pin-gate').style.display = 'none';
+    // Auto-login check: require both auth flag AND stored PIN
+    if (sessionStorage.getItem('cdl_auth') === '1' && sessionStorage.getItem('cdl_pin')) {
+        document.getElementById('pin-gate').style.display = 'none';
+    } else {
+        // Force fresh login if PIN is missing
+        sessionStorage.removeItem('cdl_auth');
+        sessionStorage.removeItem('cdl_pin');
+    }
     </script>
 
     <!-- Loader -->

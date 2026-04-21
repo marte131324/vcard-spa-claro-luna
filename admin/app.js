@@ -121,6 +121,11 @@ function renderAll() {
     renderCheckins();
     updateStats();
     populateSelects();
+    // Load loyalty & gift badge counts if PIN is available
+    if (typeof getPin === 'function' && getPin()) {
+        fetchLoyaltyData();
+        fetchGiftsData();
+    }
 }
 
 function updateStats() {
