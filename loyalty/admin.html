@@ -695,8 +695,8 @@ function renderClientCard(c) {
     const stamps = document.getElementById('cc-stamps');
     stamps.innerHTML = '';
     const history = c.history || [];
-
     const reversedHistory = [...history].reverse();
+
     for (let i = 1; i <= 3; i++) {
         const entry = reversedHistory.find(h => h.stamp === i);
         const div = document.createElement('div');
