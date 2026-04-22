@@ -74,6 +74,16 @@ async function postData(payload, msg) {
 // ═══════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
     fetchAll();
+    // Deep-link: auto-navigate to section from URL hash (e.g. /admin/#loyalty)
+    const hashMap = { loyalty: 'v-loyalty', gifts: 'v-gifts', comisiones: 'v-comisiones', personal: 'v-personal', checkins: 'v-checkins', asistencia: 'v-asistencia' };
+    const hash = window.location.hash.replace('#', '');
+    if (hash && hashMap[hash]) {
+        const viewId = hashMap[hash];
+        setTimeout(() => {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(n => { if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(viewId)) switchView(viewId, n); });
+        }, 300);
+    }
     // Auto-fill commission price
     const cmService = document.getElementById('cm-service');
     const cmPrice = document.getElementById('cm-price');
