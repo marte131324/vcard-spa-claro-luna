@@ -85,6 +85,7 @@ function handleRequest(e) {
       case 'validategift':   result = validateGift(params.pin, params.folio); break;
       case 'redeemgift':     result = redeemGift(params.pin, params.folio); break;
       case 'gifts':          result = getGifts(params.pin); break;
+      case 'purgetestdata':  result = purgeTestData(params.pin); break;
       default:               result = { success: false, error: 'Acción no válida: ' + action };
     }
   } catch (err) { result = { success: false, error: err.message }; }
@@ -113,6 +114,24 @@ function saveConfig(data) {
   Object.entries(merged).forEach(([k, v]) => sheet.appendRow([k, String(v)]));
   embellecerBaseDeDatos();
   return { success: true };
+}
+
+function purgeTestData(pin) {
+  if (String(pin).trim() !== '1313') return { success: false, error: 'Solo MASTER_PIN puede purgar datos.' };
+  const sheetsToPurge = ['Personal', 'Asistencia', 'Comisiones', 'Registros', 'Clientes', 'Certificados', 'Códigos'];
+  const purged = {};
+  sheetsToPurge.forEach(name => {
+    const sheet = SS.getSheetByName(name);
+    if (!sheet) return;
+    const lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      sheet.deleteRows(2, lastRow - 1);
+      purged[name] = lastRow - 1;
+    } else {
+      purged[name] = 0;
+    }
+  });
+  return { success: true, message: 'Datos de prueba eliminados.', purged };
 }
 
 function saveStaff(personal) {

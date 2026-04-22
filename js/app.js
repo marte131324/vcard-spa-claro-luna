@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isGiftMode = false;
             btnForMe.classList.add('active'); btnGift.classList.remove('active');
             modeToggle.classList.remove('mode-gift');
-            if (bookText) bookText.textContent = 'Reservar';
+            if (bookText) bookText.textContent = 'Consultar Disp.';
         });
         btnGift.addEventListener('click', () => {
             isGiftMode = true;
@@ -321,8 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (giftFields) giftFields.style.display = 'block';
             }
             else { 
-                title.textContent = 'Configuración de Reserva'; 
-                desc.textContent = 'Permítanos conocer su preferencia de fecha.'; 
+                title.textContent = 'Revisar Disponibilidad'; 
+                desc.textContent = 'Permítanos conocer su preferencia de fecha para confirmar disponibilidad.'; 
                 if (bookingFields) bookingFields.style.display = 'block';
                 if (giftFields) giftFields.style.display = 'none';
             }

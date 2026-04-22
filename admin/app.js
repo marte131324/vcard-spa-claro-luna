@@ -3,7 +3,7 @@
 // Treze Labs | Google Sheets Backend via GAS
 // ═══════════════════════════════════════════════════════════
 (function(){
-    const allowed = ['vcard-spa-claro-luna.vercel.app','localhost','127.0.0.1'];
+    const allowed = ['vcard-spa-claro-luna.vercel.app','spa-claro-de-luna.vercel.app','localhost','127.0.0.1'];
     const h = window.location.hostname;
     if (allowed.indexOf(h) === -1 && h !== '') {
         document.body.innerHTML = '<div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#1A1814;color:#FAF8F5;font-family:monospace;text-align:center;padding:20px"><h1 style="color:#ef4444;font-size:2.5rem;margin-bottom:16px">ACCESO DENEGADO</h1><p style="color:#9A8E82;max-width:500px">Dominio no autorizado para este panel.</p><a href="https://wa.me/522214092478" style="margin-top:30px;padding:12px 24px;border:1px solid #D4A373;color:#D4A373;text-decoration:none;border-radius:8px">Contactar Treze Labs</a></div>';
