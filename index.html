@@ -104,11 +104,13 @@
 
         <!-- TREZE LABS CO-BRANDING SPLASH -->
         <a href="https://wa.me/522214092478?text=Hola%20Treze%20Labs%2C%20me%20gustar%C3%ADa%20solicitar%20el%20desarrollo%20de%20un%20sistema%20profesional." target="_blank" style="position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeInTreze 1.5s ease 0.5s forwards; text-decoration: none; -webkit-tap-highlight-color: transparent; outline: none; border: none; z-index: 9999999;">
-            <p style="color: #64748b; font-size: 11px; font-family: 'Inter', sans-serif; letter-spacing: 2px; text-transform: uppercase; margin: 0;">Powered by</p>
+            <p class="splash-powered-text" style="font-size: 11px; font-family: 'Inter', sans-serif; letter-spacing: 2px; text-transform: uppercase; margin: 0;">Powered by</p>
             <img src="treze_footer.png" class="splash-treze-img" alt="Treze Labs">
             <style>
                 @keyframes fadeInTreze { to { opacity: 1; } }
+                .splash-powered-text { color: #44403c; }
                 .splash-treze-img { height: 30px; opacity: 0.8; filter: none; }
+                [data-theme="dark"] .splash-powered-text { color: #a8a29e; }
                 [data-theme="dark"] .splash-treze-img { filter: brightness(0) invert(1) !important; opacity: 0.9 !important; }
             </style>
         </a>
