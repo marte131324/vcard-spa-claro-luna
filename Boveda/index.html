@@ -61,6 +61,12 @@
         .btn-canva { background:rgba(2,132,199,0.06); color:rgba(56,189,248,0.9); border:1px solid rgba(2,132,199,0.15); margin-bottom:40px; }
         .btn-canva:hover { background:rgba(2,132,199,0.12); border-color:rgba(2,132,199,0.3); transform:translateY(-1px); }
 
+        /* LED Contour Glow */
+        .btn-led { position:relative; border-color:rgba(56,189,248,0.12); transition:all 0.4s; }
+        .btn-led::before { content:''; position:absolute; inset:-1px; border-radius:inherit; padding:1px; background:linear-gradient(135deg, rgba(56,189,248,0.25), transparent 40%, transparent 60%, rgba(2,132,199,0.2)); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; opacity:0.6; transition:opacity 0.4s; }
+        .btn-led:hover::before { opacity:1; }
+        .btn-led:hover { box-shadow: 0 0 20px rgba(56,189,248,0.08), inset 0 0 20px rgba(56,189,248,0.03); border-color:rgba(56,189,248,0.25); }
+
         /* ===== QR Carousel ===== */
         .qr-section { text-align:center; margin-bottom:48px; padding:36px 24px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:20px; position:relative; }
         .qr-section::before { content:''; position:absolute; inset:-1px; border-radius:20px; padding:1px; background:linear-gradient(135deg, rgba(56,189,248,0.15), transparent 50%, rgba(2,132,199,0.1)); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
@@ -169,10 +175,10 @@
         </div>
 
         <a href="https://vcard-spa-claro-luna.vercel.app/" target="_blank" class="btn btn-primary">Abrir VCard Pública →</a>
-        <a href="https://vcard-spa-claro-luna.vercel.app/admin/" target="_blank" class="btn btn-secondary">⚙ Command Center</a>
-        <a href="https://vcard-spa-claro-luna.vercel.app/admin/#loyalty" target="_blank" class="btn btn-secondary">👑 Club de Lealtad</a>
-        <a href="https://vcard-spa-claro-luna.vercel.app/admin/#gifts" target="_blank" class="btn btn-secondary">🎁 Certificados de Regalo</a>
-        <a href="https://vcard-spa-claro-luna.vercel.app/checkin/" target="_blank" class="btn btn-secondary">📋 Formulario Check-In Digital</a>
+        <a href="https://vcard-spa-claro-luna.vercel.app/admin/" target="_blank" class="btn btn-secondary btn-led">Command Center</a>
+        <a href="https://vcard-spa-claro-luna.vercel.app/admin/#loyalty" target="_blank" class="btn btn-secondary btn-led">Club de Lealtad</a>
+        <a href="https://vcard-spa-claro-luna.vercel.app/admin/#gifts" target="_blank" class="btn btn-secondary btn-led">Certificados de Regalo</a>
+        <a href="https://vcard-spa-claro-luna.vercel.app/checkin/" target="_blank" class="btn btn-secondary btn-led">Formulario Check-In</a>
         <div class="qr-section">
             <div class="qr-carousel" id="qr-slider">
                 <div class="qr-slide" id="slide0">

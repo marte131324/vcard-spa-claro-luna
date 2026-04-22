@@ -102,17 +102,85 @@
         /* Mobile */
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; flex-direction: row; padding: 10px; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; }
-            .brand { display: none; }
-            .sidebar nav { display: flex; gap: 4px; width: max-content; }
-            .nav-item { white-space: nowrap; font-size: 10px; padding: 8px 12px; }
-            .nav-item .badge { display: none; }
+            .sidebar { width: 100%; padding: 12px 16px; border-right: none; border-bottom: 1px solid var(--border); overflow-x: hidden; overflow-y: auto; max-height: 46vh; }
+            .brand { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; padding-left: 4px; }
+            .brand h1 { font-size: 18px; }
+            .brand p { font-size: 7px; letter-spacing: 3px; }
+            .sidebar nav { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+            .nav-item { font-size: 11px; padding: 12px 14px; border-radius: 10px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); justify-content: flex-start; }
+            .nav-item i { font-size: 16px; }
+            .nav-item .badge { font-size: 9px; padding: 1px 6px; }
+            .nav-item:hover { transform: none; }
             .sidebar-footer { display: none; }
+            /* Section dividers in mobile grid */
+            .sidebar nav div[style*="font-size: 9px"] { grid-column: 1 / -1; margin: 8px 0 2px 4px; }
             .workspace { padding: 20px 16px; }
             .header h2 { font-size: 22px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
             .stat-grid { grid-template-columns: repeat(2, 1fr); }
         }
+
+        /* Driver.js Luxury Theme — Homologado con VCard */
+        .driver-popover {
+            background: linear-gradient(135deg, #1C1917 0%, #292524 100%) !important;
+            border: 1px solid rgba(212, 163, 115, 0.3) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,163,115,0.1) !important;
+            color: #F5F0EC !important;
+            max-width: 320px !important;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+        .driver-popover * { color: #F5F0EC !important; }
+        .driver-popover-title {
+            font-family: 'Cormorant Garamond', serif !important;
+            font-size: 1.35rem !important;
+            font-weight: 600 !important;
+            color: #D4A373 !important;
+            padding: 20px 20px 8px !important;
+            line-height: 1.3 !important;
+        }
+        .driver-popover-description {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.82rem !important;
+            font-weight: 300 !important;
+            line-height: 1.6 !important;
+            color: #A8A29E !important;
+            padding: 0 20px 16px !important;
+        }
+        .driver-popover-footer {
+            padding: 12px 20px !important;
+            background: rgba(0,0,0,0.2) !important;
+            border-top: 1px solid rgba(212,163,115,0.15) !important;
+        }
+        .driver-popover-progress-text { font-size: 0.7rem !important; color: #78716C !important; }
+        .driver-popover-prev-btn,
+        .driver-popover-next-btn {
+            background: transparent !important;
+            border: 1px solid rgba(212,163,115,0.4) !important;
+            color: #D4A373 !important;
+            border-radius: 8px !important;
+            padding: 6px 16px !important;
+            font-size: 0.78rem !important;
+            font-weight: 500 !important;
+            text-shadow: none !important;
+        }
+        .driver-popover-next-btn {
+            background: linear-gradient(135deg, #D4A373, #C5A059) !important;
+            color: #fff !important;
+            border: none !important;
+        }
+        .driver-popover-next-btn:hover {
+            background: linear-gradient(135deg, #C5A059, #B88655) !important;
+        }
+        .driver-popover-arrow-side-left.driver-popover-arrow,
+        .driver-popover-arrow-side-right.driver-popover-arrow,
+        .driver-popover-arrow-side-top.driver-popover-arrow,
+        .driver-popover-arrow-side-bottom.driver-popover-arrow {
+            border-color: #1C1917 !important;
+        }
+        .driver-overlay { background: rgba(0,0,0,0.7) !important; }
     </style>
 </head>
 <body>
