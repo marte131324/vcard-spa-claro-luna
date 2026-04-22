@@ -168,21 +168,9 @@
             <div class="ver">v3.2 · abril 2026</div>
         </div>
 
-        <div class="access-grid" style="display:grid; grid-template-columns: 1fr; gap:12px; margin-bottom: 2rem;">
-            <a href="https://vcard-spa-claro-luna.vercel.app/" target="_blank" class="btn btn-primary">Abrir VCard Pública</a>
-            <a href="https://vcard-spa-claro-luna.vercel.app/checkin/" target="_blank" class="btn btn-primary" style="background:linear-gradient(135deg,#22c55e,#16a34a); border-color:#22c55e;">Formulario Check-In (Enviar al Cliente)</a>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <a href="https://vcard-spa-claro-luna.vercel.app/loyalty/admin.html" target="_blank" class="btn btn-secondary" style="border-color:rgba(212,163,115,0.4); color:#D4A373;">Panel de Lealtad</a>
-                <a href="https://vcard-spa-claro-luna.vercel.app/admin/index.html" target="_blank" class="btn btn-secondary">Command Center</a>
-            </div>
-            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; margin-top:4px;">
-                <div style="font-size:0.6rem; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:2px; margin-bottom:6px;">Enlace para compartir al cliente por WhatsApp</div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <code id="checkin-url" style="flex:1; font-size:0.72rem; color:#38bdf8; word-break:break-all; background:rgba(0,0,0,0.3); padding:8px 10px; border-radius:6px;">https://vcard-spa-claro-luna.vercel.app/checkin/</code>
-                    <button onclick="navigator.clipboard.writeText(document.getElementById('checkin-url').textContent);this.textContent='✓';setTimeout(()=>this.textContent='Copiar',1500)" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38bdf8; padding:6px 14px; border-radius:6px; font-size:0.7rem; cursor:pointer; white-space:nowrap;">Copiar</button>
-                </div>
-            </div>
-        </div>
+        <a href="https://vcard-spa-claro-luna.vercel.app/" target="_blank" class="btn btn-primary">Abrir VCard Pública →</a>
+        <a href="https://vcard-spa-claro-luna.vercel.app/admin/index.html" target="_blank" class="btn btn-secondary">⚙ Command Center (Admin / Lealtad / Comisiones)</a>
+        <a href="https://vcard-spa-claro-luna.vercel.app/checkin/" target="_blank" class="btn btn-secondary">📋 Formulario Check-In Digital</a>
         <div class="qr-section">
             <div class="qr-carousel" id="qr-slider">
                 <div class="qr-slide" id="slide0">
@@ -342,11 +330,7 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Adaptive grid: less particles on mobile for performance
-    const isMobile = window.innerWidth < 768;
-    const isTablet = window.innerWidth < 1024;
-    const COLS = isMobile ? 30 : isTablet ? 40 : 60;
-    const ROWS = isMobile ? 20 : isTablet ? 28 : 40;
+    const COLS = 60, ROWS = 40;
     const points = [];
     for (let j = 0; j < ROWS; j++) {
         for (let i = 0; i < COLS; i++) {
