@@ -473,14 +473,17 @@
             </div>
         </section>
         <!-- TREZE FOOTER -->
-        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px;">
-            <a href="https://wa.me/522214092478" target="_blank" style="text-decoration: none; display: block;">
-                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 12px; font-family: 'Inter', sans-serif;">© 2026 Reservados todos los derechos.</p>
-                <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <span style="font-size: 0.75rem; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif;">Desarrollado por</span>
-                    <img src="../treze_footer.png" alt="Treze Labs" style="height: 16px; opacity: 0.8; filter: brightness(0) invert(1);">
-                </div>
-            </a>
+        <style>
+            .treze-global-footer { text-align: center; margin-top: 40px; padding-top: 32px; padding-bottom: 32px; border-top: 1px solid rgba(255,255,255,0.04); }
+            .treze-logo { height: 20px; filter: brightness(0) invert(1); opacity: 0.25; margin-bottom: 8px; transition: filter 0.3s; }
+            .treze-sig { font-size: 0.55rem; color: rgba(255,255,255,0.15); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; font-weight: 500; }
+            .treze-wa-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(56,189,248,0.05); border: 1px solid rgba(56,189,248,0.1); color: #38bdf8; padding: 12px 24px; border-radius: 100px; font-weight: 500; text-decoration: none; font-size: 0.82rem; transition: all 0.3s; }
+            .treze-wa-btn:hover { background: rgba(56,189,248,0.1); border-color: rgba(56,189,248,0.2); box-shadow: 0 0 20px rgba(56,189,248,0.08); transform: translateY(-1px); }
+        </style>
+        <div class="treze-global-footer">
+            <img src="../treze_footer.png" alt="Treze Labs" class="treze-logo">
+            <div class="treze-sig">Ecosistema Blindado por Treze Labs</div>
+            <a href="https://wa.me/522214092478?text=Hola%20equipo%20de%20soporte%20Treze%20Labs%2C%20necesito%20ayuda%20con%20el%20Command%20Center%20de%20Claro%20de%20Luna" target="_blank" class="treze-wa-btn">Asistencia Técnica →</a>
         </div>
 
     </main>
