@@ -268,8 +268,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateCart() {
+        const floatingActions = document.getElementById('floating-actions');
         if (selectedServices.length > 0) {
             floatingCart.classList.add('visible');
+            if (floatingActions) {
+                floatingActions.style.opacity = '0';
+                floatingActions.style.pointerEvents = 'none';
+                floatingActions.style.transform = 'translateY(20px)';
+            }
             cartCount.textContent = `${selectedServices.length} servicio${selectedServices.length > 1 ? 's' : ''}`;
             cartPrice.textContent = `$${totalPrice.toLocaleString('en-US')} MXN`;
             // Render item list
@@ -287,6 +293,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             floatingCart.classList.remove('visible');
             floatingCart.classList.remove('expanded');
+            if (floatingActions) {
+                floatingActions.style.opacity = '1';
+                floatingActions.style.pointerEvents = 'auto';
+                floatingActions.style.transform = 'translateY(0)';
+            }
             if (cartItems) cartItems.innerHTML = '';
         }
     }

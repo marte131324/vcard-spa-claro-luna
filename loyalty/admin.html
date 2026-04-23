@@ -163,6 +163,37 @@
         .toast i { color: var(--copper); }
         .toast.error i { color: var(--error); }
 
+        /* Custom Dropdown */
+        .custom-select-wrapper { position: relative; user-select: none; width: 100%; }
+        .custom-select {
+            position: relative; display: flex; flex-direction: column;
+        }
+        .custom-select__trigger {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.8rem 1rem; background: var(--elevated);
+            border: 1px solid var(--border); border-radius: 12px;
+            color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.3s;
+        }
+        .custom-select.open .custom-select__trigger { border-color: var(--copper); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .custom-select__options {
+            position: absolute; display: block; top: 100%; left: 0; right: 0;
+            background: var(--elevated); border: 1px solid var(--copper); border-top: none;
+            border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100;
+            opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-10px);
+            transition: all 0.3s; max-height: 250px; overflow-y: auto;
+        }
+        .custom-select.open .custom-select__options {
+            opacity: 1; visibility: visible; pointer-events: all; transform: translateY(0);
+        }
+        .custom-select__option {
+            padding: 0.8rem 1rem; font-size: 0.8rem; cursor: pointer; transition: background 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text);
+        }
+        .custom-select__option:last-child { border-bottom: none; }
+        .custom-select__option:hover { background: var(--surface-hover); color: var(--copper); }
+        .custom-select__option.selected { background: rgba(212, 163, 115, 0.1); color: var(--copper); font-weight: 500; }
+
         /* Hidden */
         .hidden { display: none !important; }
     </style>
@@ -412,6 +443,13 @@
         <button class="btn btn--ghost mt" onclick="logout()" style="margin-bottom:2rem;">
             <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
         </button>
+
+        <!-- TREZE FOOTER -->
+        <div class="footer" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
+            <img src="../treze_footer.png" alt="Treze Labs" style="height: 18px; filter: brightness(0) invert(1); opacity: 0.5; margin-bottom: 8px;">
+            <div class="sig" style="font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">Desarrollado por Treze Labs</div>
+            <a href="https://wa.me/522214092478" class="wa-btn" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(56,189,248,0.05); color: #38bdf8; padding: 6px 12px; border-radius: 100px; text-decoration: none; font-size: 0.7rem; font-weight: 500; border: 1px solid rgba(56,189,248,0.2); transition: all 0.3s ease; margin-bottom: 20px;"><i class="fa-brands fa-whatsapp"></i> Asistencia Técnica</a>
+        </div>
     </div>
 
     <!-- TOAST -->
@@ -444,6 +482,7 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+    makeCustomSelect('gift-bg-select');
     if (window.location.hash) {
         const hash = window.location.hash.substring(1);
         if (['stamp', 'register', 'clients', 'gifts'].includes(hash)) {
@@ -534,6 +573,85 @@ function loadDemoServices() {
     renderGiftServiceSelect();
 }
 
+function makeCustomSelect(selectId) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    
+    // Remove old wrapper if exists
+    if (select.parentNode.classList.contains('custom-select-wrapper')) {
+        select.parentNode.outerHTML = select.outerHTML;
+    }
+    
+    const newSelect = document.getElementById(selectId);
+    newSelect.style.display = 'none'; // hide native select
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'custom-select-wrapper';
+    
+    const customSelect = document.createElement('div');
+    customSelect.className = 'custom-select';
+    
+    const trigger = document.createElement('div');
+    trigger.className = 'custom-select__trigger';
+    const selectedOpt = newSelect.options[newSelect.selectedIndex];
+    trigger.innerHTML = `<span>${selectedOpt ? selectedOpt.text : 'Seleccionar'}</span><i class="fa-solid fa-chevron-down" style="color: var(--subtle); font-size: 0.7rem;"></i>`;
+    
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'custom-select__options';
+    
+    Array.from(newSelect.options).forEach((opt, idx) => {
+        if (opt.value === "") return; // Skip placeholder if desired, or keep it. Let's keep it but make it unselectable
+        const optionEl = document.createElement('div');
+        optionEl.className = 'custom-select__option' + (newSelect.selectedIndex === idx ? ' selected' : '');
+        optionEl.textContent = opt.text;
+        
+        optionEl.addEventListener('click', function(e) {
+            e.stopPropagation();
+            newSelect.selectedIndex = idx;
+            trigger.querySelector('span').textContent = opt.text;
+            
+            // Trigger change event on original select
+            const event = new Event('change');
+            newSelect.dispatchEvent(event);
+            
+            // Remove selected class from all
+            optionsDiv.querySelectorAll('.custom-select__option').forEach(o => o.classList.remove('selected'));
+            this.classList.add('selected');
+            customSelect.classList.remove('open');
+            trigger.querySelector('i').style.transform = 'rotate(0deg)';
+        });
+        
+        optionsDiv.appendChild(optionEl);
+    });
+    
+    customSelect.appendChild(trigger);
+    customSelect.appendChild(optionsDiv);
+    wrapper.appendChild(customSelect);
+    newSelect.parentNode.insertBefore(wrapper, newSelect);
+    wrapper.appendChild(newSelect);
+    
+    trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isOpen = customSelect.classList.contains('open');
+        document.querySelectorAll('.custom-select').forEach(cs => {
+            cs.classList.remove('open');
+            cs.querySelector('.custom-select__trigger i').style.transform = 'rotate(0deg)';
+        });
+        if (!isOpen) {
+            customSelect.classList.add('open');
+            this.querySelector('i').style.transform = 'rotate(180deg)';
+        }
+    });
+}
+
+// Close custom selects when clicking outside
+document.addEventListener('click', function() {
+    document.querySelectorAll('.custom-select').forEach(cs => {
+        cs.classList.remove('open');
+        cs.querySelector('.custom-select__trigger i').style.transform = 'rotate(0deg)';
+    });
+});
+
 function renderServiceSelect() {
     const sel = document.getElementById('service-select');
     sel.innerHTML = '<option value="">— Seleccionar servicio —</option>';
@@ -550,6 +668,7 @@ function renderServiceSelect() {
             document.getElementById('service-amount').value = opt.dataset.price;
         }
     };
+    makeCustomSelect('service-select');
 }
 
 function renderGiftServiceSelect() {
@@ -569,6 +688,7 @@ function renderGiftServiceSelect() {
             document.getElementById('gift-amount-input').value = opt.dataset.price;
         }
     };
+    makeCustomSelect('gift-service-select');
 }
 
 // ======= GENERATE CODE =======
