@@ -59,7 +59,7 @@
 }
 
 /* === RESET === */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 *:focus { outline: none; }
 button:focus, select:focus, input:focus, a:focus { outline: none; box-shadow: none; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
@@ -78,17 +78,13 @@ img { display: block; max-width: 100%; }
 button { font-family: inherit; cursor: pointer; }
 
 /* === PERFORMANCE: GPU-accelerated animations === */
-.hero__video, .splash, .swiper-slide img, .section {
+.splash, .swiper-slide img, .section {
     will-change: transform, opacity;
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
-/* Lazy-render below-fold sections */
-.section:not(:first-child) {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 500px;
-}
+/* Sections */
 
 
 /* =============================================
@@ -1106,7 +1102,7 @@ button { font-family: inherit; cursor: pointer; }
 .cart {
     position: fixed;
     bottom: 1.5rem; left: 50%;
-    transform: translateX(-50%) translateY(120px);
+    transform: translateX(-50%) translateY(200%);
     width: 92%; max-width: 480px;
     background: var(--text);
     color: #fff;
