@@ -109,9 +109,9 @@
             <style>
                 @keyframes fadeInTreze { to { opacity: 1; } }
                 .splash-powered-text { color: #44403c; }
-                .splash-treze-img { height: 30px; opacity: 0.8; filter: none; }
+                .splash-treze-img { height: 30px; opacity: 0.8; filter: brightness(0); /* Black in light mode */ }
                 [data-theme="dark"] .splash-powered-text { color: #a8a29e; }
-                [data-theme="dark"] .splash-treze-img { filter: brightness(0) invert(1) !important; opacity: 0.9 !important; }
+                [data-theme="dark"] .splash-treze-img { filter: brightness(0) invert(1) !important; opacity: 0.9 !important; /* White in dark mode */ }
             </style>
         </a>
 
@@ -716,12 +716,6 @@
             <p class="footer__phone"><i class="fa-solid fa-phone"></i> 229 402 3957</p>
             <a href="politicas.html" style="display:block;margin-top:12px;font-size:0.65rem;color:var(--text-subtle);text-decoration:none;letter-spacing:1px;text-transform:uppercase;margin-bottom:30px;">Etiqueta del Spa · Privacidad · T&C</a>
             
-            <!-- TREZE FOOTER -->
-            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
-                <img src="treze_footer.png" alt="Treze Labs" style="height: 18px; filter: brightness(0) invert(1); opacity: 0.5; margin-bottom: 8px; border-radius: 0;">
-                <div class="sig" style="font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; font-weight: 500;">Desarrollado por Treze Labs</div>
-                <a href="https://wa.me/522214092478" class="wa-btn" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(56,189,248,0.05); color: #38bdf8; padding: 6px 12px; border-radius: 100px; text-decoration: none; font-size: 0.7rem; font-weight: 500; border: 1px solid rgba(56,189,248,0.2); transition: all 0.3s ease; margin-bottom: 30px;"><i class="fa-brands fa-whatsapp"></i> Asistencia Técnica</a>
-            </div>
         </footer>
     </main>
 
