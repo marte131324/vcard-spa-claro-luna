@@ -327,6 +327,7 @@ button { font-family: inherit; cursor: pointer; }
     background: var(--text); color: #fff;
     border-color: var(--text);
 }
+[data-theme="dark"] .pill.active { color: #1C1917; }
 
 
 /* =============================================

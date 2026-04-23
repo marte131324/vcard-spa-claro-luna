@@ -139,6 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update active pill
             catPills.forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
+            
+            // Clear sensory filters
+            const sensoryPills = document.querySelectorAll('.pill');
+            sensoryPills.forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.service').forEach(s => s.classList.remove('dimmed'));
+
             // Scroll pill into view within nav
             pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
             // Show target category, hide others
@@ -174,11 +180,14 @@ document.addEventListener('DOMContentLoaded', () => {
         pill.addEventListener('click', () => {
             const isActive = pill.classList.contains('active');
             pills.forEach(p => p.classList.remove('active'));
+            
+            // Deselect main categories
+            catPills.forEach(p => p.classList.remove('active'));
+
             if (isActive) {
                 allServices.forEach(s => s.classList.remove('dimmed'));
-                // Return to active pill's category
-                const activePill = document.querySelector('.cat-nav__pill.active');
-                if (activePill) activePill.click();
+                // Return to first category if deselecting filter
+                if (catPills.length > 0) catPills[0].click();
                 return;
             }
             pill.classList.add('active');
