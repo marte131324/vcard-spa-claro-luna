@@ -1,38 +1,31 @@
 /**
  * ═══════════════════════════════════════════════════════════════
- * TREZE LABS — SHIELD v3.0 (Hardware Video Surface Trick)
+ * TREZE LABS — SHIELD v3.1 (EME ClearKey + Hardware Surface)
  * ═══════════════════════════════════════════════════════════════
  * 
- * TÉCNICA PRINCIPAL: Video Overlay con Hardware Acceleration
- * ──────────────────────────────────────────────────────────
- * En Android, los <video> se renderizan vía SurfaceView/TextureView
- * del hardware decoder del GPU. Cuando el OS toma un screenshot,
- * esa superficie aparece NEGRA porque el screenshot captura ANTES
- * de que el compositor mezcle el frame de video.
+ * Técnica: Encrypted Media Extensions (EME) con ClearKey DRM.
+ * Al asociar MediaKeys con el video overlay, el navegador 
+ * lo trata como "contenido protegido" y puede activar la ruta
+ * de renderizado seguro del GPU que produce pantalla negra
+ * en screenshots.
  * 
- * Este script crea un micro-video transparente (generado en JS vía
- * Canvas + MediaRecorder, sin archivos externos) y lo reproduce
- * como overlay fullscreen con pointer-events:none. El usuario
- * no percibe nada, pero el screenshot captura negro.
- * 
- * CAPAS ADICIONALES (silenciosas):
- * 1. user-select: none
- * 2. Bloqueo de clic derecho
- * 3. Bloqueo de atajos de teclado
- * 4. Bloqueo de arrastre de imágenes
- * 5. Bloqueo de impresión
- * 6. Overlay negro al cambiar pestaña
+ * Protecciones silenciosas incluidas:
+ * 1. Video overlay DRM-tagged (hardware surface)
+ * 2. user-select: none (excepto inputs)  
+ * 3. Bloqueo de clic derecho
+ * 4. Bloqueo de atajos de teclado
+ * 5. Bloqueo de arrastre de imágenes
+ * 6. Bloqueo de impresión
+ * 7. Overlay negro al cambiar pestaña
  * ═══════════════════════════════════════════════════════════════
  */
 (function TREZE_SHIELD() {
     'use strict';
 
     var OVERLAY_ID = 'treze-shield-overlay';
-    var VIDEO_ID   = 'treze-shield-video';
+    var VIDEO_ID = 'treze-shield-video';
 
-    // ═══════════════════════════════════════════════
-    // CSS INJECTION (silencioso)
-    // ═══════════════════════════════════════════════
+    // ═══ CSS ═══
     var css = document.createElement('style');
     css.id = 'treze-shield-css';
     css.textContent = [
@@ -47,8 +40,7 @@
         '#', OVERLAY_ID, '.active{opacity:1}',
         '#', VIDEO_ID, '{position:fixed!important;top:0!important;left:0!important;',
         'width:100vw!important;height:100vh!important;z-index:2147483646!important;',
-        'pointer-events:none!important;object-fit:cover!important;',
-        'opacity:0.01!important}',
+        'pointer-events:none!important;object-fit:cover!important;opacity:0.005!important}',
         '@media print{body{display:none!important}',
         'html::after{content:"Contenido protegido";display:flex;align-items:center;',
         'justify-content:center;height:100vh;font-size:2rem;color:#333;font-family:sans-serif}}'
@@ -56,50 +48,32 @@
     document.head.appendChild(css);
 
     // ═══════════════════════════════════════════════
-    // HARDWARE VIDEO SURFACE (técnica principal)
+    // EME CLEARKEY VIDEO SURFACE
     // ═══════════════════════════════════════════════
-    function createProtectionVideo() {
-        // Crear un canvas minúsculo para generar frames de video
+    function initProtectedVideo() {
+        // Step 1: Generar micro-video via Canvas + MediaRecorder
         var canvas = document.createElement('canvas');
-        canvas.width = 2;
-        canvas.height = 2;
+        canvas.width = 4;
+        canvas.height = 4;
         var ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'rgba(0,0,0,0.01)';
+        ctx.fillRect(0, 0, 4, 4);
 
-        // Dibujar un pixel casi transparente (invisible al ojo)
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.01)';
-        ctx.fillRect(0, 0, 2, 2);
-
-        // Intentar capturar como stream de video
-        if (!canvas.captureStream) {
-            // Fallback: si captureStream no existe, no hacemos nada
-            return;
-        }
+        if (!canvas.captureStream || typeof MediaRecorder === 'undefined') return;
 
         var stream;
-        try {
-            stream = canvas.captureStream(1); // 1 fps — mínimo consumo
-        } catch (e) {
-            return;
-        }
+        try { stream = canvas.captureStream(1); } catch(e) { return; }
 
-        // Grabar un micro-video WebM
-        var mimeType = '';
-        if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
-            mimeType = 'video/webm;codecs=vp9';
-        } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8')) {
-            mimeType = 'video/webm;codecs=vp8';
-        } else if (MediaRecorder.isTypeSupported('video/webm')) {
-            mimeType = 'video/webm';
-        } else {
-            return; // No soportado
+        // Buscar codec soportado
+        var mime = '';
+        var codecs = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+        for (var i = 0; i < codecs.length; i++) {
+            if (MediaRecorder.isTypeSupported(codecs[i])) { mime = codecs[i]; break; }
         }
+        if (!mime) return;
 
         var recorder;
-        try {
-            recorder = new MediaRecorder(stream, { mimeType: mimeType });
-        } catch (e) {
-            return;
-        }
+        try { recorder = new MediaRecorder(stream, { mimeType: mime }); } catch(e) { return; }
 
         var chunks = [];
         recorder.ondataavailable = function(e) {
@@ -107,78 +81,134 @@
         };
 
         recorder.onstop = function() {
-            if (chunks.length === 0) return;
-
-            var blob = new Blob(chunks, { type: mimeType });
+            if (!chunks.length) return;
+            var blob = new Blob(chunks, { type: mime });
             var url = URL.createObjectURL(blob);
-
-            var video = document.createElement('video');
-            video.id = VIDEO_ID;
-            video.src = url;
-            video.autoplay = true;
-            video.loop = true;
-            video.muted = true;
-            video.playsInline = true;
-            video.setAttribute('playsinline', '');
-            video.setAttribute('webkit-playsinline', '');
-            video.setAttribute('disablePictureInPicture', '');
-            video.setAttribute('x-webkit-airplay', 'deny');
-            video.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
-            video.controls = false;
-
-            document.body.appendChild(video);
-
-            // Forzar reproducción (necesario en algunos navegadores)
-            var playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(function() {
-                    // Si autoplay falla, intentar al primer toque del usuario
-                    document.addEventListener('touchstart', function handler() {
-                        video.play().catch(function(){});
-                        document.removeEventListener('touchstart', handler);
-                    }, { once: true });
-                    document.addEventListener('click', function handler() {
-                        video.play().catch(function(){});
-                        document.removeEventListener('click', handler);
-                    }, { once: true });
-                });
-            }
-
-            // Mantener loop activo constantemente
-            video.addEventListener('ended', function() {
-                video.currentTime = 0;
-                video.play().catch(function(){});
-            });
-            video.addEventListener('pause', function() {
-                setTimeout(function() { video.play().catch(function(){}); }, 100);
-            });
+            mountVideo(url);
         };
 
         recorder.start();
-        // Grabar 200ms de frames (suficiente para un loop)
-        setTimeout(function() {
-            try { recorder.stop(); } catch(e) {}
-        }, 200);
+        setTimeout(function() { try { recorder.stop(); } catch(e){} }, 300);
     }
 
-    // Ejecutar al cargar el DOM
+    function mountVideo(videoUrl) {
+        var video = document.createElement('video');
+        video.id = VIDEO_ID;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('disablePictureInPicture', '');
+        video.setAttribute('x-webkit-airplay', 'deny');
+        video.controls = false;
+
+        // Step 2: Intentar asociar EME ClearKey (marca como DRM content)
+        tryEME(video).then(function() {
+            video.src = videoUrl;
+            document.body.appendChild(video);
+            startPlayback(video);
+        }).catch(function() {
+            // Si EME falla, montar igual sin DRM tag
+            video.src = videoUrl;
+            document.body.appendChild(video);
+            startPlayback(video);
+        });
+    }
+
+    function tryEME(videoElement) {
+        if (!navigator.requestMediaKeySystemAccess) {
+            return Promise.reject('no EME');
+        }
+
+        var configs = [
+            {
+                initDataTypes: ['webm'],
+                videoCapabilities: [
+                    { contentType: 'video/webm; codecs="vp9"', robustness: '' },
+                    { contentType: 'video/webm; codecs="vp8"', robustness: '' }
+                ]
+            },
+            {
+                initDataTypes: ['cenc'],
+                videoCapabilities: [
+                    { contentType: 'video/mp4; codecs="avc1.42E01E"', robustness: '' }
+                ]
+            }
+        ];
+
+        // Intentar ClearKey primero
+        return navigator.requestMediaKeySystemAccess('org.w3.clearkey', configs)
+            .then(function(keySystemAccess) {
+                return keySystemAccess.createMediaKeys();
+            })
+            .then(function(mediaKeys) {
+                return videoElement.setMediaKeys(mediaKeys);
+            })
+            .catch(function() {
+                // Fallback: intentar con Widevine (solo marca, no necesita license server)
+                return navigator.requestMediaKeySystemAccess('com.widevine.alpha', [{
+                    initDataTypes: ['webm', 'cenc'],
+                    videoCapabilities: [
+                        { contentType: 'video/webm; codecs="vp9"', robustness: '' },
+                        { contentType: 'video/webm; codecs="vp8"', robustness: '' }
+                    ]
+                }]).then(function(keySystemAccess) {
+                    return keySystemAccess.createMediaKeys();
+                }).then(function(mediaKeys) {
+                    return videoElement.setMediaKeys(mediaKeys);
+                }).catch(function() {
+                    return Promise.resolve(); // Continuar sin DRM
+                });
+            });
+    }
+
+    function startPlayback(video) {
+        var play = function() {
+            var p = video.play();
+            if (p && p.catch) p.catch(function(){});
+        };
+
+        play();
+
+        // Retry en interacción del usuario (Android requiere gesto)
+        var activate = function() {
+            play();
+            document.removeEventListener('touchstart', activate);
+            document.removeEventListener('click', activate);
+            document.removeEventListener('scroll', activate);
+        };
+        document.addEventListener('touchstart', activate, { passive: true });
+        document.addEventListener('click', activate);
+        document.addEventListener('scroll', activate, { passive: true });
+
+        // Mantener vivo
+        video.addEventListener('pause', function() {
+            setTimeout(play, 50);
+        });
+        video.addEventListener('ended', function() {
+            video.currentTime = 0;
+            play();
+        });
+    }
+
+    // Iniciar al cargar DOM
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', createProtectionVideo);
+        document.addEventListener('DOMContentLoaded', initProtectedVideo);
     } else {
-        createProtectionVideo();
+        initProtectedVideo();
     }
 
     // ═══════════════════════════════════════════════
-    // VISIBILITY SHIELD (overlay al cambiar pestaña)
+    // VISIBILITY SHIELD
     // ═══════════════════════════════════════════════
     var overlay = document.createElement('div');
     overlay.id = OVERLAY_ID;
     (document.body || document.documentElement).appendChild(overlay);
 
     function shieldOn()  { overlay.classList.add('active'); }
-    function shieldOff() {
-        setTimeout(function() { overlay.classList.remove('active'); }, 250);
-    }
+    function shieldOff() { setTimeout(function() { overlay.classList.remove('active'); }, 250); }
 
     document.addEventListener('visibilitychange', function() {
         document.hidden ? shieldOn() : shieldOff();
@@ -187,7 +217,7 @@
     window.addEventListener('focus', shieldOff);
 
     // ═══════════════════════════════════════════════
-    // KEYBOARD INTERCEPT
+    // KEYBOARD / CONTEXT / DRAG
     // ═══════════════════════════════════════════════
     document.addEventListener('keydown', function(e) {
         if (e.key === 'PrintScreen') { e.preventDefault(); shieldOn(); setTimeout(shieldOff, 1000); return false; }
@@ -197,10 +227,6 @@
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && 'ijc'.indexOf(e.key.toLowerCase()) !== -1) { e.preventDefault(); return false; }
         if ((e.ctrlKey || e.metaKey) && 'us'.indexOf(e.key.toLowerCase()) !== -1) { e.preventDefault(); return false; }
     }, true);
-
-    // ═══════════════════════════════════════════════
-    // CONTEXT MENU + DRAG
-    // ═══════════════════════════════════════════════
     document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
     document.addEventListener('dragstart', function(e) {
         if (e.target.tagName === 'IMG') { e.preventDefault(); return false; }
