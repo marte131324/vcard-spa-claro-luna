@@ -71,7 +71,14 @@ function handleRequest(e) {
       case 'savestaff':      result = saveStaff(body.personal); break;
       case 'logattendance':  result = logAttendance(body.record); break;
       case 'logcommission':  result = logCommission(body.record); break;
-      case 'savecheckin':    result = saveCheckin(body.data); break;
+      case 'savecheckin':    
+        // Soporta POST body.data o GET params.payload (fallback)
+        let checkinData = body.data;
+        if (!checkinData && params.payload) {
+          try { checkinData = JSON.parse(params.payload); } catch(pe) {}
+        }
+        result = saveCheckin(checkinData || {}); 
+        break;
       case 'getstatus':      result = { success: true, ...getConfig() }; break;
       case 'lookup':         result = lookupClient(params.phone); break;
       case 'register':       result = registerClient(params.pin, params.phone, params.name); break;
@@ -196,7 +203,7 @@ function generateStampCode(pin, service, amount) {
   const config = getConfig();
   const code = generateRandomCode(6);
   const expires = new Date(new Date().getTime() + config.CODE_EXPIRY * 60000);
-  getSheet('Códigos').appendRow([code, service, Number(amount) || 0, pin, new Date().toISOString(), expires.toISOString(), 'NO', '']);
+  getSheet('Códigos').appendRow([code, service, Number(amount) || 0, pin, formatDateMX(), expires.toISOString(), 'NO', '']);
   return { success: true, code, expiresAt: expires.toISOString() };
 }
 
@@ -245,7 +252,7 @@ function redeemStampCode(code, phone) {
 function createGift(pin, giftTo, giftFrom, service, amount) {
   if (!validatePin(pin)) return { success: false, error: 'PIN incorrecto' };
   const folio = 'CDL-' + generateRandomCode(5);
-  getSheet('Certificados').appendRow([folio, giftTo||'', giftFrom||'', service||'', Number(amount)||0, new Date().toISOString(), 'ACTIVO', '']);
+  getSheet('Certificados').appendRow([folio, giftTo||'', giftFrom||'', service||'', Number(amount)||0, formatDateMX(), 'ACTIVO', '']);
   return { success: true, folio };
 }
 
@@ -313,7 +320,7 @@ function redeemGift(pin, folio) {
     if (String(data[i][0]).toUpperCase() === String(folio).toUpperCase()) {
       if (data[i][6] === 'CANJEADO') return { success: false, error: 'Ya canjeado anteriormente' };
       sheet.getRange(i + 1, 7).setValue('CANJEADO');
-      sheet.getRange(i + 1, 8).setValue(new Date().toISOString());
+      sheet.getRange(i + 1, 8).setValue(formatDateMX());
       return { success: true };
     }
   }
@@ -420,3 +427,6 @@ function generateRandomCode(l) {
 }
 function rowToObject(h, r) { const o = {}; h.forEach((k, i) => o[k] = r[i]); return o; }
 function safeParseJSON(s) { try { return JSON.parse(s); } catch (e) { return []; } }
+function formatDateMX() {
+  return Utilities.formatDate(new Date(), 'America/Mexico_City', 'dd/MM/yyyy HH:mm');
+}

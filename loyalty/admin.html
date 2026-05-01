@@ -125,7 +125,7 @@
             border-style: solid; border-color: var(--copper);
             background: var(--copper); color: #fff;
         }
-        .mini-stamp__label { font-size: 0.5rem; color: var(--subtle); text-align: center; max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .mini-stamp__label { font-size: 0.5rem; color: var(--subtle); text-align: center; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .mini-stamp.filled .mini-stamp__label { color: var(--copper); }
         .mini-stamp--reward .mini-stamp__circle { border-color: rgba(212,163,115,0.25); color: rgba(212,163,115,0.3); }
         .mini-stamp--reward.filled .mini-stamp__circle { background: linear-gradient(135deg, #FFD700, #FFA500); border-color: #FFD700; }
@@ -239,6 +239,10 @@
                     <select class="input" id="service-select">
                         <option value="">Cargando servicios...</option>
                     </select>
+                </div>
+                <div class="field hidden" id="manual-service-field">
+                    <label>Nombre del servicio</label>
+                    <input type="text" class="input" id="manual-service-input" placeholder="Escribe el nombre del servicio">
                 </div>
                 <div class="field">
                     <label>Monto cobrado (MXN)</label>
@@ -675,10 +679,25 @@ function renderServiceSelect() {
         opt.textContent = `${s.name} — $${s.price.toLocaleString()}`;
         sel.appendChild(opt);
     });
+    // Opción manual
+    const manualOpt = document.createElement('option');
+    manualOpt.value = '__manual__';
+    manualOpt.textContent = '✏️ Otro servicio (escribir manualmente)';
+    sel.appendChild(manualOpt);
+
     sel.onchange = () => {
         const opt = sel.selectedOptions[0];
-        if (opt && opt.dataset.price) {
-            document.getElementById('service-amount').value = opt.dataset.price;
+        const manualField = document.getElementById('manual-service-field');
+        if (sel.value === '__manual__') {
+            manualField.classList.remove('hidden');
+            document.getElementById('service-amount').value = '';
+            document.getElementById('manual-service-input').focus();
+        } else {
+            manualField.classList.add('hidden');
+            document.getElementById('manual-service-input').value = '';
+            if (opt && opt.dataset.price) {
+                document.getElementById('service-amount').value = opt.dataset.price;
+            }
         }
     };
     makeCustomSelect('service-select');
@@ -706,8 +725,13 @@ function renderGiftServiceSelect() {
 
 // ======= GENERATE CODE =======
 function generateCode() {
-    const service = document.getElementById('service-select').value;
+    let service = document.getElementById('service-select').value;
     const amount = document.getElementById('service-amount').value;
+    // Si eligió manual, tomar el input de texto
+    if (service === '__manual__') {
+        service = document.getElementById('manual-service-input').value.trim();
+        if (!service) { showToast('Escribe el nombre del servicio', true); return; }
+    }
     if (!service) { showToast('Selecciona el servicio prestado', true); return; }
 
     const btn = document.getElementById('btn-generate');
@@ -863,25 +887,32 @@ function renderClientCard(c) {
     document.getElementById('cc-meta').textContent = `${c.phone} · ${c.totalVisits} visitas`;
     document.getElementById('cc-tier').textContent = c.tier;
 
-    const stamps = document.getElementById('cc-stamps');
-    stamps.innerHTML = '';
+    const stampsEl = document.getElementById('cc-stamps');
+    stampsEl.innerHTML = '';
     const history = c.history || [];
-    const reversedHistory = [...history].reverse();
+    
+    // Obtener las entradas del ciclo ACTUAL (después del último reset/recompensa)
+    // Filtramos las que NO son recompensas y tomamos las últimas N según stamps actuales
+    const stampEntries = history.filter(h => h.service !== 'RECOMPENSA 50% APLICADA');
+    // Las entradas del ciclo actual son las últimas c.stamps entradas
+    const currentCycleEntries = stampEntries.slice(-Math.max(c.stamps, 0));
 
     for (let i = 1; i <= 3; i++) {
-        const entry = reversedHistory.find(h => h.stamp === i);
+        const entry = currentCycleEntries[i - 1]; // Entrada para este slot
+        const isFilled = i <= c.stamps;
         const div = document.createElement('div');
-        div.className = 'mini-stamp' + (i <= c.stamps ? ' filled' : '');
+        div.className = 'mini-stamp' + (isFilled ? ' filled' : '');
+        const labelText = (isFilled && entry) ? entry.service.split(' ').slice(0, 2).join(' ') : (isFilled ? 'Servicio' : '—');
         div.innerHTML = `
             <div class="mini-stamp__circle"><i class="fa-solid fa-moon"></i></div>
-            <span class="mini-stamp__label">${entry ? entry.service.split(' ').slice(0, 2).join(' ') : '—'}</span>
+            <span class="mini-stamp__label">${labelText}</span>
         `;
-        stamps.appendChild(div);
+        stampsEl.appendChild(div);
     }
     const reward = document.createElement('div');
     reward.className = 'mini-stamp mini-stamp--reward' + (c.stamps >= 3 ? ' filled' : '');
     reward.innerHTML = `<div class="mini-stamp__circle"><i class="fa-solid fa-gift"></i></div><span class="mini-stamp__label">50% OFF</span>`;
-    stamps.appendChild(reward);
+    stampsEl.appendChild(reward);
     
     // Redeem Reward Section
     let redeemContainer = document.getElementById('reward-action-container');
@@ -1126,7 +1157,7 @@ function validateGift() {
                 const g = res.gift;
                 const card = document.getElementById('gift-card');
                 document.getElementById('gv-service').textContent = g.service;
-                document.getElementById('gv-meta').innerHTML = `Para: <b>${g.giftTo}</b><br>De: ${g.giftFrom}<br>Comprado: ${new Date(g.date).toLocaleDateString()}`;
+                document.getElementById('gv-meta').innerHTML = `Para: <b>${g.giftTo}</b><br>De: ${g.giftFrom}<br>Comprado: ${formatDateMX(g.date)}`;
                 
                 const badge = document.getElementById('gv-status');
                 badge.textContent = g.status;
@@ -1201,6 +1232,13 @@ function api(action, params) {
 }
 
 // ======= UTILS =======
+function formatDateMX(isoStr) {
+    if (!isoStr) return '—';
+    try {
+        const d = new Date(isoStr);
+        return d.toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch(e) { return isoStr; }
+}
 function localCode(n) { const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = ''; for (let i = 0; i < n; i++) s += c[Math.floor(Math.random()*c.length)]; return s; }
 function showError(id, msg) { const el = document.getElementById(id); el.textContent = msg; setTimeout(() => el.textContent = '', 3000); }
 let toastTimer;
